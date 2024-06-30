@@ -1,0 +1,19 @@
+/* .simplified-route:hover {
+    background-color: limegreen;
+    cursor: pointer;
+} */
+
+.simple-route-header {
+    /* font-weight: bold; */
+    background-color: #dddddd;
+}
+
+.simple-route-header:hover {
+    /* background-color: limegreen; */
+    background-color: greenyellow;
+    cursor: pointer;
+}
+
+.simple-route-date {
+    color: darkviolet;
+}

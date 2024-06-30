@@ -1,0 +1,50 @@
+#route-container {
+    /* background-color: white; */
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+        
+#route-crumbs {
+    font-size: 20px;
+}
+
+#route-name {
+    font-weight: bold;
+    color: green; 
+}
+
+.date-entry {
+    font-size: 15px;
+}
+
+.date {
+    background-color: lightsteelblue;
+    /* margin-left: -10px;
+    margin-right: -10px;
+    margin-bottom: 5px; */
+    padding: 5px;
+}
+
+img {
+    width: 200px;
+    height: auto;
+}
+
+#route-container-hidden {
+    display: none;
+}
+
+#add-date-entry-button {
+    background-color: orange;
+    padding: 10px;
+    font-size: 15px;
+    text-align: center;
+}
+
+#add-date-entry-button:hover {
+    cursor: pointer;
+    background-color: limegreen;
+    color: ghostwhite;
+}

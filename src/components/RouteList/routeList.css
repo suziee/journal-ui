@@ -1,0 +1,15 @@
+#keyword-routes {
+    /* color: #cccccc; */
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+li:hover {
+    background-color: greenyellow;
+    cursor: pointer; /*https://stackoverflow.com/questions/3087975/how-to-change-the-cursor-into-a-hand-when-a-user-hovers-over-a-list-item*/
+}
+
+/* .route-name {
+    color: #333333;
+} */
