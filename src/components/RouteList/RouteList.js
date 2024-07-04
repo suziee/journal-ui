@@ -22,7 +22,11 @@ export default function RouteList(props) {
 
     function buildList() {
         if (keywordEntries == null || keywordEntries.length == 0) {
-            return;
+            return (
+                <div>
+                    No results
+                </div>
+            );
         }
 
         return keywordEntries.map((entry, index) => {

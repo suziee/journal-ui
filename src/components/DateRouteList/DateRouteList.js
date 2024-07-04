@@ -22,7 +22,11 @@ export default function DateRouteList(props) {
 
     function buildList() {
         if (yearEntries == null || yearEntries.length == 0) {
-            return;
+            return (
+                <div>
+                    No results
+                </div>
+            );
         }
 
         return yearEntries.map((entry, index) => {
