@@ -67,8 +67,8 @@ export default function RouteDateForm(props) {
                 <label>Approach photos absolute path:</label>
                 <input type="text" disabled/>
                 <div className="form-buttons">
-                    <button type="submit">Save</button>
                     <button onClick={raiseCloseEvent}>Cancel</button>
+                    <button type="submit">Save</button>
                 </div>
             </form>
         );
