@@ -1,7 +1,7 @@
 import React from 'react';
 import * as SUB from './subscriptionKeys';
 import { useKeyword as id } from './hookNames';
-import { addJournalEntry } from '../../api';
+import { addRoute } from '../../api';
 
 export default function useRouteForm(args) {
     const {messenger} = args;
@@ -27,7 +27,7 @@ export default function useRouteForm(args) {
 
     function save(obj) {
         async function postDataAsync() {
-            await addJournalEntry(obj);
+            await addRoute(obj);
         }
 
         postDataAsync();

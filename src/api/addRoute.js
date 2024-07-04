@@ -2,7 +2,7 @@ import { API_URL } from './constants';
 
 export default async function addJournalEntry(journalEntry) {
     const response = await fetch(
-        API_URL + "journal",
+        API_URL + "journal/route",
         {
             method: "POST",
             body: JSON.stringify(journalEntry),
@@ -10,6 +10,6 @@ export default async function addJournalEntry(journalEntry) {
                 "content-type": "application/json; charset=UTF-8",
             }
         });
-    const data = await response.json();
-    return data;
+
+    return response.ok;
 }

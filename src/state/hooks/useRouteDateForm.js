@@ -1,7 +1,7 @@
 import React from 'react';
 import * as SUB from './subscriptionKeys';
 import { useKeyword as id } from './hookNames';
-import { addJournalEntry } from '../../api';
+import { addDate } from '../../api';
 
 export default function useRouteDateForm(args) {
     const {messenger} = args;
@@ -23,7 +23,7 @@ export default function useRouteDateForm(args) {
 
     function save(obj) {
         async function postDataAsync() {
-            await addJournalEntry(obj);
+            await addDate(obj);
         }
 
         postDataAsync();
