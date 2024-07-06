@@ -6,9 +6,9 @@ import {
 import {JournalEntry} from '../../models';
 
 export default function RouteForm(props) {
-    const {saveJournalEntry, closeForm, open} = useAppData(NAME.useRouteForm);
+    const {saveJournalEntry, closeForm, open, errors} = useAppData(NAME.useRouteForm);
 
-    function raiseSubmitEvent(event) {
+    async function raiseSubmitEvent(event) {
         event.preventDefault();
 
         let location = event.target.location.value;
@@ -28,7 +28,11 @@ export default function RouteForm(props) {
             pitchesClimbed: event.target.pitchesClimbed.value,
         });
 
-        saveJournalEntry(journalEntry);
+        let isSuccessful = await saveJournalEntry(journalEntry);
+
+        if (isSuccessful) {
+            closeForm();
+        }
     }
 
     function raiseCloseEvent(event) {
@@ -70,6 +74,11 @@ export default function RouteForm(props) {
                 <button onClick={raiseCloseEvent}>Cancel</button>
                 <button type="submit">Save</button>
             </div>
+            <ul className="form-errors">
+                {errors.map((error, index) => {
+                    return <li key={`form-error-${index}`}>{error}</li>
+                })}
+            </ul>
         </form>
     );
 }
