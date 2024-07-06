@@ -6,10 +6,11 @@ import {
 import './calendarContainer.css';
 import Calendar from '../Calendar';
 import DateRouteList from '../DateRouteList';
+import {validate} from './validator.js';
 
 export default function CalendarContainer(props) {
     const {updateYear, year} = useAppData(NAME.useCalendar);
-    
+    const [error, setError] = React.useState(null);
     const yearRef = React.useRef(year);
 
     React.useEffect(() => {
@@ -17,6 +18,13 @@ export default function CalendarContainer(props) {
     }, [year]);
 
     function raiseUpdateEvent() {
+        let validateResult = validate(yearRef.current.value);
+        if (!validateResult.isValid) {
+            setError(x => validateResult.error);
+            return;
+        }
+
+        setError(x => null);
         const year = parseInt(yearRef.current.value);
         updateYear(year);
     }
@@ -28,6 +36,7 @@ export default function CalendarContainer(props) {
                 Days climbed for the year
                 <input type="text" ref={yearRef}/>
                 <button onClick={raiseUpdateEvent}>Update</button>
+                <div id="calendar-error">{error}</div>
             </div>
             <DateRouteList />
         </React.Fragment>

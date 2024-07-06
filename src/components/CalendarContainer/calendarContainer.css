@@ -8,3 +8,7 @@
 #current-year-form > input {
     width: 200px;
 }
+
+#calendar-error {
+    color: red;
+}

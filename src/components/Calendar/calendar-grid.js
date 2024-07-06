@@ -1,8 +1,13 @@
 import { DateHelper } from './helper.js';
 
-export function getCalendarGrid(dates) {
-	const startOfYear = DateHelper.startOfYear(dates[0]);
-	const numberOfDays = DateHelper.getTotalDaysForYear(dates[0]);
+export function getCalendarGrid(dates, year) {
+    let tempDate = new Date(year, DateHelper.JANUARY, 1);
+    if (dates.length > 0) {
+        tempDate = dates[0];
+    }
+
+	const startOfYear = DateHelper.startOfYear(tempDate);
+	const numberOfDays = DateHelper.getTotalDaysForYear(tempDate);
 	
 	// set up dates for the whole year
 	let days = Array.from(Array(numberOfDays).keys());
@@ -33,20 +38,24 @@ export function getCalendarGrid(dates) {
         }
 	}
 	
+    // later on when you do if (outsideDays[index]), out of bounds will return undefined which is treated as false
 	let outsideDays = [];
 	counter = 0;
 	for (let index in gridDays) {
+        // exit early b/c no use in iterating the future
+        // edit: used to be at the end of the loop but what if dates is empty?
+        // for some reason dates[counter] did not throw error...
+        // b/c gridDay != null is false and short circuits; would throw error when jan 01 is first gridDay
+		if (counter == dates.length) {
+			break;
+		}
+
         let gridDay = gridDays[index];
 		if (gridDay != null && DateHelper.equals(gridDay, dates[counter])) {
 			outsideDays = [...outsideDays, true];
 			counter++;
 		} else {
 			outsideDays = [...outsideDays, false];
-		}
-		
-		// exit early b/c no use in iterating the future
-		if (counter == dates.length) {
-			break;
 		}
 	}
 

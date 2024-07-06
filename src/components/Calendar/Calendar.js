@@ -7,10 +7,10 @@ import {
 } from '../../state';
 
 export default function Calendar(props) {
-    const { yearEntries } = useAppData(NAME.useCalendar);
+    const { yearEntries, year } = useAppData(NAME.useCalendar);
 
 	React.useEffect(() => {
-		if (yearEntries == null || yearEntries.length == 0) {
+		if (yearEntries == null) {
 			return;
 		}
 
@@ -27,7 +27,7 @@ export default function Calendar(props) {
 		})
 
 		// have to reverse b/c it comes back in DESC order from api
-		getCalendarGrid(dates.reverse());
+		getCalendarGrid(dates.reverse(), year);
 	}, [yearEntries]);
 
     return (
