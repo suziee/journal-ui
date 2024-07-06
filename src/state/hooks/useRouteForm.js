@@ -34,7 +34,7 @@ export default function useRouteForm(args) {
         const response = await addRoute(obj);
         
         if (response.isSuccessful) {
-            useRoute.updateRoute(new Route(response.json));
+            useRoute.updateRoute(response.json);
         } else {
             if (response.json != null && response.json.errors) {
                 const values = Object.values(response.json.errors);

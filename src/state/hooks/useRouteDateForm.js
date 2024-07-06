@@ -2,7 +2,6 @@ import React from 'react';
 import * as SUB from './subscriptionKeys';
 import { useRouteDateForm as id } from './hookNames';
 import { addDate } from '../../api';
-import { Route } from '../../models';
 
 export default function useRouteDateForm(args) {
     const {messenger, useRoute} = args;
@@ -30,7 +29,7 @@ export default function useRouteDateForm(args) {
         const response = await addDate(obj);
         
         if (response.isSuccessful) {
-            useRoute.updateRoute(new Route(obj));
+            useRoute.updateRoute(obj);
         } else {
             if (response.json != null && response.json.errors) {
                 const values = Object.values(response.json.errors);

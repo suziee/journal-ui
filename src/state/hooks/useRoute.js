@@ -2,6 +2,7 @@ import React from 'react';
 import * as SUB from './subscriptionKeys';
 import { useRoute as id } from './hookNames';
 import { getByRoute } from '../../api';
+import { Route } from '../../models';
 
 export default function useRoute(args) {
     const { messenger } = args;
@@ -25,7 +26,7 @@ export default function useRoute(args) {
     }
 
     function update(route) {
-        setSelectedRoute(x => route);
+        setSelectedRoute(x => new Route(route));
     }
 
     React.useEffect(() => {
