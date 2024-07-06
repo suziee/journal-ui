@@ -49,13 +49,19 @@ export default function RouteDateForm(props) {
         messenger.broadcast(SUB.SHOW_ROUTE);
     }
 
+    // React.useEffect(() => {
+    //     if (selectedRoute == null) return;
+    //     let doc = document.getElementById("route-date-form-date");
+    //     doc.value = "2024-05-05";
+    // }, [selectedRoute]);
+
     function getForm() {
         if (selectedRoute == null) {
             return;
         }
 
         return (
-            <form className={open ? "route-form" : "route-form-hidden"} onSubmit={raiseSubmitEvent}>
+            <form id="route-date-form" className={open ? "route-form" : "route-form-hidden"} onSubmit={raiseSubmitEvent}>
                 <label>Location (Geo-tags):</label>
                 <input type="text" value={selectedRoute.location} disabled/>
                 <label>Route Name:</label>
@@ -66,15 +72,15 @@ export default function RouteDateForm(props) {
                 <input type="text" value={selectedRoute.bookGrade} disabled/>
                 <label>Mountain Project Grade:</label>
                 <input type="text" value={selectedRoute.mountainProjectGrade} disabled/>
-                <label>Pitches Climbed:</label>
+                <label><div class="required"></div>Pitches Climbed:</label>
                 <input type="text" name="pitchesClimbed"/>
                 <label>Pitches Total:</label>
                 <input type="text" value={selectedRoute.numberOfPitches} disabled/>
-                <label>Date:</label>
-                <input type="text" name="date"/>
+                <label><div class="required"></div>Date:</label>
+                <input type="text" name="date" id="route-date-form-date"/>
                 <label>Notes:</label>
                 <textarea name="notes"></textarea>
-                <label>Sort ID:</label>
+                <label><div class="required"></div>Sort ID:</label>
                 <input type="text" name="sortId"/>
                 <label>Approach photos absolute path:</label>
                 <input type="text" disabled/>
