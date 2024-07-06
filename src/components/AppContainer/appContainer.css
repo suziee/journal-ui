@@ -86,3 +86,9 @@ header {
 .route-form-hidden {
     display: none;
 }
+
+.form-errors {
+    padding: 0;
+    list-style: none;
+    color: red;
+}

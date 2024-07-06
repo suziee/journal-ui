@@ -12,26 +12,42 @@ export default function useRouteDateForm(args) {
     });
 
     const [open, setOpen] = React.useState(false);
+    const [errors, setErrors] = React.useState([]);
 
     function show() {
         setOpen(x => true);
     }
 
     function hide() {
+        clearErrors();
         setOpen(x => false);
     }
 
-    function save(obj) {
-        async function postDataAsync() {
-            await addDate(obj);
+    async function save(obj) {
+        clearErrors();
+
+        const response = await addDate(obj);
+        
+        if (!response.isSuccessful) {
+            if (response.json != null && response.json.errors) {
+                const values = Object.values(response.json.errors);
+                setErrors(x => [...x, ...values.flat()]);
+            } else {
+                setErrors(x => [...x, response.text]);
+            }
         }
 
-        postDataAsync();
+        return response.isSuccessful;
+    }
+
+    function clearErrors() {
+        setErrors(x => []);
     }
 
     return {
         open: open,
         closeForm: hide,
         saveJournalEntry: save,
+        errors: errors
     };
 }

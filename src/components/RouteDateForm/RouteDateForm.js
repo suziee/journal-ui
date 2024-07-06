@@ -8,10 +8,11 @@ import {JournalEntry} from '../../models';
 
 export default function RouteDateForm(props) {
     const {selectedRoute} = useAppData(NAME.useRoute);
-    const {saveJournalEntry, closeForm, open} = useAppData(NAME.useRouteDateForm);
+    const {year} = useAppData(NAME.useCalendar);
+    const {saveJournalEntry, closeForm, open, errors} = useAppData(NAME.useRouteDateForm);
     const messenger = useAppData(NAME.useMessenger);
 
-    function raiseSubmitEvent(event) {
+    async function raiseSubmitEvent(event) {
         event.preventDefault();
 
         let journalEntry = new JournalEntry({
@@ -28,7 +29,16 @@ export default function RouteDateForm(props) {
             routeGuid: selectedRoute.routeGuid
         });
 
-        saveJournalEntry(journalEntry);
+        let isSuccessful = await saveJournalEntry(journalEntry);
+
+        if (isSuccessful) {
+            messenger.broadcast(SUB.REFRESH_ROUTE);
+            if (year === new Date(journalEntry.date).getFullYear()) {
+                messenger.broadcast(SUB.REFRESH_YEAR_ROUTES);
+            }
+            closeForm();
+            messenger.broadcast(SUB.SHOW_ROUTE);
+        }
     }
 
     function raiseCloseEvent(event) {
@@ -70,6 +80,11 @@ export default function RouteDateForm(props) {
                     <button onClick={raiseCloseEvent}>Cancel</button>
                     <button type="submit">Save</button>
                 </div>
+                <ul className="form-errors">
+                    {errors.map((error, index) => {
+                        return <li key={`form-error-${index}`}>{error}</li>
+                    })}
+                </ul>
             </form>
         );
     }
