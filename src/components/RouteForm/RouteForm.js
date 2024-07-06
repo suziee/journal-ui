@@ -7,6 +7,8 @@ import {JournalEntry} from '../../models';
 
 export default function RouteForm(props) {
     const {saveJournalEntry, closeForm, open, errors} = useAppData(NAME.useRouteForm);
+    const {keyword} = useAppData(NAME.useKeyword);
+    const messenger = useAppData(NAME.useMessenger);
 
     async function raiseSubmitEvent(event) {
         event.preventDefault();
@@ -31,6 +33,9 @@ export default function RouteForm(props) {
         let isSuccessful = await saveJournalEntry(journalEntry);
 
         if (isSuccessful) {
+            if (journalEntry.fullName.includes(keyword)) {
+                messenger.broadcast(SUB.REFRESH_KEYWORD_ROUTES);
+            }
             closeForm();
         }
     }

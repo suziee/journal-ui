@@ -1,11 +1,11 @@
 import React from 'react';
 import * as SUB from './subscriptionKeys';
-import { useKeyword as id } from './hookNames';
+import { useRouteForm as id } from './hookNames';
 import { addRoute } from '../../api';
+import { Route } from '../../models';
 
 export default function useRouteForm(args) {
     const {messenger, useRoute} = args;
-    const {updateRoute} = useRoute;
 
     messenger.subscribe(id, {
         [SUB.SHOW_ROUTE_FORM]: show,
@@ -33,17 +33,15 @@ export default function useRouteForm(args) {
 
         const response = await addRoute(obj);
         
-        if (!response.isSuccessful) {
+        if (response.isSuccessful) {
+            useRoute.updateRoute(new Route(response.json));
+        } else {
             if (response.json != null && response.json.errors) {
                 const values = Object.values(response.json.errors);
                 setErrors(x => [...x, ...values.flat()]);
             } else {
                 setErrors(x => [...x, response.text]);
             }
-        } else {
-            updateRoute({
-                routeGuid: response.text
-            });
         }
 
         return response.isSuccessful;

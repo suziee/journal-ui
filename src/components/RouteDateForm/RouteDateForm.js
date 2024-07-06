@@ -34,11 +34,12 @@ export default function RouteDateForm(props) {
         if (isSuccessful) {
             // for some reason selectedRoute is null on broadcast
             // messenger.broadcast(SUB.REFRESH_ROUTE);
-            closeForm();
-            updateRoute(selectedRoute); // this will take care of SHOW_ROUTE
+            // so instead, calling updateRoute in hook to match useRouteForm
             if (year === new Date(journalEntry.date).getFullYear()) {
                 messenger.broadcast(SUB.REFRESH_YEAR_ROUTES);
             }
+            closeForm();
+            messenger.broadcast(SUB.SHOW_ROUTE);
         }
     }
 

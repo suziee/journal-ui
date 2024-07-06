@@ -27,7 +27,8 @@ export default function getDefaults(args) {
             messenger: messenger
         }),
         [NAME.useRouteDateForm]: useRouteDateForm({
-            messenger: messenger
+            messenger: messenger,
+            useRoute: _useRoute,
         }),
         [NAME.useRouteForm]: useRouteForm({
             messenger: messenger,

@@ -41,6 +41,8 @@ export default function JournalEntry(args) {
     }
 
     // remove later? or use don't allow default values data annotation on api
+    // just keep b/c don't allow default values was removed in .net 8
+    // https://stackoverflow.com/questions/7187576/validation-of-guid
     if (notes == "") {
         this.notes = null;
     }

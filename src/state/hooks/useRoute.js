@@ -9,7 +9,7 @@ export default function useRoute(args) {
     messenger.subscribe(id, {
         [SUB.SHOW_ROUTE]: show,
         [SUB.HIDE_ROUTE]: hide,
-        [SUB.REFRESH_ROUTE]: getByRouteEntries,
+        // [SUB.REFRESH_ROUTE]: getByRouteEntries, // doesn't work b/c selectedRoute is null
     });
 
     const [open, setOpen] = React.useState(false);

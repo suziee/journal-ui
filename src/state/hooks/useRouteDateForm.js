@@ -1,10 +1,11 @@
 import React from 'react';
 import * as SUB from './subscriptionKeys';
-import { useKeyword as id } from './hookNames';
+import { useRouteDateForm as id } from './hookNames';
 import { addDate } from '../../api';
+import { Route } from '../../models';
 
 export default function useRouteDateForm(args) {
-    const {messenger} = args;
+    const {messenger, useRoute} = args;
 
     messenger.subscribe(id, {
         [SUB.SHOW_DATE_FORM]: show,
@@ -28,7 +29,9 @@ export default function useRouteDateForm(args) {
 
         const response = await addDate(obj);
         
-        if (!response.isSuccessful) {
+        if (response.isSuccessful) {
+            useRoute.updateRoute(new Route(obj));
+        } else {
             if (response.json != null && response.json.errors) {
                 const values = Object.values(response.json.errors);
                 setErrors(x => [...x, ...values.flat()]);
