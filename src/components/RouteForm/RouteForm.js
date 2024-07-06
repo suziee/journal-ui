@@ -13,12 +13,8 @@ export default function RouteForm(props) {
     async function raiseSubmitEvent(event) {
         event.preventDefault();
 
-        let location = event.target.location.value;
-        let locationCrumbs = location.split("/");
-        locationCrumbs = locationCrumbs.map(x => x.trim());
-
         let journalEntry = new JournalEntry({
-            locationCrumbs: locationCrumbs,
+            location: event.target.location.value,
             routeName: event.target.routeName.value,
             routeType: event.target.climb_type.value,
             bookGrade: event.target.bookGrade.value,
