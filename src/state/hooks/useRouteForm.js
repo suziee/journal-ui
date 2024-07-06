@@ -4,7 +4,8 @@ import { useKeyword as id } from './hookNames';
 import { addRoute } from '../../api';
 
 export default function useRouteForm(args) {
-    const {messenger} = args;
+    const {messenger, useRoute} = args;
+    const {updateRoute} = useRoute;
 
     messenger.subscribe(id, {
         [SUB.SHOW_ROUTE_FORM]: show,
@@ -39,6 +40,10 @@ export default function useRouteForm(args) {
             } else {
                 setErrors(x => [...x, response.text]);
             }
+        } else {
+            updateRoute({
+                routeGuid: response.text
+            });
         }
 
         return response.isSuccessful;

@@ -7,7 +7,7 @@ import {
 import {JournalEntry} from '../../models';
 
 export default function RouteDateForm(props) {
-    const {selectedRoute} = useAppData(NAME.useRoute);
+    const {selectedRoute, updateRoute} = useAppData(NAME.useRoute);
     const {year} = useAppData(NAME.useCalendar);
     const {saveJournalEntry, closeForm, open, errors} = useAppData(NAME.useRouteDateForm);
     const messenger = useAppData(NAME.useMessenger);
@@ -32,12 +32,13 @@ export default function RouteDateForm(props) {
         let isSuccessful = await saveJournalEntry(journalEntry);
 
         if (isSuccessful) {
-            messenger.broadcast(SUB.REFRESH_ROUTE);
+            // for some reason selectedRoute is null on broadcast
+            // messenger.broadcast(SUB.REFRESH_ROUTE);
+            closeForm();
+            updateRoute(selectedRoute); // this will take care of SHOW_ROUTE
             if (year === new Date(journalEntry.date).getFullYear()) {
                 messenger.broadcast(SUB.REFRESH_YEAR_ROUTES);
             }
-            closeForm();
-            messenger.broadcast(SUB.SHOW_ROUTE);
         }
     }
 

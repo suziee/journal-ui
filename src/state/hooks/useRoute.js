@@ -1,6 +1,6 @@
 import React from 'react';
 import * as SUB from './subscriptionKeys';
-import { useCalendar as id } from './hookNames';
+import { useRoute as id } from './hookNames';
 import { getByRoute } from '../../api';
 
 export default function useRoute(args) {
@@ -9,6 +9,7 @@ export default function useRoute(args) {
     messenger.subscribe(id, {
         [SUB.SHOW_ROUTE]: show,
         [SUB.HIDE_ROUTE]: hide,
+        [SUB.REFRESH_ROUTE]: getByRouteEntries,
     });
 
     const [open, setOpen] = React.useState(false);
@@ -33,13 +34,9 @@ export default function useRoute(args) {
         show();
     }, [selectedRoute]);
 
-    function getByRouteEntries() {
-        async function getDataAsync() {
-            let journalEntries = await getByRoute(selectedRoute.routeGuid);
-            setJournalEntries(x => journalEntries);
-        }
-
-        getDataAsync();
+    async function getByRouteEntries() {
+        let journalEntries = await getByRoute(selectedRoute.routeGuid);
+        setJournalEntries(x => journalEntries);
     }
 
     return {

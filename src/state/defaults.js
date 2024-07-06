@@ -8,10 +8,15 @@ import useRouteForm from './hooks/useRouteForm';
 
 export default function getDefaults(args) {
     const messenger = useMessenger();
+    
+    const _useRoute = useRoute({
+        messenger: messenger
+    });
 
     let defaults = {
         [NAME.useMessenger]: messenger,
-    }
+        [NAME.useRoute]: _useRoute,
+    };
 
     defaults = {
         ...defaults,
@@ -21,14 +26,12 @@ export default function getDefaults(args) {
         [NAME.useKeyword]: useKeyword({
             messenger: messenger
         }),
-        [NAME.useRoute]: useRoute({
-            messenger: messenger
-        }),
         [NAME.useRouteDateForm]: useRouteDateForm({
             messenger: messenger
         }),
         [NAME.useRouteForm]: useRouteForm({
-            messenger: messenger
+            messenger: messenger,
+            useRoute: _useRoute,
         }),
     };
 
