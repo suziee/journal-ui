@@ -12,8 +12,8 @@ export default function RouteList(props) {
     const messenger = useAppData(NAME.useMessenger);
 
     function raiseClickEvent(event) {
-        let guid = event.target.getAttribute("data-value");
-        let route = keywordEntries.find(x => x.routeGuid == guid);
+        const guid = event.target.getAttribute("data-value");
+        const route = keywordEntries.find(x => x.routeGuid == guid);
         updateRoute(route);
         messenger.broadcast(SUB.HIDE_DATE_FORM);
         messenger.broadcast(SUB.HIDE_ROUTE);

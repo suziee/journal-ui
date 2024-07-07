@@ -120,3 +120,19 @@ header {
     background-color: tomato;
     height: 10px;
 }
+
+.custom-button {
+    background-color: forestgreen;
+    color: ghostwhite;
+}
+
+.big-custom-button {
+    padding: 10px;
+    font-size: 15px;
+    text-align: center;
+}
+
+.custom-button:hover {
+    background-color: limegreen;
+    cursor: pointer;
+}

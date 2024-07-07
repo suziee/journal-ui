@@ -2,7 +2,7 @@ import React from 'react';
 import * as SUB from './subscriptionKeys';
 import { useRoute as id } from './hookNames';
 import { getByRoute } from '../../api';
-import { Route } from '../../models';
+import { JournalEntry, Route } from '../../models';
 
 export default function useRoute(args) {
     const { messenger } = args;
@@ -14,8 +14,9 @@ export default function useRoute(args) {
     });
 
     const [open, setOpen] = React.useState(false);
-    const [selectedRoute, setSelectedRoute] = React.useState(null);
+    const [selectedRoute, setRoute] = React.useState(null);
     const [journalEntries, setJournalEntries] = React.useState([]);
+    const [selectedJournalEntry, setJournalEntry] = React.useState(null);
 
     function show() {
         setOpen(x => true);
@@ -25,8 +26,20 @@ export default function useRoute(args) {
         setOpen(x => false);
     }
 
-    function update(route) {
-        setSelectedRoute(x => new Route(route));
+    function updateRoute(route) {
+        if (route == null) {
+            setRoute(x => null);
+        } else {
+            setRoute(x => new Route(route));
+        }
+    }
+
+    function updateJournalEntry(journalEntry) {
+        if (journalEntry == null) {
+            setJournalEntry(x => null);
+        } else {
+            setJournalEntry(x => new JournalEntry(journalEntry));
+        }
     }
 
     React.useEffect(() => {
@@ -41,9 +54,11 @@ export default function useRoute(args) {
     }
 
     return {
-        updateRoute: update,
+        updateRoute: updateRoute,
         selectedRoute: selectedRoute,
         journalEntries: journalEntries,
         open: open,
+        updateJournalEntry: updateJournalEntry,
+        selectedJournalEntry: selectedJournalEntry,
     };
 }

@@ -25,6 +25,8 @@
     margin-right: -10px;
     margin-bottom: 5px; */
     padding: 5px;
+    display: flex;
+    justify-content: space-between;
 }
 
 img {
@@ -34,17 +36,4 @@ img {
 
 #route-container-hidden {
     display: none;
-}
-
-#add-date-entry-button {
-    background-color: orange;
-    padding: 10px;
-    font-size: 15px;
-    text-align: center;
-}
-
-#add-date-entry-button:hover {
-    cursor: pointer;
-    background-color: limegreen;
-    color: ghostwhite;
 }

@@ -8,6 +8,8 @@ export const SHOW_DATE_FORM = "SHOW_DATE_FORM";
 export const HIDE_DATE_FORM = "HIDE_DATE_FORM";
 export const SHOW_ROUTE= "SHOW_ROUTE";
 export const HIDE_ROUTE = "HIDE_ROUTE";
-export const REFRESH_ROUTE = "REFRESH_ROUTE"; // does not work right now
 export const REFRESH_YEAR_ROUTES = "REFRESH_YEAR_ROUTES";
 export const REFRESH_KEYWORD_ROUTES = "REFRESH_KEYWORD_ROUTES";
+
+export const ADD_JOURNAL_ENTRY = "ADD_JOURNAL_ENTRY";
+export const UPDATE_JOURNAL_ENTRY = "UPDATE_JOURNAL_ENTRY";

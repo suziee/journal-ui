@@ -7,7 +7,7 @@ import {
 import {JournalEntry} from '../../models';
 
 export default function RouteDateForm(props) {
-    const {selectedRoute, updateRoute} = useAppData(NAME.useRoute);
+    const {selectedRoute, updateRoute, selectedJournalEntry} = useAppData(NAME.useRoute);
     const {year} = useAppData(NAME.useCalendar);
     const {saveJournalEntry, closeForm, open, errors} = useAppData(NAME.useRouteDateForm);
     const messenger = useAppData(NAME.useMessenger);
@@ -49,11 +49,30 @@ export default function RouteDateForm(props) {
         messenger.broadcast(SUB.SHOW_ROUTE);
     }
 
-    // React.useEffect(() => {
-    //     if (selectedRoute == null) return;
-    //     let doc = document.getElementById("route-date-form-date");
-    //     doc.value = "2024-05-05";
-    // }, [selectedRoute]);
+    React.useEffect(() => {
+        // if selectedRoute is null then dom is not ready yet,
+        // which you need for getElementById later
+        if (selectedRoute == null) {
+            return;
+        }
+
+        function setValue(id, newValue) {
+            const obj = document.getElementById(id);
+            obj.value = newValue;
+        }
+
+        if (selectedJournalEntry == null) {
+            setValue("rdf-date", null);
+            setValue("rdf-pitches-climbed", null);
+            setValue("rdf-sort-id", null);
+            setValue("rdf-notes", null);
+        } else {
+            setValue("rdf-date", selectedJournalEntry.date);
+            setValue("rdf-pitches-climbed", selectedJournalEntry.pitchesClimbed);
+            setValue("rdf-sort-id", selectedJournalEntry.sortId);
+            setValue("rdf-notes", selectedJournalEntry.notes);
+        }        
+    }, [selectedJournalEntry]);
 
     function getForm() {
         if (selectedRoute == null) {
@@ -73,14 +92,14 @@ export default function RouteDateForm(props) {
                 <label>Mountain Project Grade:</label>
                 <input type="text" value={selectedRoute.mountainProjectGrade} disabled/>
                 <label><div className="required"></div>Pitches Climbed:</label>
-                <input type="text" name="pitchesClimbed"/>
+                <input type="text" name="pitchesClimbed" id="rdf-pitches-climbed"/>
                 <label>Pitches Total:</label>
                 <input type="text" value={selectedRoute.numberOfPitches} disabled/>
                 <label><div className="required"></div>Date:</label>
-                <input type="text" name="date" id="route-date-form-date"/>
+                <input type="text" name="date" id="rdf-date"/>
                 <label>Notes:</label>
-                <textarea name="notes"></textarea>
-                <label><div className="required"></div>Sort ID:</label>
+                <textarea name="notes" id="rdf-notes"></textarea>
+                <label><div className="required" id="rdf-sort-id"></div>Sort ID:</label>
                 <input type="text" name="sortId"/>
                 <label>Approach photos absolute path:</label>
                 <input type="text" disabled/>

@@ -24,7 +24,7 @@ export default function RouteListContainer(props) {
 
     return (
         <React.Fragment>
-            <div id="add-route-button" onClick={raiseAddEvent}>
+            <div className="custom-button big-custom-button" onClick={raiseAddEvent}>
                 Add Route Journal Entry
             </div>
             <div id="keyword-form">
