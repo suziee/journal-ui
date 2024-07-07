@@ -16,8 +16,8 @@ export default function DateRouteList(props) {
         let route = yearEntries.find(x => x.routeGuid == guid);
         updateRoute(route);
         messenger.broadcast(SUB.HIDE_DATE_FORM);
-        messenger.broadcast(SUB.HIDE_ROUTE);
-        messenger.broadcast(SUB.SHOW_ROUTE_FORM);
+        messenger.broadcast(SUB.HIDE_ROUTE_FORM);
+        messenger.broadcast(SUB.SHOW_ROUTE);
     }
 
     function buildList() {
