@@ -44,30 +44,30 @@ export default function RouteForm(props) {
 
     return (
         <form id="route-form" className={open ? "route-form" : "route-form-hidden"} onSubmit={raiseSubmitEvent}>
-            <label><div class="required"></div>Location (Geo-tags):</label>
+            <label><div className="required"></div>Location (Geo-tags):</label>
             <input type="text" name="location"/>
-            <label><div class="required"></div>Route Name:</label>
+            <label><div className="required"></div>Route Name:</label>
             <input type="text" name="routeName"/>
-            <div class="climb-type">
-                <label><div class="required"></div>Type of Climbing:</label>
+            <div className="climb-type">
+                <label><div className="required"></div>Type of Climbing:</label>
                 <input type="radio" id="trad" value="Trad" name="climb_type"/>
                 <label htmlFor="trad">Trad</label>
                 <input type="radio" id="sport" value="Sport" name="climb_type"/>
                 <label htmlFor="sport">Sport</label>
             </div>
-            <label><div class="sort-of-required"></div>Book Grade:</label>
+            <label><div className="sort-of-required"></div>Book Grade:</label>
             <input type="text" name="bookGrade"/>
-            <label><div class="sort-of-required"></div>Mountain Project Grade:</label>
+            <label><div className="sort-of-required"></div>Mountain Project Grade:</label>
             <input type="text" name="mountainProjectGrade"/>
-            <label><div class="required"></div>Pitches Climbed:</label>
+            <label><div className="required"></div>Pitches Climbed:</label>
             <input type="text" name="pitchesClimbed"/>
-            <label><div class="required"></div>Pitches Total:</label>
+            <label><div className="required"></div>Pitches Total:</label>
             <input type="text" name="numberOfPitches"/>
-            <label><div class="required"></div>Date:</label>
+            <label><div className="required"></div>Date:</label>
             <input type="text" name="date"/>
             <label>Notes:</label>
             <textarea name="notes"></textarea>
-            <label><div class="required"></div>Sort ID:</label>
+            <label><div className="required"></div>Sort ID:</label>
             <input type="text" name="sortId"/>
             <label>Approach photos absolute path:</label>
             <input type="text" disabled />

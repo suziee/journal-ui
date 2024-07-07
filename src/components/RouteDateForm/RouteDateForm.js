@@ -72,15 +72,15 @@ export default function RouteDateForm(props) {
                 <input type="text" value={selectedRoute.bookGrade} disabled/>
                 <label>Mountain Project Grade:</label>
                 <input type="text" value={selectedRoute.mountainProjectGrade} disabled/>
-                <label><div class="required"></div>Pitches Climbed:</label>
+                <label><div className="required"></div>Pitches Climbed:</label>
                 <input type="text" name="pitchesClimbed"/>
                 <label>Pitches Total:</label>
                 <input type="text" value={selectedRoute.numberOfPitches} disabled/>
-                <label><div class="required"></div>Date:</label>
+                <label><div className="required"></div>Date:</label>
                 <input type="text" name="date" id="route-date-form-date"/>
                 <label>Notes:</label>
                 <textarea name="notes"></textarea>
-                <label><div class="required"></div>Sort ID:</label>
+                <label><div className="required"></div>Sort ID:</label>
                 <input type="text" name="sortId"/>
                 <label>Approach photos absolute path:</label>
                 <input type="text" disabled/>
