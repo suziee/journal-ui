@@ -122,8 +122,9 @@ header {
 }
 
 .custom-button {
-    background-color: forestgreen;
-    color: ghostwhite;
+    /*background-color: forestgreen;
+    color: ghostwhite;*/
+    background-color: white;
 }
 
 .big-custom-button {
@@ -133,6 +134,8 @@ header {
 }
 
 .custom-button:hover {
-    background-color: limegreen;
+    /*background-color: limegreen;*/
+    background-color: forestgreen;
+    color: ghostwhite;
     cursor: pointer;
 }
