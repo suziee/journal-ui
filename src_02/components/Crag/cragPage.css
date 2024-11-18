@@ -1,0 +1,8 @@
+#routes {
+    list-style-type: circle;
+}
+
+#routes > li:hover {
+    color: hotpink;
+    cursor: pointer;
+}

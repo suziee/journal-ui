@@ -1,0 +1,28 @@
+#year-results > ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+#year-results > ul > li {
+    margin: 3px;
+    color: #888888;
+}
+
+#year-results > ul > li:hover {
+    background-color: ghostwhite;
+    cursor: pointer;
+}
+
+.light {
+    color: #aaaaaa;
+}
+
+#year-results td {
+    padding: 3px 10px 3px 10px;
+}
+
+#year-results tr:hover {
+    background-color: aliceblue;
+    cursor: pointer;
+}

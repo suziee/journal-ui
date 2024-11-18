@@ -1,0 +1,41 @@
+.graph-box {
+    background-color: lightgray;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.bar-graph {
+    border-collapse: collapse;
+    border: 1px solid ghostwhite;
+}
+
+.bar-graph td {
+    height: 5px;
+    width: 20px;
+    border: 1px solid ghostwhite;
+}
+
+.bar-graph-fill {
+    background-color: green;
+}
+
+.bar-graph-void {
+    border: none !important
+}
+
+#current-date {
+    font-weight: bold;
+    text-align: center;
+    background-color: violet;
+    color: white;
+}
+
+.not-current-date {
+    color: ghostwhite;
+    text-align: center;
+}
+
+.not-current-date:hover {
+    cursor: pointer;
+    background-color: limegreen;
+}

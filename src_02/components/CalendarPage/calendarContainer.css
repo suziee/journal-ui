@@ -1,0 +1,14 @@
+#current-year-form {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    font-size: 15px;
+}
+
+#current-year-form > input {
+    width: 200px;
+}
+
+#calendar-error {
+    color: red;
+}

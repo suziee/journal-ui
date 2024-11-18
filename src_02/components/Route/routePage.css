@@ -1,0 +1,28 @@
+/* #dates-climbed {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+} */
+
+/* #dates-climbed > li {
+    padding: 3px;
+} */
+
+/* #dates-climbed {
+    list-style-type: circle;
+}
+
+#dates-climbed > li {
+    margin-bottom: 5px;
+} */
+
+#dates-climbed table {
+    margin-top: 15px;
+}
+
+#dates-climbed td {
+    /* padding: 3px 10px 3px 10px; */
+    padding: 10px;
+    vertical-align: top;
+    background-color: aliceblue;
+}

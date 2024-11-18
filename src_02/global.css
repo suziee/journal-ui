@@ -1,0 +1,54 @@
+body {
+    margin: 0;
+    background-color: #eeeeee; /* gainsboro == 6d */
+    font-family: monospace;
+    color: #333333;
+}
+
+.visible {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.hidden {
+    display: none;
+}
+
+header {
+    font-size: 15px;
+}
+
+.crumb-nav:hover {
+    color: hotpink;
+    cursor: pointer;
+}
+
+.crumb-leaf {
+    color: limegreen;
+}
+
+.icon-button {
+    background-color: lightgray;
+    padding: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-button:hover {
+    background-color: limegreen;
+    cursor: pointer;
+}
+
+.text-button {
+    padding: 3px;
+    background-color: gainsboro;
+    color: white;
+    border-radius: 4px;
+}
+
+.text-button:hover {
+    background-color: limegreen;
+    cursor: pointer;
+}

@@ -1,0 +1,8 @@
+#crags {
+    list-style-type: circle;
+}
+
+#crags > li:hover {
+    color: hotpink;
+    cursor: pointer;
+}

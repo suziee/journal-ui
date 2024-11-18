@@ -5,7 +5,7 @@ module.exports = {
     // watch: false,
     mode: 'development',
     entry: {
-		app: './src/index.js',
+		app: './src_02/index.js',
 	},
 	output: {
 		filename: '[name].bundle.js',
