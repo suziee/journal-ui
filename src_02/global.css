@@ -52,3 +52,83 @@ header {
     background-color: limegreen;
     cursor: pointer;
 }
+
+.form, form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+form label {
+    padding-right: 5px;
+}
+
+form textarea, input {
+    /*outline: none;*/
+    padding: 5px;
+    background: whitesmoke;
+    border: none;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+form textarea {
+    resize: none;
+    height: 100px;
+}
+
+.form-buttons {
+    display: flex;
+    gap: 10px;
+    padding-top: 15px;
+}
+
+.form-buttons button {
+    border: none;
+    text-decoration: none;
+    cursor: pointer;
+    font-family: inherit;
+ }
+
+button.green {
+    background-color: green;
+}
+
+button.red {
+    background-color: tomato;
+}
+
+.form-errors {
+    padding: 0;
+    list-style: none;
+    color: red;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.header-buttons {
+    display: flex;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.header-buttons span.green:hover {
+    color: limegreen;
+}
+
+.header-buttons span.red:hover {
+    color: red;
+}
+
+span.size-24 {
+    font-size: 24px;
+    /*font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 48*/
+}

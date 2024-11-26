@@ -3,9 +3,11 @@ import './cragPage.css';
 import { useAppData
     , hookNames as NAME
     , componentNames as COMP
+    , subscriptionKeys as SUB
 } from '../../state';
 
 export function CragPage(props) {
+    const messenger = useAppData(NAME.useMessenger);
     const {crag} = useAppData(NAME.useCrag);
     const {get: getRoute} = useAppData(NAME.useRoute);
     const {get: getArea} = useAppData(NAME.useArea);
@@ -27,6 +29,11 @@ export function CragPage(props) {
         await getRoute(guid);
         show(COMP.ROUTE_PAGE);
     }
+
+    function raiseAddEvent(event) {
+        messenger.broadcast(SUB.ADD_ROUTE);
+        show(COMP.ROUTE_FORM);
+    }
 	
 	function build() {
 		if (crag == null) return;
@@ -38,7 +45,7 @@ export function CragPage(props) {
             {/* <p>{crag.notes}</p> */}
             <p>Underworld are a British electronic music group formed in 1987 in Cardiff, Wales[1] and the principal collaborative project of Karl Hyde and Rick Smith. Prominent former members include Darren Emerson, from 1990 to 2000, and Darren Price, as part of the live band from 2005 to 2016.</p>
             <div>
-                <header><span className="text-button">add</span> Routes:</header>
+                <header><span className="text-button" onClick={raiseAddEvent}>add</span> Routes:</header>
                 <ul id="routes">
                     {crag.routes.map((route, index) => {
                         return <li key={route.routeGuid} data-value={route.routeGuid} onClick={raiseRouteEvent}>
@@ -51,7 +58,7 @@ export function CragPage(props) {
 	}
 
     return (
-        <div style={open ? null : {display: "none"}}>
+        <div className={open ? "visible" : "hidden"}>
 			{build()}
         </div>
     );

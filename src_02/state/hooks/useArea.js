@@ -4,24 +4,15 @@ import { useArea as id } from './hookNames';
 import * as API from '../../api/area';
 
 export default function useArea(args) {
-    const {messenger, client} = args;
+    const {messenger, client, useFormBase} = args;
     const [areas, setAreas] = React.useState([]);
     const [area, setArea] = React.useState(null);
-    const [isAdd, setIsAdd] = React.useState(false);
 
     messenger.subscribe(id, {
         [SUB.STARTUP]: getAll,
-        [SUB.ADD_AREA]: prepareAddForm,
-        [SUB.UPDATE_AREA]: prepareUpdateForm,
+        [SUB.ADD_AREA]: useFormBase.initAddForm,
+        [SUB.UPDATE_AREA]: useFormBase.initUpdateForm,
     });
-
-    function prepareAddForm() {
-        setIsAdd(x => true);
-    }
-
-    function prepareUpdateForm() {
-        setIsAdd(x => false);
-    }
 
     async function getAll() {
         const {isSuccessful, json: areas} = await client.callApi(API.getAreas);
@@ -37,6 +28,8 @@ export default function useArea(args) {
             await getAll();
             setArea(x => area);
         }
+
+        return isSuccessful;
     }
 
     async function get(guid) {
@@ -47,6 +40,7 @@ export default function useArea(args) {
     async function update(area) {
         const {isSuccessful, json: _area} = await client.callApi(API.updateArea, area, true);
         if (isSuccessful) setArea(x => _area);
+        return isSuccessful;
     }
 
     return {
@@ -55,6 +49,6 @@ export default function useArea(args) {
         add: add,
         update: update,
         get: get,
-        isAdd: isAdd,
+        isAdd: useFormBase.isAddForm,
     }
 }

@@ -1,0 +1,93 @@
+import React from 'react';
+import { useAppData
+    , hookNames as NAME
+    , componentNames as COMP
+} from '../../state';
+import { setValues, clearValues } from '../shared';
+
+export function CragForm(props) {
+    const {area} = useAppData(NAME.useArea);
+    const {add, update, isAdd, crag} = useAppData(NAME.useCrag);
+    const {errors} = useAppData(NAME.useError);
+    const {get: getOpen, current, hide} = useAppData(NAME.useOpen);
+    const [open, setOpen] = React.useState(false);
+
+    const fieldMap = [
+        {ui: "cf-area", model: "areaName"},
+        {ui: "cf-name", model: "cragName"},
+        {ui: "cf-dir", model: "picturesDirectory"},
+        {ui: "cf-notes", model: "notes"},
+    ];
+
+    React.useEffect(() => {
+        setOpen(x => getOpen(COMP.CRAG_FORM));
+    }, [current]);
+
+    React.useEffect(() => {
+        if (isAdd) {
+            clearValues(fieldMap);
+        } else if (crag != null) {
+            setValues(fieldMap, crag);
+        }
+    }, [isAdd])
+
+    function raiseCancelEvent(event) {
+        event.preventDefault();
+        if (isAdd) clearValues(fieldMap);
+        hide(COMP.CRAG_FORM);
+    }
+
+    async function raiseSubmitEvent(event) {
+        event.preventDefault();
+
+        let request = {   
+            cragName: event.target.cragName.value,
+            picturesDirectory: event.target.picturesDirectory.value,
+            notes: event.target.notes.value,
+        };
+
+        if (!isAdd) {
+            request = {...request, cragGuid: crag.cragGuid};
+        }
+
+        let isSuccessful = isAdd ? await add(request) : await update(request);
+        if (isSuccessful) hide(COMP.CRAG_FORM);
+    }
+
+    function getAreaInput() {
+        if (area != null) return <input name="area" id="cf-area" value={area.areaName} disabled />
+    }
+
+    return (
+        <div className={open ? "form" : "hidden"}>
+            <header>Add area</header>
+            <form onSubmit={raiseSubmitEvent}>
+                <div>
+                    <label>Area:</label>
+                    {getAreaInput()}
+                </div>
+                <div>
+                    <label>Name:</label>
+                    <input name="cragName" id="cf-name"/>
+                </div>
+                <div>
+                    <label>Pictures Directory:</label>
+                    <input name="picturesDirectory" id="cf-dir"/>
+                </div>
+                <div>
+                    <label>Notes:</label>
+                    <textarea name="notes" id="cf-notes"></textarea>
+                </div>
+                <div className="form-buttons">
+                    <button className="text-button red" onClick={raiseCancelEvent}>cancel</button>
+                    <button className="text-button green" type="submit">save</button>
+                </div>
+            </form>
+            <ul className="form-errors">
+                {errors.map((error, index) => {
+                    return <li key={`form-error-${index}`}>{error}</li>
+                })}
+            </ul>
+        </div>
+    );
+}

@@ -28,6 +28,11 @@ export function AreaPage(props) {
         show(COMP.AREA_FORM);
     }
 
+    function raiseAddEvent(event) {
+        messenger.broadcast(SUB.ADD_CRAG);
+        show(COMP.CRAG_FORM);
+    }
+
 	function build() {
 		if (area == null) return;
 		
@@ -40,7 +45,7 @@ export function AreaPage(props) {
                 </div>
             </div>
             <div>
-                <header><span className="text-button">add</span> Crags:</header>
+                <header><span className="text-button" onClick={raiseAddEvent}>add</span> Crags:</header>
                 <ul id="crags">
                     {area.crags.map((crag, index) => {
                         return <li key={crag.cragGuid} data-value={crag.cragGuid} onClick={raiseCragEvent}>

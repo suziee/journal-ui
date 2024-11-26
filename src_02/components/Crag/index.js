@@ -1,2 +1,2 @@
 export {CragPage} from './CragPage';
-// export {AreaForm} from './AreaForm';
+export {CragForm} from './CragForm';

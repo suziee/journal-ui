@@ -1,9 +1,16 @@
 import React from 'react';
 import * as API from '../../api/route';
+import * as SUB from './subscriptionKeys';
+import { useRoute as id } from './hookNames';
 
 export default function useRoute(args) {
-    const {client} = args;
+    const {messenger, client, useFormBase} = args;
     const [route, setRoute] = React.useState(null);
+
+    messenger.subscribe(id, {
+        [SUB.ADD_ROUTE]: useFormBase.initAddForm,
+        [SUB.UPDATE_ROUTE]: useFormBase.initUpdateForm,
+    });
 
     async function add(route) {
         const {isSuccessful, json: { guid }} = await client.callApi(API.addRoute, route, true);
@@ -14,6 +21,8 @@ export default function useRoute(args) {
             await getAll();
             setRoute(x => route);
         }
+
+        return isSuccessful;
     }
 
     async function get(guid) {
@@ -24,6 +33,7 @@ export default function useRoute(args) {
     async function update(route) {
         const {isSuccessful, json: _route} = await client.callApi(API.updateRoute, route, true);
         if (isSuccessful) setRoute(x => _route);
+        return isSuccessful;
     }
 
     return {
@@ -31,5 +41,6 @@ export default function useRoute(args) {
         add: add,
         update: update,
         get: get,
+        isAdd: useFormBase.isAddForm,
     }
 }

@@ -1,5 +1,4 @@
 import React from 'react';
-import './areaForm.css';
 import { useAppData
     , hookNames as NAME
     , componentNames as COMP
@@ -9,7 +8,7 @@ import { setValue } from '../shared';
 export function AreaForm(props) {
     const {add, update, isAdd, area} = useAppData(NAME.useArea);
     const {errors} = useAppData(NAME.useError);
-    const {get: getOpen, current, hide, show} = useAppData(NAME.useOpen);
+    const {get: getOpen, current, hide} = useAppData(NAME.useOpen);
     const [open, setOpen] = React.useState(false);
 
     React.useEffect(() => {
@@ -33,32 +32,26 @@ export function AreaForm(props) {
     async function raiseSubmitEvent(event) {
         event.preventDefault();
 
-        let _area = {
+        let request = {
             areaName: event.target.areaName.value
         };
 
         if (!isAdd) {
-            _area = {..._area, areaGuid: area.areaGuid};
+            request = {...request, areaGuid: area.areaGuid};
         }
 
-        if (isAdd) {
-            console.log(_area);
-            // await add(area);
-            // hide(COMP.AREA_FORM);
-        } else {
-            console.log(_area);
-            // await update(area);
-            // show(COMP.AREA_PAGE);
-        }
+        let isSuccessful = isAdd ? await add(request) : await update(request);
+        if (isSuccessful) hide(COMP.AREA_FORM);
     }
 
     return (
-        <div className={open ? "area-form" : "hidden"}>
+        <div className={open ? "form" : "hidden"}>
             <header>Add area</header>
             <form onSubmit={raiseSubmitEvent}>
-                <label>Name:</label>
-                <input name="areaName" id="af-name"/>
-
+                <div>
+                    <label>Name:</label>
+                    <input name="areaName" id="af-name"/>
+                </div>
                 <div className="form-buttons">
                     <button className="text-button red" onClick={raiseCancelEvent}>cancel</button>
                     <button className="text-button green" type="submit">save</button>

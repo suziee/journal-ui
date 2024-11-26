@@ -6,6 +6,7 @@ import { useAppData
 } from '../../state';
 
 export function RoutePage(props) {
+    const messenger = useAppData(NAME.useMessenger);
     const {route} = useAppData(NAME.useRoute);
     const {get: getArea} = useAppData(NAME.useArea);
     const {get: getCrag} = useAppData(NAME.useCrag);
@@ -39,7 +40,7 @@ export function RoutePage(props) {
             </header>
             <p>{route.notes}</p>
             <div id="dates-climbed">
-                <header><span className="text-button">add</span> Dates climbed:</header>
+                <header>Dates climbed:</header>
                 <table>
                     <tbody>
                         {
