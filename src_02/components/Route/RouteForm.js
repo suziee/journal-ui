@@ -17,7 +17,7 @@ export function RouteForm(props) {
         {ui: "rf-crag", model: "cragName"},
         {ui: "rf-name", model: "routeName"},
         {ui: "rf-dir", model: "picturesDirectory"},
-        {ui: "rf-type", model: "routeType"},
+        {ui: "rf-type", model: "type"},
         {ui: "rf-grade", model: "grade"},
         {ui: "rf-pitches", model: "numberOfPitches"},
         {ui: "rf-feet", model: "numberOfFeet"},
@@ -35,7 +35,7 @@ export function RouteForm(props) {
         } else if (route != null) {
             setValues(fieldMap, route);
         }
-    }, [isAdd])
+    }, [isAdd, route])
 
     function raiseCancelEvent(event) {
         event.preventDefault();
@@ -66,11 +66,13 @@ export function RouteForm(props) {
     }
 
     function getAreaInput() {
-        if (crag != null) return <input name="areaName" id="rf-area" value={crag.areaName} disabled />
+        if (crag || route) 
+            return <input name="areaName" id="rf-area" value={crag ? crag.areaName : route.areaName} disabled />
     }
 
     function getCragInput() {
-        if (crag != null) return <input name="cragName" id="rf-crag" value={crag.cragName} disabled />
+        if (crag || route) 
+            return <input name="cragName" id="rf-crag" value={crag ? crag.cragName : route.cragName} disabled />
     }
 
     return (

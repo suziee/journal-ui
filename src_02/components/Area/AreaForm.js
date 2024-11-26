@@ -16,7 +16,7 @@ export function AreaForm(props) {
     }, [current]);
 
     React.useEffect(() => {
-        if (isAdd || area == null) {
+        if (isAdd) {
             setValue("af-name", null);
         } else if (area != null) {
             setValue("af-name", area.areaName);

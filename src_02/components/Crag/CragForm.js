@@ -29,7 +29,7 @@ export function CragForm(props) {
         } else if (crag != null) {
             setValues(fieldMap, crag);
         }
-    }, [isAdd])
+    }, [isAdd, crag]); // need crag for update if it's first; isAdd won't trigger b/c it'll still be false
 
     function raiseCancelEvent(event) {
         event.preventDefault();
@@ -55,12 +55,13 @@ export function CragForm(props) {
     }
 
     function getAreaInput() {
-        if (area != null) return <input name="area" id="cf-area" value={area.areaName} disabled />
+        if (area || crag)
+            return <input name="area" id="cf-area" value={area ? area.areaName : crag.areaName} disabled />
     }
 
     return (
         <div className={open ? "form" : "hidden"}>
-            <header>Add area</header>
+            <header>Add crag</header>
             <form onSubmit={raiseSubmitEvent}>
                 <div>
                     <label>Area:</label>

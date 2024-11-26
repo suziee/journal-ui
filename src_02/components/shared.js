@@ -12,7 +12,8 @@ export function clearValues(fieldMap) {
 
 export function setValues(fieldMap, obj) {
     for (const field of fieldMap) {
-        if (fieldMap.model) 
+        if (field.model) {
             setValue(field.ui, obj[field.model]);
+        }
     }
 }

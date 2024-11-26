@@ -34,14 +34,26 @@ export function CragPage(props) {
         messenger.broadcast(SUB.ADD_ROUTE);
         show(COMP.ROUTE_FORM);
     }
+
+    function raiseEditEvent(event) {
+        messenger.broadcast(SUB.UPDATE_CRAG);
+        show(COMP.CRAG_FORM);
+    }
 	
 	function build() {
 		if (crag == null) return;
 		
 		return <React.Fragment>
-			<header>
-                Crag: <span className="crumb-nav" onClick={raiseAreaEvent} data-value={crag.areaGuid}>{crag.areaName}</span> / <span className="crumb-leaf">{crag.cragName}</span>
-            </header>
+            <div className="header">
+                <header>
+                    Crag: <span className="crumb-nav" onClick={raiseAreaEvent} data-value={crag.areaGuid}>{crag.areaName}</span> / <span className="crumb-leaf">{crag.cragName}</span>
+                </header>
+                <div className="header-buttons">
+                    <span className="material-symbols-outlined size-24 green" onClick={raiseEditEvent}>edit</span>
+                    <span className="material-symbols-outlined size-24 red">delete</span>
+                </div>
+            </div>
+			
             {/* <p>{crag.notes}</p> */}
             <p>Underworld are a British electronic music group formed in 1987 in Cardiff, Wales[1] and the principal collaborative project of Karl Hyde and Rick Smith. Prominent former members include Darren Emerson, from 1990 to 2000, and Darren Price, as part of the live band from 2005 to 2016.</p>
             <div>

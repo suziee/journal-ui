@@ -38,7 +38,7 @@ export function AreaPage(props) {
 		
 		return <React.Fragment>
 			<div className="header">
-                <header>Area: {area.areaName}eofjweoifjewofijewoifjewofijweoifjweoifjweoifjweofjwoiefjwoeijfwoiejfwoeijfowiejfoiewjfowiejfoiwejf</header>
+                <header>Area: {area.areaName}</header>
                 <div className="header-buttons">
                     <span className="material-symbols-outlined size-24 green" onClick={raiseEditEvent}>edit</span>
                     <span className="material-symbols-outlined size-24 red">delete</span>

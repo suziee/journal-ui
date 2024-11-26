@@ -8,7 +8,7 @@ export default function useFormBase(args) {
 	}
 	
 	function initUpdateForm() {
-		setIsAddForm(x => true);
+		setIsAddForm(x => false);
 	}
 
     return {

@@ -3,6 +3,7 @@ import './routePage.css';
 import { useAppData
     , hookNames as NAME
     , componentNames as COMP
+    , subscriptionKeys as SUB
 } from '../../state';
 
 export function RoutePage(props) {
@@ -29,15 +30,27 @@ export function RoutePage(props) {
         show(COMP.CRAG_PAGE);
     }
 
+    function raiseEditEvent(event) {
+        messenger.broadcast(SUB.UPDATE_ROUTE);
+        show(COMP.ROUTE_FORM);
+    }
+
 	function build() {
 		if (route == null) return;
 
 		return <React.Fragment>
-			<header>
-                Route: <span className="crumb-nav" onClick={raiseAreaEvent} data-value={route.areaGuid}>{route.areaName}</span> / <span className="crumb-nav" onClick={raiseCragEvent} data-value={route.cragGuid}>{route.cragName}</span> / <span className="crumb-leaf">{route.routeName}</span>
-                <br />
-                {route.type}, {route.numberOfPitches} pitches, {route.numberOfFeet} feet, FA: {route.firstAscentionist}
-            </header>
+            <div className="header">
+                <header>
+                    Route: <span className="crumb-nav" onClick={raiseAreaEvent} data-value={route.areaGuid}>{route.areaName}</span> / <span className="crumb-nav" onClick={raiseCragEvent} data-value={route.cragGuid}>{route.cragName}</span> / <span className="crumb-leaf">{route.routeName}</span>
+                    <br />
+                    {route.type}, {route.numberOfPitches} pitches, {route.numberOfFeet} feet, FA: {route.firstAscentionist}
+                </header>
+                <div className="header-buttons">
+                    <span className="material-symbols-outlined size-24 green" onClick={raiseEditEvent}>edit</span>
+                    <span className="material-symbols-outlined size-24 red">delete</span>
+                </div>
+            </div>
+
             <p>{route.notes}</p>
             <div id="dates-climbed">
                 <header>Dates climbed:</header>
