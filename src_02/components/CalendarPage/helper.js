@@ -18,16 +18,20 @@ DateHelper.startOfYear = function(date) {
     return new Date(date.getFullYear(), DateHelper.JANUARY, 1);
 }
 
-DateHelper.toAlignedString = function(delimiter) {
+DateHelper.toAlignedString = function(date, delimiter = "-") {
     const month = date.getMonth() + 1;
 
-    if (delimiter == null || delimiter == undefined) {
-        delimiter = "-";
-    }
+    // if (delimiter == null || delimiter == undefined) {
+    //     delimiter = "-";
+    // }
     
-    let str = month.toString().padLeft(2, '0') 
-    + delimiter + date.getDate().toString().padLeft(2, '0') 
-    + delimiter + date.getFullYear();
+    // let str = month.toString().padLeft(2, '0') 
+    // + delimiter + date.getDate().toString().padLeft(2, '0') 
+    // + delimiter + date.getFullYear();
+
+    let str = date.getFullYear()
+    + delimiter + month.toString().padStart(2, '0') 
+    + delimiter + date.getDate().toString().padStart(2, '0');
     
     return str;
 }

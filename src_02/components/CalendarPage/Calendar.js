@@ -1,34 +1,40 @@
 import React from 'react';
 import './calendar.css';
-import { getCalendarGrid } from './calendar-grid.js';
+import { CalendarBuilder } from './calendar-builder.js';
 import {
-    useAppData,
-    hookNames as NAME
+    useAppData
+    , hookNames as NAME
+	, componentNames as COMP
 } from '../../state';
 
 export default function Calendar(props) {
     const { entries: yearEntries, year } = useAppData(NAME.useCalendar);
+	const {show} = useAppData(NAME.useOpen);
 
 	React.useEffect(() => {
 		if (yearEntries == null) {
 			return;
 		}
 
-		let dates = yearEntries.map((entry) => {
-			return entry.date;
-		});
-		
-		//https://stackoverflow.com/questions/20069828/how-to-convert-set-to-array
-		dates = Array.from(new Set(dates));
-		dates = dates.map((date) => {
+		const dates = yearEntries.map((entry) => {
 			//https://stackoverflow.com/questions/7556591/is-the-javascript-date-object-always-one-day-off
 			// js string to date weird behavior... yyyy-mm-dd = one day behind, yyyy/mm/dd = correct date
-			return new Date(date.replace("-","/"));
-		})
+			return new Date(entry.date.replace("-","/"));
+		});
 
-		// have to reverse b/c it comes back in DESC order from api
-		getCalendarGrid(dates/*.reverse()*/, year);
+		const builder = new CalendarBuilder({dates: dates, year: year});
+		builder.build("calendar-graph", raiseClickEvent);
 	}, [yearEntries]);
+
+	function raiseClickEvent(event) {
+		const dateStr = event.target.attributes.name.value;
+		let entry = yearEntries.find(x => x.date == dateStr);
+		if (entry) {
+			show(COMP.JOURNAL_ENTRY_PAGE);
+		} else {
+			show(COMP.JOURNAL_ENTRY_FORM);
+		}
+	}
 
     return (
 		<div className="graph-box">
