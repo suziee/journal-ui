@@ -9,7 +9,7 @@ export function CragForm(props) {
     const {area} = useAppData(NAME.useArea);
     const {add, update, isAdd, crag} = useAppData(NAME.useCrag);
     const {errors} = useAppData(NAME.useError);
-    const {get: getOpen, current, hide} = useAppData(NAME.useOpen);
+    const {get: getOpen, current, show} = useAppData(NAME.useOpen);
     const [open, setOpen] = React.useState(false);
 
     const fieldMap = [
@@ -34,7 +34,7 @@ export function CragForm(props) {
     function raiseCancelEvent(event) {
         event.preventDefault();
         if (isAdd) clearValues(fieldMap);
-        hide(COMP.CRAG_FORM);
+        show(COMP.AREA_PAGE);
     }
 
     async function raiseSubmitEvent(event) {
@@ -51,7 +51,7 @@ export function CragForm(props) {
         }
 
         let isSuccessful = isAdd ? await add(request) : await update(request);
-        if (isSuccessful) hide(COMP.CRAG_FORM);
+        if (isSuccessful) show(COMP.CRAG_PAGE);
     }
 
     function getAreaInput() {

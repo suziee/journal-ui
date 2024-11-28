@@ -9,7 +9,7 @@ export function RouteForm(props) {
     const {crag} = useAppData(NAME.useCrag);
     const {add, update, isAdd, route} = useAppData(NAME.useRoute);
     const {errors} = useAppData(NAME.useError);
-    const {get: getOpen, current, hide} = useAppData(NAME.useOpen);
+    const {get: getOpen, current, show} = useAppData(NAME.useOpen);
     const [open, setOpen] = React.useState(false);
 
     const fieldMap = [
@@ -40,7 +40,7 @@ export function RouteForm(props) {
     function raiseCancelEvent(event) {
         event.preventDefault();
         if (isAdd) clearValues(fieldMap);
-        hide(COMP.ROUTE_FORM);
+        show(COMP.CRAG_PAGE);
     }
 
     async function raiseSubmitEvent(event) {
@@ -62,7 +62,7 @@ export function RouteForm(props) {
         }
 
         let isSuccessful = isAdd ? await add(request) : await update(request);
-        if (isSuccessful) hide(COMP.ROUTE_FORM);
+        if (isSuccessful) show(COMP.ROUTE_PAGE);
     }
 
     function getAreaInput() {

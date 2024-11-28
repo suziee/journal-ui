@@ -8,7 +8,7 @@ import { setValue } from '../shared';
 export function AreaForm(props) {
     const {add, update, isAdd, area} = useAppData(NAME.useArea);
     const {errors} = useAppData(NAME.useError);
-    const {get: getOpen, current, hide} = useAppData(NAME.useOpen);
+    const {get: getOpen, current, hide, show} = useAppData(NAME.useOpen);
     const [open, setOpen] = React.useState(false);
 
     React.useEffect(() => {
@@ -41,7 +41,7 @@ export function AreaForm(props) {
         }
 
         let isSuccessful = isAdd ? await add(request) : await update(request);
-        if (isSuccessful) hide(COMP.AREA_FORM);
+        if (isSuccessful) show(COMP.AREA_PAGE);
     }
 
     return (
