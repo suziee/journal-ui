@@ -8,13 +8,13 @@ import {
 
 export default function CalendarResults(props) {
     const { routes: yearEntries } = useAppData(NAME.useCalendar);
-    const { get: getRoute } = useAppData(NAME.useRoute);
+    const { get: getJournalEntry } = useAppData(NAME.useJournalEntry);
     const { show } = useAppData(NAME.useOpen);
 
     async function raiseRouteEvent(guid) {
         // can't do the data-value attr thing on tr, because the target is td since that's what you're clicking
-        await getRoute(guid);
-        show(COMP.ROUTE_PAGE);
+        await getJournalEntry(guid);
+        show(COMP.JOURNAL_ENTRY_PAGE);
     }
 
     function build() {
@@ -29,7 +29,7 @@ export default function CalendarResults(props) {
         return <table><tbody>
             {
                 yearEntries.map((entry) => {
-                    return <tr key={entry.journalEntryRouteGuid} onClick={() => {raiseRouteEvent(entry.routeGuid)}}>
+                    return <tr key={entry.journalEntryRouteGuid} onClick={() => {raiseRouteEvent(entry.journalEntryGuid)}}>
                         <td>{entry.date}</td>
                         <td className="light">{entry.sortId}</td>
                         <td>{entry.routeName}</td>

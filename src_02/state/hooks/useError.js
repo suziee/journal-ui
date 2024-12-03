@@ -14,6 +14,10 @@ export default function useError(args) {
         [SUB.UPDATE_CRAG]: clearErrors,
         [SUB.ADD_ROUTE]: clearErrors,
         [SUB.UPDATE_ROUTE]: clearErrors,
+        [SUB.ADD_JOURNAL_ENTRY]: clearErrors,
+        [SUB.UPDATE_JOURNAL_ENTRY]: clearErrors,
+        [SUB.ADD_JOURNAL_ENTRY_ROUTE]: clearErrors,
+        [SUB.UPDATE_JOURNAL_ENTRY_ROUTE]: clearErrors,
     });
 
     function clearErrors() {

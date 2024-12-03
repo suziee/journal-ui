@@ -17,3 +17,15 @@ export function setValues(fieldMap, obj) {
         }
     }
 }
+
+export function getValueOrDefault(str) {
+    if (str == null) {
+        return null;
+    }
+    
+    str = str.trim();
+    
+    if (str.length == 0) {
+        return null;
+    }
+}

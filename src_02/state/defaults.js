@@ -26,6 +26,7 @@ export default function getDefaults(args) {
         messenger: messenger,
         client: _useError,
         useCalendar: _useCalendar,
+        useFormBase: useFormBase(),
     });
 
     let defaults = {
@@ -50,6 +51,8 @@ export default function getDefaults(args) {
         [NAME.useJournalEntryRoute] : useJournalEntryRoute({
             client: _useError,
             useJournalEntry: _useJournalEntry,
+            useFormBase: useFormBase(),
+            messenger: messenger,
         }),
         [NAME.useKeyword]: useKeyword(),
         [NAME.useRoute] : useRoute({

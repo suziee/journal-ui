@@ -12,6 +12,7 @@ export function RoutePage(props) {
     const {get: getArea} = useAppData(NAME.useArea);
     const {get: getCrag} = useAppData(NAME.useCrag);
     const {get: getOpen, current, show} = useAppData(NAME.useOpen);
+    const {get: getJournalEntry} = useAppData(NAME.useJournalEntry);
     const [open, setOpen] = React.useState(false);
 
     React.useEffect(() => {
@@ -35,6 +36,12 @@ export function RoutePage(props) {
         show(COMP.ROUTE_FORM);
     }
 
+    async function raiseDateEvent(event) {
+        const guid = event.target.getAttribute("data-value");
+        await getJournalEntry(guid);
+        show(COMP.JOURNAL_ENTRY_PAGE);
+    }
+
 	function build() {
 		if (route == null) return;
 
@@ -50,16 +57,20 @@ export function RoutePage(props) {
                     <span className="material-symbols-outlined size-24 red">delete</span>
                 </div>
             </div>
-
             <p>{route.notes}</p>
             <div id="dates-climbed">
                 <header>Dates climbed:</header>
                 <table>
+                    <colgroup>
+                        <col span="1" width="100px" />
+                        <col span="1" width="100px" />
+                        
+                    </colgroup>
                     <tbody>
                         {
                             route.entries.map((entry) => {
                                 return <tr key={entry.journalEntryRouteGuid}>
-                                    <td>{entry.date}</td>
+                                    <td className="crumb-nav" onClick={raiseDateEvent} data-value={entry.journalEntryGuid}>{entry.date}</td>
                                     <td>{entry.pitchesClimbed} / {route.numberOfPitches} pitches</td>
                                     <td>{entry.notes}</td>
                                 </tr>

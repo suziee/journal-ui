@@ -6,6 +6,8 @@ import {AreaForm, AreaPage} from '../Area';
 import {CragPage, CragForm} from '../Crag';
 import {RoutePage, RouteForm} from '../Route';
 import CalendarPage from '../CalendarPage';
+import { JournalEntryForm, JournalEntryPage } from '../JournalEntry';
+import { JournalEntryRouteForm } from '../JournalEntryRoute';
 
 export default function AppContainer(props) {
     return (
@@ -21,6 +23,9 @@ export default function AppContainer(props) {
                     <AreaForm />
                     <CragForm />
                     <RouteForm />
+                    <JournalEntryPage />
+                    <JournalEntryForm />
+                    <JournalEntryRouteForm />
                     {/* <StatsPage />
                     <FormPage /> */}
                 </div>

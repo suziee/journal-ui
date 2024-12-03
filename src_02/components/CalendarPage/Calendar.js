@@ -5,11 +5,14 @@ import {
     useAppData
     , hookNames as NAME
 	, componentNames as COMP
+	, subscriptionKeys as SUB
 } from '../../state';
 
 export default function Calendar(props) {
+	const messenger = useAppData(NAME.useMessenger);
     const { entries: yearEntries, year } = useAppData(NAME.useCalendar);
 	const {show} = useAppData(NAME.useOpen);
+	const {get: getJournalEntry} = useAppData(NAME.useJournalEntry);
 
 	React.useEffect(() => {
 		if (yearEntries == null) {
@@ -26,12 +29,14 @@ export default function Calendar(props) {
 		builder.build("calendar-graph", raiseClickEvent);
 	}, [yearEntries]);
 
-	function raiseClickEvent(event) {
+	async function raiseClickEvent(event) {
 		const dateStr = event.target.attributes.name.value;
 		let entry = yearEntries.find(x => x.date == dateStr);
 		if (entry) {
+			await getJournalEntry(entry.journalEntryGuid);
 			show(COMP.JOURNAL_ENTRY_PAGE);
 		} else {
+			messenger.broadcast(SUB.ADD_JOURNAL_ENTRY);
 			show(COMP.JOURNAL_ENTRY_FORM);
 		}
 	}

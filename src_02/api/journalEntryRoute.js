@@ -27,3 +27,8 @@ export async function updateJournalEntryRoute(jre) {
 
     return await build(response);
 }
+
+export async function getJournalEntryRoute(guid) {
+    const response = await fetch(API_URL + `journal/entry/route/${guid}`);
+    return await build(response);
+}

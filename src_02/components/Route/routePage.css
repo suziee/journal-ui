@@ -18,6 +18,8 @@
 
 #dates-climbed table {
     margin-top: 15px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 #dates-climbed td {

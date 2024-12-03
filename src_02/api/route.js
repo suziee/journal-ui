@@ -38,3 +38,8 @@ export async function updateRoute(route) {
 
     return await build(response);
 }
+
+export async function getRoutes() {
+    const response = await fetch(API_URL + `route`);
+    return await build(response);
+}
