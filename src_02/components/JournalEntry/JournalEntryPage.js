@@ -7,6 +7,7 @@ export function JournalEntryPage(props) {
     const {journalEntry} = useAppData(NAME.useJournalEntry);
     const {get: getOpen, current, show} = useAppData(NAME.useOpen);
     const {get: getRoute} = useAppData(NAME.useRoute);
+    const {get: getJournalEntryRoute} = useAppData(NAME.useJournalEntryRoute);
     const [open, setOpen] = React.useState(false);
 
     React.useEffect(() => {
@@ -22,6 +23,13 @@ export function JournalEntryPage(props) {
         const guid = event.target.getAttribute("data-value");
         await getRoute(guid);
         show(COMP.ROUTE_PAGE);
+    }
+
+    function raiseJerEditEvent(event) {
+        const guid = event.target.getAttribute("data-value");
+        getJournalEntryRoute(guid);
+        messenger.broadcast(SUB.UPDATE_JOURNAL_ENTRY_ROUTE);
+        show(COMP.JOURNAL_ENTRY_ROUTE_FORM);
     }
 
     function build() {
@@ -63,7 +71,7 @@ export function JournalEntryPage(props) {
                                 <td>
                                     <div className="route-buttons light">
                                         <span className="material-symbols-outlined size-24 green">photo_camera</span>
-                                        <span className="material-symbols-outlined size-24 green">edit</span>
+                                        <span className="material-symbols-outlined size-24 green" data-value={route.journalEntryRouteGuid} onClick={raiseJerEditEvent}>edit</span>
                                         <span className="material-symbols-outlined size-24 red">delete</span>
                                     </div>
                                 </td>

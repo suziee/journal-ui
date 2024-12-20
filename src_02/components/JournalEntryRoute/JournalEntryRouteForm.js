@@ -32,8 +32,15 @@ export function JournalEntryRouteForm(props) {
     React.useEffect(() => {
         if (isAdd) {
             clearValues(fieldMap);
+            // to do: this is hacky, so change later...but refactoring the shared code into a helper method would mean that
+            // i would have ot od the same for crag and route events... ugh...
+            // it solves the bug where the area drop down has a value, but crag and route drop downs are empty
+            raiseAreaChangeEvent({target: {value: areas[0].areaGuid}});
         } else if (journalEntryRoute != null) {
             setValues(fieldMap, journalEntryRoute);
+            raiseAreaChangeEvent({target: {value: journalEntryRoute.areaGuid}});
+            raiseCragChangeEvent({target: {value: journalEntryRoute.cragGuid}});
+            raiseRouteChangeEvent({target: {value: journalEntryRoute.routeGuid}});
         }
     }, [isAdd, journalEntryRoute])
 
@@ -72,7 +79,7 @@ export function JournalEntryRouteForm(props) {
     }
 
     function getAreaInput() {
-        return <select id="jerf-area" name="areaGuid" onChange={raiseAreaChangeEvent} value={area}>
+        return <select id="jerf-area" name="areaGuid" onChange={raiseAreaChangeEvent} value={area ?? ""}>
             {areas.map((area) => {
                 return <option value={area.areaGuid} key={area.areaGuid}>{area.areaName}</option>
             })}
@@ -95,7 +102,7 @@ export function JournalEntryRouteForm(props) {
         if (area) temp = temp.filter(x => x.areaGuid == area);
         if (!temp) temp = [];
 
-        return <select id="jerf-crag" name="cragGuid" onChange={raiseCragChangeEvent} value={crag}>
+        return <select id="jerf-crag" name="cragGuid" onChange={raiseCragChangeEvent} value={crag ?? ""}>
             {temp.map((crag) => {
                 return <option value={crag.cragGuid} key={crag.cragGuid}>{crag.cragName}</option>
             })}
@@ -103,7 +110,7 @@ export function JournalEntryRouteForm(props) {
     }
 
     function raiseCragChangeEvent(event) {
-        const _crag =event.target.value;
+        const _crag = event.target.value;
         const _routes = routes.filter(x => x.cragGuid == _crag);
         const _route = _routes ? _routes[0].routeGuid : null;
 
@@ -117,7 +124,7 @@ export function JournalEntryRouteForm(props) {
         if (temp && crag) temp = temp.filter(x => x.cragGuid == crag);
         if (!temp) temp = [];
 
-        return <select id="jerf-route" name="routeGuid" onChange={raiseRouteChangeEvent} value={route}>
+        return <select id="jerf-route" name="routeGuid" onChange={raiseRouteChangeEvent} value={route ?? ""}>
             {temp.map((route) => {
                 return <option value={route.routeGuid} key={route.routeGuid}>{route.routeName}</option>
             })}

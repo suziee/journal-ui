@@ -39,8 +39,12 @@ export function RouteForm(props) {
 
     function raiseCancelEvent(event) {
         event.preventDefault();
-        if (isAdd) clearValues(fieldMap);
-        show(COMP.CRAG_PAGE);
+        if (isAdd) {
+            clearValues(fieldMap);
+            show(COMP.CRAG_PAGE);
+        } else {
+            show(COMP.ROUTE_PAGE);
+        }
     }
 
     async function raiseSubmitEvent(event) {

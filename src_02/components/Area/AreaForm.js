@@ -25,8 +25,12 @@ export function AreaForm(props) {
 
     function raiseCancelEvent(event) {
         event.preventDefault();
-        if (isAdd) setValue("af-name", null);
-        hide(COMP.AREA_FORM);
+        if (isAdd) {
+            setValue("af-name", null);
+            hide(COMP.AREA_FORM);
+        } else {
+            show(COMP.AREA_PAGE);
+        }
     }
 
     async function raiseSubmitEvent(event) {

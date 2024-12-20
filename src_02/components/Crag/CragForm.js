@@ -33,8 +33,12 @@ export function CragForm(props) {
 
     function raiseCancelEvent(event) {
         event.preventDefault();
-        if (isAdd) clearValues(fieldMap);
-        show(COMP.AREA_PAGE);
+        if (isAdd) {
+            clearValues(fieldMap);
+            show(COMP.AREA_PAGE);
+        } else {
+            show(COMP.CRAG_PAGE); 
+        }
     }
 
     async function raiseSubmitEvent(event) {
