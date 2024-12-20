@@ -4,14 +4,12 @@ import { useCrag as id } from './hookNames';
 import * as API from '../../api/crag';
 
 export default function useCrag(args) {
-    const {messenger, client, useFormBase} = args;
+    const {messenger, client} = args;
     const [crags, setCrags] = React.useState([]);
     const [crag, setCrag] = React.useState(null);
 
     messenger.subscribe(id, {
         [SUB.STARTUP]: getAll,
-        [SUB.ADD_CRAG]: useFormBase.initAddForm,
-        [SUB.UPDATE_CRAG]: useFormBase.initUpdateForm,
     });
 
     async function getAll() {
@@ -49,6 +47,5 @@ export default function useCrag(args) {
         add: add,
         update: update,
         get: get,
-        isAdd: useFormBase.isAddForm,
     }
 }

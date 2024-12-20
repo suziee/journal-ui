@@ -5,15 +5,8 @@ import { useJournalEntry as id } from './hookNames';
 
 export default function useJournalEntryRoute(args) {
     const {client
-        , useJournalEntry: {get: getJournalEntry, journalEntry}
-        , useFormBase
-        , messenger} = args;
+        , useJournalEntry: {get: getJournalEntry, journalEntry}} = args;
     const [journalEntryRoute, setJournalEntryRoute] = React.useState(null);
-
-    messenger.subscribe(id, {
-        [SUB.ADD_JOURNAL_ENTRY_ROUTE]: useFormBase.initAddForm,
-        [SUB.UPDATE_JOURNAL_ENTRY_ROUTE]: useFormBase.initUpdateForm,
-    });
 
     async function add(journalEntryRoute) {
         const {isSuccessful, json: { guid }} = await client.callApi(API.addJournalEntryRoute, journalEntryRoute, true);
@@ -34,7 +27,6 @@ export default function useJournalEntryRoute(args) {
 
     function get(guid) {
         var jer = journalEntry.routes.find(x => x.journalEntryRouteGuid == guid);
-        console.log(jer);
         setJournalEntryRoute(x => jer);
     }
 
@@ -43,6 +35,5 @@ export default function useJournalEntryRoute(args) {
         add: add,
         update: update,
         get: get,
-        isAdd: useFormBase.isAddForm,
     }
 }

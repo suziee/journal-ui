@@ -1,2 +1,3 @@
 export {CragPage} from './CragPage';
-export {CragForm} from './CragForm';
+export {AddCragForm} from './AddCragForm';
+export {EditCragForm} from './EditCragForm';

@@ -32,12 +32,12 @@ export function CragPage(props) {
 
     function raiseAddEvent(event) {
         messenger.broadcast(SUB.ADD_ROUTE);
-        show(COMP.ROUTE_FORM);
+        show(COMP.ADD_ROUTE_FORM);
     }
 
     function raiseEditEvent(event) {
         messenger.broadcast(SUB.UPDATE_CRAG);
-        show(COMP.CRAG_FORM);
+        show(COMP.EDIT_CRAG_FORM);
     }
 	
 	function build() {

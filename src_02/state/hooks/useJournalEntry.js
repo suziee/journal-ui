@@ -4,13 +4,8 @@ import * as SUB from './subscriptionKeys';
 import { useJournalEntry as id } from './hookNames';
 
 export default function useJournalEntry(args) {
-    const {messenger, client, useCalendar: {year}, useFormBase} = args;
+    const {client, useCalendar: {year}} = args;
     const [journalEntry, setJournalEntry] = React.useState(null);
-
-    messenger.subscribe(id, {
-        [SUB.ADD_JOURNAL_ENTRY]: useFormBase.initAddForm,
-        [SUB.UPDATE_JOURNAL_ENTRY]: useFormBase.initUpdateForm,
-    });
 
     // async function getAll() {
     //     if (year == null) {
@@ -51,6 +46,5 @@ export default function useJournalEntry(args) {
         add: add,
         update: update,
         get: get,
-        isAdd: useFormBase.isAddForm,
     }
 }

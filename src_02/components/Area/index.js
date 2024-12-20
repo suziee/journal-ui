@@ -1,2 +1,3 @@
 export {AreaPage} from './AreaPage';
-export {AreaForm} from './AreaForm';
+export {AddAreaForm} from './AddAreaForm';
+export {EditAreaForm} from './EditAreaForm';

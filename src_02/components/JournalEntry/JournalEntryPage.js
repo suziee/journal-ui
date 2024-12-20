@@ -16,7 +16,7 @@ export function JournalEntryPage(props) {
 
     function raiseAddEvent(event) {
         messenger.broadcast(SUB.ADD_JOURNAL_ENTRY_ROUTE);
-        show(COMP.JOURNAL_ENTRY_ROUTE_FORM);
+        show(COMP.ADD_JOURNAL_ENTRY_ROUTE_FORM);
     }
 
     async function raiseRouteEvent(event) {
@@ -29,7 +29,7 @@ export function JournalEntryPage(props) {
         const guid = event.target.getAttribute("data-value");
         getJournalEntryRoute(guid);
         messenger.broadcast(SUB.UPDATE_JOURNAL_ENTRY_ROUTE);
-        show(COMP.JOURNAL_ENTRY_ROUTE_FORM);
+        show(COMP.EDIT_JOURNAL_ENTRY_ROUTE_FORM);
     }
 
     function build() {

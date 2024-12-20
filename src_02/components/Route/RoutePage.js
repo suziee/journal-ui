@@ -33,7 +33,7 @@ export function RoutePage(props) {
 
     function raiseEditEvent(event) {
         messenger.broadcast(SUB.UPDATE_ROUTE);
-        show(COMP.ROUTE_FORM);
+        show(COMP.EDIT_ROUTE_FORM);
     }
 
     async function raiseDateEvent(event) {

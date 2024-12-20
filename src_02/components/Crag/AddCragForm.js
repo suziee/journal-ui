@@ -3,73 +3,52 @@ import { useAppData
     , hookNames as NAME
     , componentNames as COMP
 } from '../../state';
-import { setValues, clearValues } from '../shared';
+import { clearValues, getValueOrDefault } from '../shared';
 
-export function CragForm(props) {
+export function AddCragForm(props) {
     const {area} = useAppData(NAME.useArea);
-    const {add, update, isAdd, crag} = useAppData(NAME.useCrag);
+    const {add} = useAppData(NAME.useCrag);
     const {errors} = useAppData(NAME.useError);
     const {get: getOpen, current, show} = useAppData(NAME.useOpen);
     const [open, setOpen] = React.useState(false);
 
     const fieldMap = [
-        {ui: "cf-area", model: "areaName"},
         {ui: "cf-name", model: "cragName"},
         {ui: "cf-dir", model: "picturesDirectory"},
         {ui: "cf-notes", model: "notes"},
     ];
 
     React.useEffect(() => {
-        setOpen(x => getOpen(COMP.CRAG_FORM));
+        setOpen(x => getOpen(COMP.ADD_CRAG_FORM));
+        clearValues(fieldMap);
     }, [current]);
-
-    React.useEffect(() => {
-        if (isAdd) {
-            clearValues(fieldMap);
-        } else if (crag != null) {
-            setValues(fieldMap, crag);
-        }
-    }, [isAdd, crag]); // need crag for update if it's first; isAdd won't trigger b/c it'll still be false
 
     function raiseCancelEvent(event) {
         event.preventDefault();
-        if (isAdd) {
-            clearValues(fieldMap);
-            show(COMP.AREA_PAGE);
-        } else {
-            show(COMP.CRAG_PAGE); 
-        }
+        clearValues(fieldMap);
+        show(COMP.AREA_PAGE);
     }
 
     async function raiseSubmitEvent(event) {
         event.preventDefault();
 
         let request = {   
-            cragName: event.target.cragName.value,
-            picturesDirectory: event.target.picturesDirectory.value,
-            notes: event.target.notes.value,
+            cragName: getValueOrDefault(event.target.cragName.value),
+            picturesDirectory: getValueOrDefault(event.target.picturesDirectory.value),
+            notes: getValueOrDefault(event.target.notes.value),
         };
 
-        if (!isAdd) {
-            request = {...request, cragGuid: crag.cragGuid};
-        }
-
-        let isSuccessful = isAdd ? await add(request) : await update(request);
+        let isSuccessful = await add(request);
         if (isSuccessful) show(COMP.CRAG_PAGE);
-    }
-
-    function getAreaInput() {
-        if (area || crag)
-            return <input name="area" id="cf-area" value={area ? area.areaName : crag.areaName} disabled />
     }
 
     return (
         <div className={open ? "form" : "hidden"}>
-            <header>Add crag</header>
+            <header>Add Crag</header>
             <form onSubmit={raiseSubmitEvent}>
                 <div>
                     <label>Area:</label>
-                    {getAreaInput()}
+                    <input name="area" value={area?.areaName} disabled />
                 </div>
                 <div>
                     <label>Name:</label>

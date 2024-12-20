@@ -4,14 +4,12 @@ import * as SUB from './subscriptionKeys';
 import { useRoute as id } from './hookNames';
 
 export default function useRoute(args) {
-    const {messenger, client, useFormBase} = args;
+    const {messenger, client} = args;
     const [route, setRoute] = React.useState(null);
     const [routes, setRoutes] = React.useState([]);
 
     messenger.subscribe(id, {
         [SUB.STARTUP]: getAll,
-        [SUB.ADD_ROUTE]: useFormBase.initAddForm,
-        [SUB.UPDATE_ROUTE]: useFormBase.initUpdateForm,
     });
 
     async function getAll() {
@@ -48,7 +46,6 @@ export default function useRoute(args) {
         add: add,
         update: update,
         get: get,
-        isAdd: useFormBase.isAddForm,
         routes: routes,
     }
 }

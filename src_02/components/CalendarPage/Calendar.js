@@ -37,7 +37,7 @@ export default function Calendar(props) {
 			show(COMP.JOURNAL_ENTRY_PAGE);
 		} else {
 			messenger.broadcast(SUB.ADD_JOURNAL_ENTRY);
-			show(COMP.JOURNAL_ENTRY_FORM);
+			show(COMP.ADD_JOURNAL_ENTRY_FORM);
 		}
 	}
 

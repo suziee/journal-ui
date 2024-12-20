@@ -12,11 +12,16 @@ export default function Navbar(props) {
     const [enabled, setEnabled] = React.useState(true);
 
     React.useEffect(() => {
-        setEnabled(x => !(current == COMP.AREA_FORM
-            || current == COMP.CRAG_FORM
-            || current == COMP.JOURNAL_ENTRY_FORM
-            || current == COMP.JOURNAL_ENTRY_ROUTE_FORM
-            || current == COMP.ROUTE_FORM));
+        setEnabled(x => !(current == COMP.ADD_AREA_FORM
+            || current == COMP.ADD_CRAG_FORM
+            || current == COMP.ADD_JOURNAL_ENTRY_FORM
+            || current == COMP.ADD_JOURNAL_ENTRY_ROUTE_FORM
+            || current == COMP.ADD_ROUTE_FORM
+            || current == COMP.EDIT_AREA_FORM
+            || current == COMP.EDIT_CRAG_FORM
+            || current == COMP.EDIT_JOURNAL_ENTRY_FORM
+            || current == COMP.EDIT_JOURNAL_ENTRY_ROUTE_FORM
+            || current == COMP.EDIT_ROUTE_FORM));
     }, [current]);
 
     function search() {
@@ -26,7 +31,7 @@ export default function Navbar(props) {
     function addArea() {
         if (enabled) {
             messenger.broadcast(SUB.ADD_AREA);
-            show(COMP.AREA_FORM);
+            show(COMP.ADD_AREA_FORM);
         }
     }
 

@@ -3,14 +3,14 @@ import { useAppData
     , hookNames as NAME
     , componentNames as COMP
 } from '../../state';
-import { setValues, clearValues, getValueOrDefault } from '../shared';
+import { clearValues, getValueOrDefault } from '../shared';
 
-export function JournalEntryRouteForm(props) {
+export function AddJournalEntryRouteForm(props) {
     const {areas} = useAppData(NAME.useArea);
     const {crags} = useAppData(NAME.useCrag);
     const {routes} = useAppData(NAME.useRoute);
     const {journalEntry} = useAppData(NAME.useJournalEntry);
-    const {add, update, isAdd, journalEntryRoute} = useAppData(NAME.useJournalEntryRoute);
+    const {add} = useAppData(NAME.useJournalEntryRoute);
     const {errors} = useAppData(NAME.useError);
     const {get: getOpen, current, show} = useAppData(NAME.useOpen);
     const [open, setOpen] = React.useState(false);
@@ -22,7 +22,7 @@ export function JournalEntryRouteForm(props) {
         {ui: "jerf-area", model: "areaGuid"},
         {ui: "jerf-crag", model: "cragGuid"},
         {ui: "jerf-route", model: "routeGuid"},
-        {ui: "jerf-date", model: "date"},
+        // {ui: "jerf-date", model: "date"},
         {ui: "jerf-dir", model: "picturesDirectory"},
         {ui: "jerf-notes", model: "notes"},
         {ui: "jerf-pitches", model: "pitchesClimbed"},
@@ -30,27 +30,21 @@ export function JournalEntryRouteForm(props) {
     ];
 
     React.useEffect(() => {
-        if (isAdd) {
+        let active = getOpen(COMP.ADD_JOURNAL_ENTRY_ROUTE_FORM);
+        setOpen(x => active);
+
+        if (active) {
             clearValues(fieldMap);
             // to do: this is hacky, so change later...but refactoring the shared code into a helper method would mean that
             // i would have ot od the same for crag and route events... ugh...
             // it solves the bug where the area drop down has a value, but crag and route drop downs are empty
             raiseAreaChangeEvent({target: {value: areas[0].areaGuid}});
-        } else if (journalEntryRoute != null) {
-            setValues(fieldMap, journalEntryRoute);
-            raiseAreaChangeEvent({target: {value: journalEntryRoute.areaGuid}});
-            raiseCragChangeEvent({target: {value: journalEntryRoute.cragGuid}});
-            raiseRouteChangeEvent({target: {value: journalEntryRoute.routeGuid}});
-        }
-    }, [isAdd, journalEntryRoute])
-
-    React.useEffect(() => {
-        setOpen(x => getOpen(COMP.JOURNAL_ENTRY_ROUTE_FORM));
+        } 
     }, [current]);
 
     function raiseCancelEvent(event) {
         event.preventDefault();
-        if (isAdd) clearValues(fieldMap);
+        clearValues(fieldMap);
         show(COMP.JOURNAL_ENTRY_PAGE);
     }
 
@@ -68,14 +62,8 @@ export function JournalEntryRouteForm(props) {
             sortId: getValueOrDefault(event.target.sortId.value),
         };
 
-        console.log(request)
-
-        if (!isAdd) {
-            request = {...request, journalEntryRouteGuid: journalEntryRoute.journalEntryRouteGuid};
-        }
-
-        let isSuccessful = isAdd ? await add(request) : await update(request);
-        if (isSuccessful) show(COMP.ROUTE_PAGE);
+        let isSuccessful = await add(request);
+        if (isSuccessful) show(COMP.JOURNAL_ENTRY_PAGE);
     }
 
     function getAreaInput() {
@@ -135,19 +123,20 @@ export function JournalEntryRouteForm(props) {
         setRequestData(x => ({...x, route: event.target.value}));
     }
 
-    function getDateInput() {
-        if (journalEntry == null) return null;
+    // function getDateInput() {
+    //     if (journalEntry == null) return null;
 
-        return <input name="date" id="jerf-date" value={journalEntry.date} disabled/>
-    }
+    //     return <input name="date" id="jerf-date" value={journalEntry.date} disabled/>
+    // }
 
     return (
         <div className={open ? "form" : "hidden"}>
-            <header>Add route climbed to journal entry</header>
+            <header>Add Route Climbed</header>
             <form onSubmit={raiseSubmitEvent}>
                 <div>
                     <label>Date:</label>
-                    {getDateInput()}
+                    {/* {getDateInput()} */}
+                    <input name="date" value={journalEntry?.date} disabled/>
                 </div>
                 <div>
                     <label>Area:</label>

@@ -1,2 +1,3 @@
 export {RoutePage} from './RoutePage';
-export {RouteForm} from './RouteForm';
+export {AddRouteForm} from './AddRouteForm';
+export {EditRouteForm} from './EditRouteForm';

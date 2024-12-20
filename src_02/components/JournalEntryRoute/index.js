@@ -1,2 +1,2 @@
-export {JournalEntryRoutePage} from './JournalEntryRoutePage';
-export {JournalEntryRouteForm} from './JournalEntryRouteForm';
+export {EditJournalEntryRouteForm} from './EditJournalEntryRouteForm';
+export {AddJournalEntryRouteForm} from './AddJournalEntryRouteForm';

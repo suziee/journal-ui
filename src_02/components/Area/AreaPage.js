@@ -25,12 +25,12 @@ export function AreaPage(props) {
 
     function raiseEditEvent(event) {
         messenger.broadcast(SUB.UPDATE_AREA);
-        show(COMP.AREA_FORM);
+        show(COMP.EDIT_AREA_FORM);
     }
 
     function raiseAddEvent(event) {
         messenger.broadcast(SUB.ADD_CRAG);
-        show(COMP.CRAG_FORM);
+        show(COMP.ADD_CRAG_FORM);
     }
 
 	function build() {

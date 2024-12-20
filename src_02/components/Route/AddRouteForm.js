@@ -3,18 +3,16 @@ import { useAppData
     , hookNames as NAME
     , componentNames as COMP
 } from '../../state';
-import { setValues, clearValues } from '../shared';
+import { clearValues, getValueOrDefault } from '../shared';
 
-export function RouteForm(props) {
+export function AddRouteForm(props) {
     const {crag} = useAppData(NAME.useCrag);
-    const {add, update, isAdd, route} = useAppData(NAME.useRoute);
+    const {add} = useAppData(NAME.useRoute);
     const {errors} = useAppData(NAME.useError);
     const {get: getOpen, current, show} = useAppData(NAME.useOpen);
     const [open, setOpen] = React.useState(false);
 
     const fieldMap = [
-        {ui: "rf-area", model: "areaName"},
-        {ui: "rf-crag", model: "cragName"},
         {ui: "rf-name", model: "routeName"},
         {ui: "rf-dir", model: "picturesDirectory"},
         {ui: "rf-type", model: "type"},
@@ -26,70 +24,48 @@ export function RouteForm(props) {
     ];
 
     React.useEffect(() => {
-        setOpen(x => getOpen(COMP.ROUTE_FORM));
-    }, [current]);
-
-    React.useEffect(() => {
-        if (isAdd) {
+        let active = getOpen(COMP.ADD_ROUTE_FORM);
+        setOpen(x => active);
+        if (active) {
             clearValues(fieldMap);
-        } else if (route != null) {
-            setValues(fieldMap, route);
         }
-    }, [isAdd, route])
+    }, [current]);
 
     function raiseCancelEvent(event) {
         event.preventDefault();
-        if (isAdd) {
-            clearValues(fieldMap);
-            show(COMP.CRAG_PAGE);
-        } else {
-            show(COMP.ROUTE_PAGE);
-        }
+        clearValues(fieldMap);
+        show(COMP.CRAG_PAGE);
     }
 
     async function raiseSubmitEvent(event) {
         event.preventDefault();
 
         let request = {   
-            routeName: event.target.routeName.value,
-            picturesDirectory: event.target.picturesDirectory.value,
-            type: event.target.routeType.value,
-            grade: event.target.grade.value,
-            numbeOfPitches: event.target.numberOfPitches.value,
-            numberOfFeet: event.target.numberOfFeet.value,
-            firstAscentionist: event.target.firstAscentionist.value,
-            notes: event.target.notes.value,
+            routeName: getValueOrDefault(event.target.routeName.value),
+            picturesDirectory: getValueOrDefault(event.target.picturesDirectory.value),
+            type: getValueOrDefault(event.target.routeType.value),
+            grade: getValueOrDefault(event.target.grade.value),
+            numbeOfPitches: getValueOrDefault(event.target.numberOfPitches.value),
+            numberOfFeet: getValueOrDefault(event.target.numberOfFeet.value),
+            firstAscentionist: getValueOrDefault(event.target.firstAscentionist.value),
+            notes: getValueOrDefault(event.target.notes.value),
         };
 
-        if (!isAdd) {
-            request = {...request, routeGuid: route.routeGuid, cragGuid: route.cragGuid};
-        }
-
-        let isSuccessful = isAdd ? await add(request) : await update(request);
+        let isSuccessful = await add(request);
         if (isSuccessful) show(COMP.ROUTE_PAGE);
-    }
-
-    function getAreaInput() {
-        if (crag || route) 
-            return <input name="areaName" id="rf-area" value={crag ? crag.areaName : route.areaName} disabled />
-    }
-
-    function getCragInput() {
-        if (crag || route) 
-            return <input name="cragName" id="rf-crag" value={crag ? crag.cragName : route.cragName} disabled />
     }
 
     return (
         <div className={open ? "form" : "hidden"}>
-            <header>Add area</header>
+            <header>Add Route</header>
             <form onSubmit={raiseSubmitEvent}>
                 <div>
                     <label>Area:</label>
-                    {getAreaInput()}
+                    <input name="areaName" value={crag?.areaName} disabled />
                 </div>
                 <div>
                     <label>Crag:</label>
-                    {getCragInput()}
+                    <input name="cragName" value={crag?.cragName} disabled />
                 </div>
                 <div>
                     <label>Name:</label>

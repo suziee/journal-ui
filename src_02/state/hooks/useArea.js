@@ -4,14 +4,12 @@ import { useArea as id } from './hookNames';
 import * as API from '../../api/area';
 
 export default function useArea(args) {
-    const {messenger, client, useFormBase} = args;
+    const {messenger, client} = args;
     const [areas, setAreas] = React.useState([]);
     const [area, setArea] = React.useState(null);
 
     messenger.subscribe(id, {
         [SUB.STARTUP]: getAll,
-        [SUB.ADD_AREA]: useFormBase.initAddForm,
-        [SUB.UPDATE_AREA]: useFormBase.initUpdateForm,
     });
 
     async function getAll() {
@@ -49,6 +47,5 @@ export default function useArea(args) {
         add: add,
         update: update,
         get: get,
-        isAdd: useFormBase.isAddForm,
     }
 }

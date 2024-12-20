@@ -9,7 +9,6 @@ import useJournalEntryRoute from './hooks/useJournalEntryRoute';
 import useKeyword from './hooks/useKeyword';
 import useRoute from './hooks/useRoute';
 import useOpen from './hooks/useOpen';
-import useFormBase from './hooks/useFormBase';
 
 export default function getDefaults(args) {
     const messenger = useMessenger();
@@ -26,7 +25,6 @@ export default function getDefaults(args) {
         messenger: messenger,
         client: _useError,
         useCalendar: _useCalendar,
-        useFormBase: useFormBase(),
     });
 
     let defaults = {
@@ -41,24 +39,20 @@ export default function getDefaults(args) {
         [NAME.useArea] : useArea({
             messenger: messenger,
             client: _useError,
-            useFormBase: useFormBase(),
         }),
         [NAME.useCrag] : useCrag({
             messenger: messenger,
             client: _useError,
-            useFormBase: useFormBase(),
         }),
         [NAME.useJournalEntryRoute] : useJournalEntryRoute({
             client: _useError,
             useJournalEntry: _useJournalEntry,
-            useFormBase: useFormBase(),
             messenger: messenger,
         }),
         [NAME.useKeyword]: useKeyword(),
         [NAME.useRoute] : useRoute({
             messenger: messenger,
             client: _useError,
-            useFormBase: useFormBase(),
         }),
         [NAME.useOpen]: useOpen(),
     };

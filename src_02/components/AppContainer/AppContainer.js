@@ -2,14 +2,15 @@ import React from 'react';
 import './appContainer.css';
 import Navbar from '../Navbar';
 import SearchPage from '../SearchPage';
-import {AreaForm, AreaPage} from '../Area';
-import {CragPage, CragForm} from '../Crag';
-import {RoutePage, RouteForm} from '../Route';
+import {AddAreaForm, AreaPage, EditAreaForm} from '../Area';
+import {CragPage, AddCragForm, EditCragForm} from '../Crag';
+import {RoutePage, AddRouteForm, EditRouteForm} from '../Route';
 import CalendarPage from '../CalendarPage';
-import { JournalEntryForm, JournalEntryPage } from '../JournalEntry';
-import { JournalEntryRouteForm } from '../JournalEntryRoute';
+import { AddJournalEntryForm, EditJournalEntryForm, JournalEntryPage } from '../JournalEntry';
+import { AddJournalEntryRouteForm, EditJournalEntryRouteForm } from '../JournalEntryRoute';
 
 export default function AppContainer(props) {
+
     return (
         <React.Fragment>
             <div id="app">
@@ -20,12 +21,17 @@ export default function AppContainer(props) {
                     <CragPage />
                     <RoutePage />
                     <CalendarPage />
-                    <AreaForm />
-                    <CragForm />
-                    <RouteForm />
                     <JournalEntryPage />
-                    <JournalEntryForm />
-                    <JournalEntryRouteForm />
+                    <AddAreaForm />
+                    <EditAreaForm />
+                    <AddCragForm />
+                    <EditCragForm />
+                    <AddRouteForm />
+                    <EditRouteForm />
+                    <AddJournalEntryForm />
+                    <EditJournalEntryForm />
+                    <AddJournalEntryRouteForm />
+                    <EditJournalEntryRouteForm />
                     {/* <StatsPage />
                     <FormPage /> */}
                 </div>

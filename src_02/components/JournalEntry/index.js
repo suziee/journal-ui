@@ -1,2 +1,3 @@
 export {JournalEntryPage} from './JournalEntryPage';
-export {JournalEntryForm} from './JournalEntryForm';
+export {AddJournalEntryForm} from './AddJournalEntryForm';
+export {EditJournalEntryForm} from './EditJournalEntryForm';
