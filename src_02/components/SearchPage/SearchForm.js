@@ -14,6 +14,13 @@ export default function SearchForm(props) {
         await updateKeyword(keywordRef.current.value);
     }
 
+    document.getElementById("search-bar")?.addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            raiseSearchEvent();
+        }
+    })
+
     return (
         <div id="search-form">
             <input
