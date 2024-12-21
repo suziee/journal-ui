@@ -19,6 +19,10 @@ export function JournalEntryPage(props) {
         show(COMP.ADD_JOURNAL_ENTRY_ROUTE_FORM);
     }
 
+    function raiseEditEvent(event) {
+        show(COMP.EDIT_JOURNAL_ENTRY_FORM);
+    }
+
     async function raiseRouteEvent(event) {
         const guid = event.target.getAttribute("data-value");
         await getRoute(guid);
@@ -41,7 +45,7 @@ export function JournalEntryPage(props) {
                     Date: {journalEntry.date}
                 </header>
                 <div className="header-buttons">
-                    <span className="material-symbols-outlined size-24 green">edit</span>
+                    <span className="material-symbols-outlined size-24 green" onClick={raiseEditEvent}>edit</span>
                     <span className="material-symbols-outlined size-24 red">delete</span>
                 </div>
             </div>
