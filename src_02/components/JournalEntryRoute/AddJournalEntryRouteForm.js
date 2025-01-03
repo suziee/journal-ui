@@ -3,7 +3,7 @@ import { useAppData
     , hookNames as NAME
     , componentNames as COMP
 } from '../../state';
-import { clearValues, getValueOrDefault } from '../shared';
+import { clearValues, getValueOrDefault, getControlledValue } from '../shared';
 
 export function AddJournalEntryRouteForm(props) {
     const {areas} = useAppData(NAME.useArea);
@@ -136,7 +136,7 @@ export function AddJournalEntryRouteForm(props) {
                 <div>
                     <label>Date:</label>
                     {/* {getDateInput()} */}
-                    <input name="date" value={journalEntry?.date} disabled/>
+                    <input name="date" value={getControlledValue(journalEntry?.date)} disabled/> 
                 </div>
                 <div>
                     <label>Area:</label>

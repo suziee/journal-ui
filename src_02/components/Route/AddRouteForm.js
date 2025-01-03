@@ -3,7 +3,7 @@ import { useAppData
     , hookNames as NAME
     , componentNames as COMP
 } from '../../state';
-import { clearValues, getValueOrDefault } from '../shared';
+import { clearValues, getValueOrDefault, getControlledValue } from '../shared';
 
 export function AddRouteForm(props) {
     const {crag} = useAppData(NAME.useCrag);
@@ -61,11 +61,11 @@ export function AddRouteForm(props) {
             <form onSubmit={raiseSubmitEvent}>
                 <div>
                     <label>Area:</label>
-                    <input name="areaName" value={crag?.areaName} disabled />
+                    <input name="areaName" value={getControlledValue(crag?.areaName)} disabled />
                 </div>
                 <div>
                     <label>Crag:</label>
-                    <input name="cragName" value={crag?.cragName} disabled />
+                    <input name="cragName" value={getControlledValue(crag?.cragName)} disabled />
                 </div>
                 <div>
                     <label>Name:</label>

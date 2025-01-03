@@ -29,3 +29,12 @@ export function getValueOrDefault(str) {
         return null;
     }
 }
+
+export function getControlledValue(str) {
+    /**
+     * without this method, then doing <input ... value={obj?.val} ... />
+     * throws Warning: A component is changing an uncontrolled input to be controlled
+     * b/c it could go from undefined to an actual value when obj is not null
+     */
+    return str ?? "";
+}

@@ -3,7 +3,7 @@ import { useAppData
     , hookNames as NAME
     , componentNames as COMP
 } from '../../state';
-import { setValues, getValueOrDefault } from '../shared';
+import { setValues, getValueOrDefault, getControlledValue } from '../shared';
 
 export function EditCragForm(props) {
     const {update, crag} = useAppData(NAME.useCrag);
@@ -52,7 +52,7 @@ export function EditCragForm(props) {
             <form onSubmit={raiseSubmitEvent}>
                 <div>
                     <label>Area:</label>
-                    <input name="area" value={crag?.areaName} disabled />
+                    <input name="area" value={getControlledValue(crag?.areaName)} disabled />
                 </div>
                 <div>
                     <label>Name:</label>

@@ -59,7 +59,7 @@ export function JournalEntryPage(props) {
                         <col span="1" width="10px" />
                     </colgroup>
                     <tbody>
-                        {journalEntry.routes.map((route, index) => {
+                        {journalEntry.routes.sort((a, b) => a.sortId > b.sortId).map((route, index) => {
                             return <tr key={route.journalEntryRouteGuid}>
                                 <td>
                                     <table className="unstyled">

@@ -37,12 +37,19 @@ export default function CalendarPage(props) {
         updateYear(year);
     }
 
+    document.getElementById("year-bar")?.addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            raiseUpdateEvent();
+        }
+    })
+
     return (
         <div className={open ? "visible" : "hidden"}>
             <Calendar />
             <div id="current-year-form">
                 What you climbed in
-                <input type="text" placeholder="year" ref={yearRef}/>
+                <input type="text" placeholder="year" ref={yearRef} id="year-bar"/>
                 <button onClick={raiseUpdateEvent}>Update</button>
                 <div id="calendar-error">{error}</div>
             </div>
