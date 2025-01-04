@@ -21,3 +21,5 @@ export const ROUTE_PAGE = "ROUTE_PAGE";
 
 export const CALENDAR_PAGE = "CALENDAR_PAGE";
 export const SEARCH_PAGE = "SEARCH_PAGE";
+export const STATS_PAGE = "STATS_PAGE";
+export const TODO_PAGE = "TOOD_PAGE";
