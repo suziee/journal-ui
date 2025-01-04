@@ -14,10 +14,6 @@
     background-color: aliceblue;
 }
 
-.light {
-    color: #aaaaaa;
-}
-
 .route-buttons {
     display: flex;
     flex-direction: column;
@@ -30,4 +26,18 @@
 
 .route-buttons span.red:hover {
     color: red;
+}
+
+#edit-sort-routes td {
+    padding: 3px 10px 3px 10px;
+}
+
+.sort-button:hover {
+    color: limegreen;
+    cursor: pointer;
+}
+
+.sort-button {
+    display: flex;
+    align-items: flex-end;
 }

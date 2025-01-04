@@ -4,9 +4,11 @@ import { getValueOrDefault, setValues } from '../shared';
 
 export function EditJournalEntryForm(props) {
     const {errors} = useAppData(NAME.useError);
-    const {update, journalEntry} = useAppData(NAME.useJournalEntry);
+    const {update: updateJournalEntry, journalEntry} = useAppData(NAME.useJournalEntry);
+    const {update: updateJournalEntryRoute} = useAppData(NAME.useJournalEntryRoute);
     const {get: getOpen, current, show} = useAppData(NAME.useOpen);
     const [open, setOpen] = React.useState(false);
+    const [routes, setRoutes] = React.useState([]);
 
     const fieldMap = [
         {ui: "jef-date-edit", model: "date"},
@@ -17,6 +19,10 @@ export function EditJournalEntryForm(props) {
     React.useEffect(() => {
         setOpen(x => getOpen(COMP.EDIT_JOURNAL_ENTRY_FORM));
     }, [current]);
+
+    React.useEffect(() => {
+        setRoutes(x => journalEntry?.routes ?? []);
+    }, [journalEntry]);
 
     React.useEffect(() => {
         if (journalEntry != null) {
@@ -39,8 +45,33 @@ export function EditJournalEntryForm(props) {
             journalEntryGuid: journalEntry.journalEntryGuid,
         };
 
-        let isSuccessful = await update(request);
+        let isSuccessful = await updateJournalEntry(request);
+
+        if (isSuccessful) {
+            for (let i = 0; i < routes.length; i++) {
+                if (i != routes[i].sortId) {
+                    isSuccessful = isSuccessful && await updateJournalEntryRoute(request);
+                }
+            }    
+        }
+
         if (isSuccessful) show(COMP.JOURNAL_ENTRY_PAGE);
+    }
+
+    function raiseUpEvent(index) {
+        if (index == 0) return;
+        let temp = routes[index];
+        routes[index] = routes[index - 1];
+        routes[index - 1] = temp;
+        setRoutes(x => [...routes]);
+    }
+
+    function raiseDownEvent(index) {
+        if (index == routes.length - 1) return;
+        let temp = routes[index];
+        routes[index] = routes[index + 1];
+        routes[index + 1] = temp;
+        setRoutes(x => [...routes]);
     }
 
     return (
@@ -58,6 +89,34 @@ export function EditJournalEntryForm(props) {
                 <div>
                     <label>Notes:</label>
                     <textarea name="notes" id="jef-notes-edit"></textarea>
+                </div>
+                <div id="edit-sort-routes">
+                    <table>
+                        <tbody>
+                            {routes.map((route, index) => {
+                                return <tr key={route.journalEntryRouteGuid}>
+                                    <td className="light">{route.sortId}</td>
+                                    {/**this is a little hack... the align-items:flex-end works with one or the other, but not both, when they're the first two td's. */}
+                                    <td>
+                                        <div className="sort-button">
+                                            <span className="material-symbols-outlined"
+                                                onClick={() => raiseUpEvent(index)}>keyboard_arrow_up</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div className="sort-button">
+                                            <span className="material-symbols-outlined"
+                                                onClick={() => raiseDownEvent(index)}>keyboard_arrow_down</span>
+                                        </div>
+                                    </td>
+                                    <td>{route.routeName}</td>
+                                    <td className="light">{route.areaName} / {route.cragName}</td>
+                                    <td className="light">{route.grade}</td>
+                                    <td className="light">{route.type}</td>
+                                </tr>
+                            })}
+                        </tbody>
+                    </table>
                 </div>
                 <div className="form-buttons">
                     <button className="text-button red" onClick={raiseCancelEvent}>cancel</button>

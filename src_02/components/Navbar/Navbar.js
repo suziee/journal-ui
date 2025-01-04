@@ -43,20 +43,25 @@ export default function Navbar(props) {
         // messenger.broadcast(SUB.SHOW_STATS);
     }
 
+    function todo() {
+    }
+
+    /** not doing component b/c of the enabled flag... */
+    function getButton(name, func) {
+        return (
+            <div className={enabled ? "nav-button" : "nav-button-disabled"} onClick={func}>
+                <span className="material-symbols-outlined size-48">{name}</span>
+            </div>
+        );
+    }
+
     return (
         <div id="nav-bar">
-            <div className={enabled ? "nav-button" : "nav-button-disabled"} onClick={search}>
-                <span className="material-symbols-outlined size-48">house</span>
-            </div>
-            <div className={enabled ? "nav-button" : "nav-button-disabled"} onClick={addArea}>
-                <span className="material-symbols-outlined size-48">add_photo_alternate</span>
-            </div>
-            <div className={enabled ? "nav-button" : "nav-button-disabled"} onClick={calendar}>
-                <span className="material-symbols-outlined size-48">calendar_month</span>
-            </div>
-            <div className={enabled ? "nav-button" : "nav-button-disabled"} onClick={stats}>
-                <span className="material-symbols-outlined size-48">bar_chart_4_bars</span>
-            </div>
+            {getButton("house", search)}
+            {getButton("add_photo_alternate", addArea)}
+            {getButton("calendar_month", calendar)}
+            {getButton("bar_chart_4_bars", stats)}
+            {getButton("checklist", todo)}
         </div>
     );
 }
