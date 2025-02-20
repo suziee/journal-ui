@@ -5,6 +5,7 @@ import {componentNames as COMP} from '../../state';
 export default function NavButtons(props) {
     const {getButton, icons} = props;
 
+    // this determines the order
     return (
         <div id="nav-bar">
             {getButton(icons[COMP.SEARCH_PAGE])}
