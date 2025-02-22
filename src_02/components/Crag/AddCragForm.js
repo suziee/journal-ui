@@ -14,8 +14,6 @@ export function AddCragForm(props) {
 
     const fieldMap = [
         {ui: "cf-name", model: "cragName"},
-        {ui: "cf-dir", model: "picturesDirectory"},
-        {ui: "cf-notes", model: "notes"},
     ];
 
     React.useEffect(() => {
@@ -53,14 +51,6 @@ export function AddCragForm(props) {
                 <div>
                     <label>Name:</label>
                     <input name="cragName" id="cf-name"/>
-                </div>
-                <div>
-                    <label>Pictures Directory:</label>
-                    <input name="picturesDirectory" id="cf-dir"/>
-                </div>
-                <div>
-                    <label>Notes:</label>
-                    <textarea name="notes" id="cf-notes"></textarea>
                 </div>
                 <div className="form-buttons">
                     <button className="text-button red" onClick={raiseCancelEvent}>cancel</button>

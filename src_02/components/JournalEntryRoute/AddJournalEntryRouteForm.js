@@ -23,7 +23,7 @@ export function AddJournalEntryRouteForm(props) {
         {ui: "jerf-crag", model: "cragGuid"},
         {ui: "jerf-route", model: "routeGuid"},
         // {ui: "jerf-date", model: "date"},
-        {ui: "jerf-dir", model: "picturesDirectory"},
+        // {ui: "jerf-dir", model: "picturesPath"},
         {ui: "jerf-notes", model: "notes"},
         {ui: "jerf-pitches", model: "pitchesClimbed"},
         {ui: "jerf-sortId", model: "sortId"},
@@ -56,7 +56,7 @@ export function AddJournalEntryRouteForm(props) {
             cragGuid: crag,
             routeGuid: route,
             journalEntryGuid: journalEntry.journalEntryGuid,
-            picturesDirectory: getValueOrDefault(event.target.picturesDirectory.value),
+            // picturesPath: getValueOrDefault(event.target.picturesPath.value),
             notes: getValueOrDefault(event.target.notes.value),
             pitchesClimbed: getValueOrDefault(event.target.pitchesClimbed.value),
             sortId: getValueOrDefault(event.target.sortId.value),
@@ -158,10 +158,10 @@ export function AddJournalEntryRouteForm(props) {
                     <label>Pitches Climbed:</label>
                     <input name="pitchesClimbed" id="jerf-pitches"/>
                 </div>
-                <div>
-                    <label>Pictures Directory:</label>
-                    <input name="picturesDirectory" id="jerf-dir"/>
-                </div>
+                {/* <div>
+                    <label>Pictures Path:</label>
+                    <input name="picturesPath" id="jerf-dir"/>
+                </div> */}
                 <div>
                     <label>Notes:</label>
                     <textarea name="notes" id="jerf-notes"></textarea>

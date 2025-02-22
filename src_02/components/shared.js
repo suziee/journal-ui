@@ -28,6 +28,8 @@ export function getValueOrDefault(str) {
     if (str.length == 0) {
         return null;
     }
+
+    return str;
 }
 
 export function getControlledValue(str) {

@@ -13,8 +13,6 @@ export function EditCragForm(props) {
 
     const fieldMap = [
         {ui: "cf-name-edit", model: "cragName"},
-        {ui: "cf-dir-edit", model: "picturesDirectory"},
-        {ui: "cf-notes-edit", model: "notes"},
     ];
 
     React.useEffect(() => {
@@ -57,14 +55,6 @@ export function EditCragForm(props) {
                 <div>
                     <label>Name:</label>
                     <input name="cragName" id="cf-name-edit"/>
-                </div>
-                <div>
-                    <label>Pictures Directory:</label>
-                    <input name="picturesDirectory" id="cf-dir-edit"/>
-                </div>
-                <div>
-                    <label>Notes:</label>
-                    <textarea name="notes" id="cf-notes-edit"></textarea>
                 </div>
                 <div className="form-buttons">
                     <button className="text-button red" onClick={raiseCancelEvent}>cancel</button>

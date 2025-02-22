@@ -10,7 +10,7 @@ export function AddJournalEntryForm(props) {
 
     const fieldMap = [
         {ui: "jef-date", model: "date"},
-        {ui: "jef-dir", model: "picturesDirectory"},
+        {ui: "jef-dir", model: "picturesPath"},
         {ui: "jef-notes", model: "notes"},
     ];
 
@@ -33,7 +33,7 @@ export function AddJournalEntryForm(props) {
 
         let request = {   
             date: getValueOrDefault(event.target.date.value),
-            picturesDirectory: getValueOrDefault(event.target.picturesDirectory.value),
+            picturesPath: getValueOrDefault(event.target.picturesPath.value),
             notes: getValueOrDefault(event.target.notes.value),
         };
 
@@ -50,8 +50,8 @@ export function AddJournalEntryForm(props) {
                     <input name="date" id="jef-date"/>
                 </div>
                 <div>
-                    <label>Pictures Directory:</label>
-                    <input name="picturesDirectory" id="jef-dir"/>
+                    <label>Pictures Path:</label>
+                    <input name="picturesPath" id="jef-dir"/>
                 </div>
                 <div>
                     <label>Notes:</label>

@@ -16,10 +16,11 @@ export function EditJournalEntryRouteForm(props) {
         // {ui: "ejerf-crag", model: "cragName"},
         // {ui: "ejerf-route", model: "routeName"},
         // {ui: "ejerf-date", model: "date"},
-        {ui: "ejerf-dir", model: "picturesDirectory"},
+        // {ui: "ejerf-dir", model: "picturesPath"},
         {ui: "ejerf-notes", model: "notes"},
         {ui: "ejerf-pitches", model: "pitchesClimbed"},
         {ui: "ejerf-sortId", model: "sortId"},
+        {ui: "ejerf-type", model: "climbType"},
     ];
 
     React.useEffect(() => {
@@ -78,9 +79,13 @@ export function EditJournalEntryRouteForm(props) {
                     <label>Pitches Climbed:</label>
                     <input name="pitchesClimbed" id="ejerf-pitches"/>
                 </div>
+                {/* <div>
+                    <label>Pictures Path:</label>
+                    <input name="picturesPath" id="ejerf-dir"/>
+                </div> */}
                 <div>
-                    <label>Pictures Directory:</label>
-                    <input name="picturesDirectory" id="ejerf-dir"/>
+                    <label>Climb Type:</label>
+                    <input name="climbType" id="ejerf-type"/>
                 </div>
                 <div>
                     <label>Notes:</label>

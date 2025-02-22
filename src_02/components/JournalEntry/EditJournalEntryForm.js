@@ -12,7 +12,7 @@ export function EditJournalEntryForm(props) {
 
     const fieldMap = [
         {ui: "jef-date-edit", model: "date"},
-        {ui: "jef-dir-edit", model: "picturesDirectory"},
+        {ui: "jef-dir-edit", model: "picturesPath"},
         {ui: "jef-notes-edit", model: "notes"},
     ];
 
@@ -40,7 +40,7 @@ export function EditJournalEntryForm(props) {
 
         let request = {   
             date: getValueOrDefault(event.target.date.value),
-            picturesDirectory: getValueOrDefault(event.target.picturesDirectory.value),
+            picturesPath: getValueOrDefault(event.target.picturesPath.value),
             notes: getValueOrDefault(event.target.notes.value),
             journalEntryGuid: journalEntry.journalEntryGuid,
         };
@@ -83,8 +83,8 @@ export function EditJournalEntryForm(props) {
                     <input name="date" id="jef-date-edit"/>
                 </div>
                 <div>
-                    <label>Pictures Directory:</label>
-                    <input name="picturesDirectory" id="jef-dir-edit"/>
+                    <label>Pictures Path:</label>
+                    <input name="picturesPath" id="jef-dir-edit"/>
                 </div>
                 <div>
                     <label>Notes:</label>

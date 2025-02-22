@@ -45,6 +45,7 @@ export function JournalEntryPage(props) {
                     Date: {journalEntry.date}
                 </header>
                 <div className="header-buttons">
+                    <span className="material-symbols-outlined size-24 green">photo_camera</span>
                     <span className="material-symbols-outlined size-24 green" onClick={raiseEditEvent}>edit</span>
                     <span className="material-symbols-outlined size-24 red">delete</span>
                 </div>
@@ -74,7 +75,7 @@ export function JournalEntryPage(props) {
                                 <td>{route.notes}</td>
                                 <td>
                                     <div className="route-buttons light">
-                                        <span className="material-symbols-outlined size-24 green">photo_camera</span>
+                                        {/* <span className="material-symbols-outlined size-24 green">photo_camera</span> */}
                                         <span className="material-symbols-outlined size-24 green" data-value={route.journalEntryRouteGuid} onClick={raiseJerEditEvent}>edit</span>
                                         <span className="material-symbols-outlined size-24 red">delete</span>
                                     </div>

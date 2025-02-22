@@ -14,13 +14,9 @@ export function AddRouteForm(props) {
 
     const fieldMap = [
         {ui: "rf-name", model: "routeName"},
-        {ui: "rf-dir", model: "picturesDirectory"},
         {ui: "rf-type", model: "type"},
         {ui: "rf-grade", model: "grade"},
         {ui: "rf-pitches", model: "numberOfPitches"},
-        {ui: "rf-feet", model: "numberOfFeet"},
-        {ui: "rf-fa", model: "firstAscentionist"},
-        {ui: "rf-notes", model: "notes"},
     ];
 
     React.useEffect(() => {
@@ -42,13 +38,9 @@ export function AddRouteForm(props) {
 
         let request = {   
             routeName: getValueOrDefault(event.target.routeName.value),
-            picturesDirectory: getValueOrDefault(event.target.picturesDirectory.value),
             type: getValueOrDefault(event.target.routeType.value),
             grade: getValueOrDefault(event.target.grade.value),
             numbeOfPitches: getValueOrDefault(event.target.numberOfPitches.value),
-            numberOfFeet: getValueOrDefault(event.target.numberOfFeet.value),
-            firstAscentionist: getValueOrDefault(event.target.firstAscentionist.value),
-            notes: getValueOrDefault(event.target.notes.value),
         };
 
         let isSuccessful = await add(request);
@@ -82,22 +74,6 @@ export function AddRouteForm(props) {
                 <div>
                     <label>Number of Pitches:</label>
                     <input name="numberOfPitches" id="rf-pitches"/>
-                </div>
-                <div>
-                    <label>Number of Feet:</label>
-                    <input name="numberOfFeet" id="rf-feet"/>
-                </div>
-                <div>
-                    <label>First Ascentionist:</label>
-                    <input name="firstAscentionist" id="rf-fa"/>
-                </div>
-                <div>
-                    <label>Pictures Directory:</label>
-                    <input name="picturesDirectory" id="rf-dir"/>
-                </div>
-                <div>
-                    <label>Notes:</label>
-                    <textarea name="notes" id="rf-notes"></textarea>
                 </div>
                 <div className="form-buttons">
                     <button className="text-button red" onClick={raiseCancelEvent}>cancel</button>
