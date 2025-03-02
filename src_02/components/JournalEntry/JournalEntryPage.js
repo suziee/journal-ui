@@ -54,33 +54,24 @@ export function JournalEntryPage(props) {
             <div id="routes-climbed">
                 <header><span className="text-button" onClick={raiseAddEvent}>add</span> Routes climbed:</header>
                 <table>
-                    <colgroup>
-                        <col span="1" width="225px" />
-                        <col span="1" />
-                        <col span="1" width="10px" />
-                    </colgroup>
                     <tbody>
                         {journalEntry.routes.map((route, index) => {
-                            return <tr key={route.journalEntryRouteGuid}>
-                                <td>
-                                    <table className="unstyled">
-                                        <tbody>
-                                            <tr><td className="unstyled crumb-nav" data-value={route.routeGuid} onClick={raiseRouteEvent}>{route.routeName}</td></tr>
-                                            <tr><td className="unstyled light">{route.areaName} / {route.cragName}</td></tr>
-                                            <tr><td className="unstyled">{route.grade} {route.type}</td></tr>
-                                            <tr><td className="unstyled">{route.pitchesClimbed} / {route.numberOfPitches} pitches</td></tr>
-                                        </tbody>
-                                    </table>
-                                </td>                                
-                                <td>{route.notes}</td>
-                                <td>
-                                    <div className="route-buttons light">
-                                        {/* <span className="material-symbols-outlined size-24 green">photo_camera</span> */}
-                                        <span className="material-symbols-outlined size-24 green" data-value={route.journalEntryRouteGuid} onClick={raiseJerEditEvent}>edit</span>
-                                        <span className="material-symbols-outlined size-24 red">delete</span>
-                                    </div>
-                                </td>
-                            </tr>
+                            return <React.Fragment key={index}>
+                                <tr className="route-data">
+                                    <td className="crumb-nav" data-value={route.routeGuid} onClick={raiseRouteEvent}>{route.routeName}</td>
+                                    <td className="light">{route.areaName} / {route.cragName}</td>
+                                    <td style={{width: 100}}>{route.grade} {route.type}</td>
+                                    <td style={{width: 125}}>{route.pitchesClimbed} / {route.numberOfPitches} pitches</td>
+                                    <td style={{width: 75}}>{route.climbType}</td>
+                                    <td style={{width: 75}} className="route-buttons">
+                                        <span className="text-button" data-value={route.journalEntryRouteGuid} onClick={raiseJerEditEvent}>edit</span>&nbsp;
+                                        <span className="text-button red" data-value={route.journalEntryRouteGuid} onClick={raiseJerEditEvent}>delete</span>
+                                    </td>
+                                </tr>
+                                {route.notes ? <tr>
+                                    <td colSpan="6" className="route-notes">{route.notes}</td>
+                                </tr> : null}
+                            </React.Fragment>
                         })}
                     </tbody>
                 </table>

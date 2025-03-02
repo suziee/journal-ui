@@ -1,31 +1,21 @@
-#routes-climbed table:not(.unstyled) {
+#routes-climbed table {
     margin-top: 15px;
     width: 100%;
     box-sizing: border-box;
-}
-
-#routes-climbed td:not(.unstyled) {
-    /* padding: 3px 10px 3px 10px; */
-    padding: 10px;
+    /* border-collapse: collapse; */
 }
 
 #routes-climbed td {
+    padding: 10px;
+}
+
+#routes-climbed td:not(.route-notes) {
     vertical-align: top;
     background-color: aliceblue;
 }
 
-.route-buttons {
-    display: flex;
-    flex-direction: column;
-    cursor: pointer;
-}
-
-.route-buttons span.green:hover {
-    color: limegreen;
-}
-
 .route-buttons span.red:hover {
-    color: red;
+    background-color: red;
 }
 
 #edit-sort-routes td {
@@ -40,4 +30,12 @@
 .sort-button {
     display: flex;
     align-items: flex-end;
+}
+
+.route-data {
+    border-top: solid white;
+}
+
+.route-notes {
+    background-color: #f8fcff;
 }

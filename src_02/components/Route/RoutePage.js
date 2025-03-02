@@ -50,7 +50,7 @@ export function RoutePage(props) {
                 <header>
                     Route: <span className="crumb-nav" onClick={raiseAreaEvent} data-value={route.areaGuid}>{route.areaName}</span> / <span className="crumb-nav" onClick={raiseCragEvent} data-value={route.cragGuid}>{route.cragName}</span> / <span className="crumb-leaf">{route.routeName}</span>
                     <br />
-                    {route.type}, {route.numberOfPitches} pitches, {route.numberOfFeet} feet, FA: {route.firstAscentionist}
+                    {route.grade} {route.type}, {route.numberOfPitches} pitches
                 </header>
                 <div className="header-buttons">
                     <span className="material-symbols-outlined size-24 green" onClick={raiseEditEvent}>edit</span>
@@ -71,6 +71,7 @@ export function RoutePage(props) {
                             route.entries.map((entry) => {
                                 return <tr key={entry.journalEntryRouteGuid}>
                                     <td className="crumb-nav" onClick={raiseDateEvent} data-value={entry.journalEntryGuid}>{entry.date}</td>
+                                    <td>{entry.climbType}</td>
                                     <td>{entry.pitchesClimbed} / {route.numberOfPitches} pitches</td>
                                     <td>{entry.notes}</td>
                                 </tr>

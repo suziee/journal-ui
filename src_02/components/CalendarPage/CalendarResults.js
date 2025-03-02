@@ -36,6 +36,7 @@ export default function CalendarResults(props) {
                         <td className="light">{entry.areaName} / {entry.cragName}</td>
                         <td>{entry.grade}</td>
                         <td>{entry.type}</td>
+                        <td>{entry.climbType}</td>
                     </tr>
                 })
             }

@@ -44,11 +44,11 @@ export function EditJournalEntryRouteForm(props) {
         let request = {
             routeGuid: journalEntryRoute.routeGuid,
             journalEntryGuid: journalEntryRoute.journalEntryGuid,
-            picturesDirectory: getValueOrDefault(event.target.picturesDirectory.value),
             notes: getValueOrDefault(event.target.notes.value),
             pitchesClimbed: getValueOrDefault(event.target.pitchesClimbed.value),
             sortId: getValueOrDefault(event.target.sortId.value),
             journalEntryRouteGuid: journalEntryRoute.journalEntryRouteGuid,
+            climbType: getValueOrDefault(event.target.climbType.value),
         };
 
         let isSuccessful = await update(request);
