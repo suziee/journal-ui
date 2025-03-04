@@ -1,11 +1,12 @@
 import React from 'react';
 import { useAppData, hookNames as NAME, componentNames as COMP } from '../../state';
-import { getValueOrDefault, clearValues } from '../shared';
+import { getValueOrDefault, clearValues, getControlledValue } from '../shared';
 
 export function AddJournalEntryForm(props) {
     const {errors} = useAppData(NAME.useError);
     const {add} = useAppData(NAME.useJournalEntry);
     const {get: getOpen, current, show} = useAppData(NAME.useOpen);
+    const {date} = useAppData(NAME.useCalendar);
     const [open, setOpen] = React.useState(false);
 
     const fieldMap = [
@@ -47,7 +48,7 @@ export function AddJournalEntryForm(props) {
             <form onSubmit={raiseSubmitEvent}>
                 <div>
                     <label>Date:</label>
-                    <input name="date" id="jef-date"/>
+                    <input name="date" id="jef-date" value={getControlledValue(date)} disabled/>
                 </div>
                 <div>
                     <label>Pictures Path:</label>

@@ -8,6 +8,7 @@ export default function useCalendar(args) {
     const [year, setYear] = React.useState(new Date(Date.now()).getFullYear());
     const [entries, setEntries] = React.useState([]);
     const [routes, setRoutes] = React.useState([]);
+    const [date, setDate] = React.useState(null);
 
     React.useEffect(() => {getResults()}, [year]);
 
@@ -30,10 +31,17 @@ export default function useCalendar(args) {
         setRoutes(x => results.routes);
     }
 
+    function updateDate(newDate) {
+        setDate(x => newDate);
+    }
+
     return {
         year: year,
         updateYear: updateYear,
         entries: entries,
         routes: routes,
+        date: date,
+        updateDate: updateDate,
+        getResults: getResults,
     };
 }

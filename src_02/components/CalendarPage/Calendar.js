@@ -10,7 +10,7 @@ import {
 
 export default function Calendar(props) {
 	const messenger = useAppData(NAME.useMessenger);
-    const { entries: yearEntries, year } = useAppData(NAME.useCalendar);
+    const { entries: yearEntries, year, updateDate } = useAppData(NAME.useCalendar);
 	const {show} = useAppData(NAME.useOpen);
 	const {get: getJournalEntry} = useAppData(NAME.useJournalEntry);
 
@@ -36,6 +36,7 @@ export default function Calendar(props) {
 			await getJournalEntry(entry.journalEntryGuid);
 			show(COMP.JOURNAL_ENTRY_PAGE);
 		} else {
+			updateDate(dateStr);
 			messenger.broadcast(SUB.ADD_JOURNAL_ENTRY);
 			show(COMP.ADD_JOURNAL_ENTRY_FORM);
 		}
