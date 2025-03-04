@@ -12,6 +12,8 @@ export function JournalEntryPage(props) {
 
     React.useEffect(() => {
         setOpen(x => getOpen(COMP.JOURNAL_ENTRY_PAGE));
+        // See useOpen.getOpen for why this commented code is here
+        // console.log(current, getOpen(COMP.JOURNAL_ENTRY_PAGE));
     }, [current]);
 
     function raiseAddEvent(event) {
