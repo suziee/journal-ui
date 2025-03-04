@@ -68,11 +68,11 @@ export function RoutePage(props) {
                     </colgroup>
                     <tbody>
                         {
-                            route.entries.map((entry) => {
+                            route.entries?.map((entry) => {
                                 return <tr key={entry.journalEntryRouteGuid}>
                                     <td className="crumb-nav" onClick={raiseDateEvent} data-value={entry.journalEntryGuid}>{entry.date}</td>
-                                    <td>{entry.climbType}</td>
-                                    <td>{entry.pitchesClimbed} / {route.numberOfPitches} pitches</td>
+                                    <td style={{width: 75}}>{entry.climbType}</td>
+                                    <td style={{width: 125}}>{entry.pitchesClimbed} / {route.numberOfPitches} pitches</td>
                                     <td>{entry.notes}</td>
                                 </tr>
                             })

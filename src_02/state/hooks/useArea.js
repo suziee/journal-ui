@@ -18,13 +18,12 @@ export default function useArea(args) {
     }
 
     async function add(area) {
-        const {isSuccessful, json: { guid }} = await client.callApi(API.addArea, area, true);
+        const {isSuccessful, json: _area} = await client.callApi(API.addArea, area, true);
         
         if (isSuccessful)
         {
-            area.guid = guid;
             await getAll();
-            setArea(x => area);
+            setArea(x => _area);
         }
 
         return isSuccessful;

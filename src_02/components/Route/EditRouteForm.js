@@ -6,7 +6,6 @@ import { useAppData
 import { setValues, getValueOrDefault, getControlledValue } from '../shared';
 
 export function EditRouteForm(props) {
-    const {crag} = useAppData(NAME.useCrag);
     const {update, isAdd, route} = useAppData(NAME.useRoute);
     const {errors} = useAppData(NAME.useError);
     const {get: getOpen, current, show} = useAppData(NAME.useOpen);
@@ -14,13 +13,9 @@ export function EditRouteForm(props) {
 
     const fieldMap = [
         {ui: "erf-name", model: "routeName"},
-        {ui: "erf-dir", model: "picturesDirectory"},
         {ui: "erf-type", model: "type"},
         {ui: "erf-grade", model: "grade"},
         {ui: "erf-pitches", model: "numberOfPitches"},
-        {ui: "erf-feet", model: "numberOfFeet"},
-        {ui: "erf-fa", model: "firstAscentionist"},
-        {ui: "erf-notes", model: "notes"},
     ];
 
     React.useEffect(() => {
@@ -43,15 +38,13 @@ export function EditRouteForm(props) {
 
         let request = {   
             routeName: getValueOrDefault(event.target.routeName.value),
-            picturesDirectory: getValueOrDefault(event.target.picturesDirectory.value),
             type: getValueOrDefault(event.target.routeType.value),
             grade: getValueOrDefault(event.target.grade.value),
-            numbeOfPitches: getValueOrDefault(event.target.numberOfPitches.value),
-            numberOfFeet: getValueOrDefault(event.target.numberOfFeet.value),
-            firstAscentionist: getValueOrDefault(event.target.firstAscentionist.value),
-            notes: getValueOrDefault(event.target.notes.value),
+            numberOfPitches: getValueOrDefault(event.target.numberOfPitches.value),
             routeGuid: route.routeGuid,
+            areaName: route.areaName,
             cragGuid: route.cragGuid,
+            cragName: route.cragName,
         };
 
         let isSuccessful = await update(request);
@@ -85,22 +78,6 @@ export function EditRouteForm(props) {
                 <div>
                     <label>Number of Pitches:</label>
                     <input name="numberOfPitches" id="erf-pitches"/>
-                </div>
-                <div>
-                    <label>Number of Feet:</label>
-                    <input name="numberOfFeet" id="erf-feet"/>
-                </div>
-                <div>
-                    <label>First Ascentionist:</label>
-                    <input name="firstAscentionist" id="erf-fa"/>
-                </div>
-                <div>
-                    <label>Pictures Directory:</label>
-                    <input name="picturesDirectory" id="erf-dir"/>
-                </div>
-                <div>
-                    <label>Notes:</label>
-                    <textarea name="notes" id="erf-notes"></textarea>
                 </div>
                 <div className="form-buttons">
                     <button className="text-button red" onClick={raiseCancelEvent}>cancel</button>

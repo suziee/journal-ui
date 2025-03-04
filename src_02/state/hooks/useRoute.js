@@ -22,7 +22,7 @@ export default function useRoute(args) {
         
         if (isSuccessful)
         {
-            route.guid = guid;
+            route.routeGuid = guid;
             await getAll();
             setRoute(x => route);
         }

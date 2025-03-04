@@ -48,6 +48,7 @@ export default function getDefaults(args) {
             client: _useError,
             useJournalEntry: _useJournalEntry,
             messenger: messenger,
+            useCalendar: _useCalendar,
         }),
         [NAME.useKeyword]: useKeyword(),
         [NAME.useRoute] : useRoute({

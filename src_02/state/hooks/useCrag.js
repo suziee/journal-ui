@@ -18,13 +18,12 @@ export default function useCrag(args) {
     }
 
     async function add(crag) {
-        const {isSuccessful, json: { guid }} = await client.callApi(API.addCrag, crag, true);
+        const {isSuccessful, json: _crag} = await client.callApi(API.addCrag, crag, true);
         
         if (isSuccessful)
         {
-            crag.guid = guid;
             await getAll();
-            setCrag(x => crag);
+            setCrag(x => _crag);
         }
 
         return isSuccessful;

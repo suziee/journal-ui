@@ -40,7 +40,10 @@ export function AddRouteForm(props) {
             routeName: getValueOrDefault(event.target.routeName.value),
             type: getValueOrDefault(event.target.routeType.value),
             grade: getValueOrDefault(event.target.grade.value),
-            numbeOfPitches: getValueOrDefault(event.target.numberOfPitches.value),
+            numberOfPitches: getValueOrDefault(event.target.numberOfPitches.value),
+            areaName: crag.areaName,
+            cragGuid: crag.cragGuid,
+            cragName: crag.cragName,
         };
 
         let isSuccessful = await add(request);

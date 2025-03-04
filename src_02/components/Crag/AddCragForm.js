@@ -32,8 +32,7 @@ export function AddCragForm(props) {
 
         let request = {   
             cragName: getValueOrDefault(event.target.cragName.value),
-            picturesDirectory: getValueOrDefault(event.target.picturesDirectory.value),
-            notes: getValueOrDefault(event.target.notes.value),
+            areaGuid: area.areaGuid,
         };
 
         let isSuccessful = await add(request);

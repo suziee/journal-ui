@@ -52,7 +52,7 @@ export function EditJournalEntryRouteForm(props) {
         };
 
         let isSuccessful = await update(request);
-        if (isSuccessful) show(COMP.ROUTE_PAGE);
+        if (isSuccessful) show(COMP.JOURNAL_ENTRY_PAGE);
     }
 
     return (

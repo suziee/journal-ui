@@ -35,9 +35,8 @@ export function EditCragForm(props) {
 
         let request = {   
             cragName: getValueOrDefault(event.target.cragName.value),
-            picturesDirectory: getValueOrDefault(event.target.picturesDirectory.value),
-            notes: getValueOrDefault(event.target.notes.value),
             cragGuid: crag.cragGuid,
+            areaGuid: crag.areaGuid,
         };
 
         let isSuccessful = await update(request);
