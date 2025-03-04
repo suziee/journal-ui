@@ -24,7 +24,6 @@ export function AddJournalEntryRouteForm(props) {
         {ui: "jerf-route", model: "routeGuid"},
         {ui: "jerf-notes", model: "notes"},
         {ui: "jerf-pitches", model: "pitchesClimbed"},
-        {ui: "jerf-sortId", model: "sortId"},
         {ui: "ejerf-type", model: "climbType"},
     ];
 
@@ -57,7 +56,6 @@ export function AddJournalEntryRouteForm(props) {
             journalEntryGuid: journalEntry.journalEntryGuid,
             notes: getValueOrDefault(event.target.notes.value),
             pitchesClimbed: getValueOrDefault(event.target.pitchesClimbed.value),
-            sortId: getValueOrDefault(event.target.sortId.value),
             climbType: getValueOrDefault(event.target.climbType.value),
         };
 
@@ -148,10 +146,6 @@ export function AddJournalEntryRouteForm(props) {
                 <div>
                     <label>Route:</label>
                     {getRouteInput()}
-                </div>
-                <div>
-                    <label>SortId:</label>
-                    <input name="sortId" id="jerf-sortId" />
                 </div>
                 <div>
                     <label>Pitches Climbed:</label>
