@@ -5,7 +5,6 @@ import { getValueOrDefault, setValues } from '../shared';
 export function EditJournalEntryForm(props) {
     const {errors} = useAppData(NAME.useError);
     const {update: updateJournalEntry, journalEntry} = useAppData(NAME.useJournalEntry);
-    const {update: updateJournalEntryRoute} = useAppData(NAME.useJournalEntryRoute);
     const {get: getOpen, current, show} = useAppData(NAME.useOpen);
     const [open, setOpen] = React.useState(false);
     const [routes, setRoutes] = React.useState([]);
@@ -43,18 +42,10 @@ export function EditJournalEntryForm(props) {
             picturesPath: getValueOrDefault(event.target.picturesPath.value),
             notes: getValueOrDefault(event.target.notes.value),
             journalEntryGuid: journalEntry.journalEntryGuid,
+            routes: routes
         };
 
         let isSuccessful = await updateJournalEntry(request);
-
-        if (isSuccessful) {
-            for (let i = 0; i < routes.length; i++) {
-                if (i != routes[i].sortId) {
-                    isSuccessful = isSuccessful && await updateJournalEntryRoute(request);
-                }
-            }    
-        }
-
         if (isSuccessful) show(COMP.JOURNAL_ENTRY_PAGE);
     }
 
