@@ -23,6 +23,7 @@ export function EditAreaForm(props) {
 
     function raiseCancelEvent(event) {
         event.preventDefault();
+        setValue("af-name-edit", area.areaName);
         show(COMP.AREA_PAGE);
     }
 

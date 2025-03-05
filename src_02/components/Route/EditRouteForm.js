@@ -30,6 +30,7 @@ export function EditRouteForm(props) {
 
     function raiseCancelEvent(event) {
         event.preventDefault();
+        setValues(fieldMap, route);
         show(COMP.ROUTE_PAGE);
     }
 

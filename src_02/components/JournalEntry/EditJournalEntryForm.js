@@ -31,6 +31,11 @@ export function EditJournalEntryForm(props) {
 
     function raiseCancelEvent(event) {
         event.preventDefault();
+
+        journalEntry?.routes.sort((a, b) => {return a.index - b.index});
+        setRoutes(x => routes.sort((a, b) => {return a.index - b.index}));
+        setValues(fieldMap, journalEntry);
+
         show(COMP.JOURNAL_ENTRY_PAGE);
     }
 

@@ -35,6 +35,7 @@ export function EditJournalEntryRouteForm(props) {
 
     function raiseCancelEvent(event) {
         event.preventDefault();
+        setValues(fieldMap, journalEntryRoute);
         show(COMP.JOURNAL_ENTRY_PAGE);
     }
 

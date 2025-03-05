@@ -27,6 +27,7 @@ export function EditCragForm(props) {
 
     function raiseCancelEvent(event) {
         event.preventDefault();
+        setValues(fieldMap, crag);
         show(COMP.CRAG_PAGE); 
     }
 
