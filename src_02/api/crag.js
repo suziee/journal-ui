@@ -37,3 +37,13 @@ export async function getCrags() {
     const response = await fetch(API_URL + `crag`);
     return await build(response);
 }
+
+export async function deleteCrag(guid) {
+    const response = await fetch(
+        API_URL + `crag/${guid}`,
+        {
+            method: "DELETE"
+        });
+
+    return await build(response);
+}

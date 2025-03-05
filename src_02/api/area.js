@@ -37,3 +37,13 @@ export async function getAreas() {
     const response = await fetch(API_URL + `area`);
     return await build(response);
 }
+
+export async function deleteArea(guid) {
+    const response = await fetch(
+        API_URL + `area/${guid}`,
+        {
+            method: "DELETE"
+        });
+
+    return await build(response);
+}

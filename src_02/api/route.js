@@ -43,3 +43,13 @@ export async function getRoutes() {
     const response = await fetch(API_URL + `route`);
     return await build(response);
 }
+
+export async function deleteRoute(guid) {
+    const response = await fetch(
+        API_URL + `route/${guid}`,
+        {
+            method: "DELETE"
+        });
+
+    return await build(response);
+}

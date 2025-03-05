@@ -41,11 +41,24 @@ export default function useRoute(args) {
         return isSuccessful;
     }
 
+    async function duhlete(guid) {
+        const {isSuccessful} = await client.callApi(API.deleteRoute, guid, true);
+
+        if (isSuccessful) {
+            await getAll();
+            setRoute(x => null);
+            // get crag again?
+        }
+
+        return isSuccessful;
+    }
+
     return {
         route: route,
         add: add,
         update: update,
         get: get,
         routes: routes,
+        delete: duhlete,
     }
 }

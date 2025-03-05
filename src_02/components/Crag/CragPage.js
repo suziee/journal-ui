@@ -8,7 +8,7 @@ import { useAppData
 
 export function CragPage(props) {
     const messenger = useAppData(NAME.useMessenger);
-    const {crag} = useAppData(NAME.useCrag);
+    const {crag, delete: deleteCrag} = useAppData(NAME.useCrag);
     const {get: getRoute} = useAppData(NAME.useRoute);
     const {get: getArea} = useAppData(NAME.useArea);
     const {get: getOpen, current, show} = useAppData(NAME.useOpen);
@@ -40,6 +40,16 @@ export function CragPage(props) {
         show(COMP.EDIT_CRAG_FORM);
     }
 	
+    async function raiseDeleteEvent(event) {
+        const isSuccessful = await deleteCrag(crag.cragGuid);
+        
+        if (isSuccessful) {
+            // maybe get rid of data value in raiseareaEvent and raiseCragEvent??
+            await getArea(crag.areaGuid);
+            show(COMP.AREA_PAGE);
+        }
+    }
+
 	function build() {
 		if (crag == null) return;
 		
@@ -50,7 +60,7 @@ export function CragPage(props) {
                 </header>
                 <div className="header-buttons">
                     <span className="material-symbols-outlined size-24 green" onClick={raiseEditEvent}>edit</span>
-                    <span className="material-symbols-outlined size-24 red">delete</span>
+                    <span className="material-symbols-outlined size-24 red" onClick={raiseDeleteEvent}>delete</span>
                 </div>
             </div>
             <div>

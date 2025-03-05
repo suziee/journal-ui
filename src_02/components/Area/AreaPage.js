@@ -8,7 +8,7 @@ import { useAppData
 
 export function AreaPage(props) {
     const messenger = useAppData(NAME.useMessenger);
-    const {area} = useAppData(NAME.useArea);
+    const {area, delete: deleteArea} = useAppData(NAME.useArea);
     const {get: getCrag} = useAppData(NAME.useCrag);
     const {get: getOpen, current, show} = useAppData(NAME.useOpen);
     const [open, setOpen] = React.useState(false);
@@ -33,6 +33,14 @@ export function AreaPage(props) {
         show(COMP.ADD_CRAG_FORM);
     }
 
+    async function raiseDeleteEvent(event) {
+        const isSuccessful = await deleteArea(area.areaGuid);
+        
+        if (isSuccessful) {
+            // to do: where do you go from here?
+        }
+    }
+
 	function build() {
 		if (area == null) return;
 		
@@ -41,7 +49,7 @@ export function AreaPage(props) {
                 <header>Area: {area.areaName}</header>
                 <div className="header-buttons">
                     <span className="material-symbols-outlined size-24 green" onClick={raiseEditEvent}>edit</span>
-                    <span className="material-symbols-outlined size-24 red">delete</span>
+                    <span className="material-symbols-outlined size-24 red" onClick={raiseDeleteEvent}>delete</span>
                 </div>
             </div>
             <div>

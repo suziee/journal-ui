@@ -8,7 +8,7 @@ import { useAppData
 
 export function RoutePage(props) {
     const messenger = useAppData(NAME.useMessenger);
-    const {route} = useAppData(NAME.useRoute);
+    const {route, delete: deleteRoute} = useAppData(NAME.useRoute);
     const {get: getArea} = useAppData(NAME.useArea);
     const {get: getCrag} = useAppData(NAME.useCrag);
     const {get: getOpen, current, show} = useAppData(NAME.useOpen);
@@ -42,6 +42,16 @@ export function RoutePage(props) {
         show(COMP.JOURNAL_ENTRY_PAGE);
     }
 
+    async function raiseDeleteEvent(event) {
+        const isSuccessful = await deleteRoute(route.routeGuid);
+        
+        if (isSuccessful) {
+            // maybe get rid of data value in raiseareaEvent and raiseCragEvent??
+            await getCrag(route.cragGuid);
+            show(COMP.CRAG_PAGE);
+        }
+    }
+
 	function build() {
 		if (route == null) return;
 
@@ -54,7 +64,7 @@ export function RoutePage(props) {
                 </header>
                 <div className="header-buttons">
                     <span className="material-symbols-outlined size-24 green" onClick={raiseEditEvent}>edit</span>
-                    <span className="material-symbols-outlined size-24 red">delete</span>
+                    <span className="material-symbols-outlined size-24 red" onClick={raiseDeleteEvent}>delete</span>
                 </div>
             </div>
             <p>{route.notes}</p>

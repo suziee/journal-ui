@@ -40,11 +40,24 @@ export default function useArea(args) {
         return isSuccessful;
     }
 
+    async function duhlete(guid) {
+        const {isSuccessful} = await client.callApi(API.deleteArea, guid, true);
+
+        if (isSuccessful) {
+            await getAll();
+            setArea(x => null);
+        }
+
+        return isSuccessful;
+    }
+    
+
     return {
         areas: areas,
         area: area,
         add: add,
         update: update,
         get: get,
+        delete: duhlete,
     }
 }

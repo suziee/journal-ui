@@ -40,11 +40,24 @@ export default function useCrag(args) {
         return isSuccessful;
     }
 
+    async function duhlete(guid) {
+        const {isSuccessful} = await client.callApi(API.deleteCrag, guid, true);
+
+        if (isSuccessful) {
+            await getAll();
+            setCrag(x => null);
+            // get area again?
+        }
+
+        return isSuccessful;
+    }
+
     return {
         crags: crags,
         crag: crag,
         add: add,
         update: update,
         get: get,
+        delete: duhlete,
     }
 }
