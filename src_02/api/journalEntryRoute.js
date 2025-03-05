@@ -32,3 +32,13 @@ export async function getJournalEntryRoute(guid) {
     const response = await fetch(API_URL + `journal/entry/route/${guid}`);
     return await build(response);
 }
+
+export async function deleteJournalEntryRoute(guid) {
+    const response = await fetch(
+        API_URL + `journal/entry/route/${guid}`,
+        {
+            method: "DELETE"
+        });
+
+    return await build(response);
+}

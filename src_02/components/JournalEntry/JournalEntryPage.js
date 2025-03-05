@@ -4,10 +4,10 @@ import './journalEntryPage.css';
 
 export function JournalEntryPage(props) {
     const messenger = useAppData(NAME.useMessenger);
-    const {journalEntry} = useAppData(NAME.useJournalEntry);
+    const {journalEntry, delete: deleteJournalEntry} = useAppData(NAME.useJournalEntry);
     const {get: getOpen, current, show} = useAppData(NAME.useOpen);
     const {get: getRoute} = useAppData(NAME.useRoute);
-    const {get: getJournalEntryRoute} = useAppData(NAME.useJournalEntryRoute);
+    const {get: getJournalEntryRoute, delete: deleteJournalEntryRoute} = useAppData(NAME.useJournalEntryRoute);
     const [open, setOpen] = React.useState(false);
 
     React.useEffect(() => {
@@ -38,6 +38,16 @@ export function JournalEntryPage(props) {
         show(COMP.EDIT_JOURNAL_ENTRY_ROUTE_FORM);
     }
 
+    async function raiseJerDeleteEvent(event) {
+        const jerGuid = event.target.getAttribute("data-value");
+        await deleteJournalEntryRoute(journalEntry.journalEntryGuid, jerGuid);
+    }
+
+    async function raiseDeleteEvent(event) {
+        const isSuccessful = await deleteJournalEntry(journalEntry.journalEntryGuid);
+        if (isSuccessful) show(COMP.CALENDAR_PAGE);
+    }
+
     function build() {
         if (journalEntry == null) return;
 
@@ -49,7 +59,7 @@ export function JournalEntryPage(props) {
                 <div className="header-buttons">
                     <span className="material-symbols-outlined size-24 green">photo_camera</span>
                     <span className="material-symbols-outlined size-24 green" onClick={raiseEditEvent}>edit</span>
-                    <span className="material-symbols-outlined size-24 red">delete</span>
+                    <span className="material-symbols-outlined size-24 red" onClick={raiseDeleteEvent}>delete</span>
                 </div>
             </div>
             <p>{journalEntry.notes}</p>
@@ -67,7 +77,7 @@ export function JournalEntryPage(props) {
                                     <td style={{width: 75}}>{route.climbType}</td>
                                     <td style={{width: 75}} className="route-buttons">
                                         <span className="text-button" data-value={route.journalEntryRouteGuid} onClick={raiseJerEditEvent}>edit</span>&nbsp;
-                                        <span className="text-button red" data-value={route.journalEntryRouteGuid} onClick={raiseJerEditEvent}>delete</span>
+                                        <span className="text-button red" data-value={route.journalEntryRouteGuid} onClick={raiseJerDeleteEvent}>delete</span>
                                     </td>
                                 </tr>
                                 {route.notes ? <tr>

@@ -38,3 +38,13 @@ export async function getByYear(year) {
     const data = await response.json();
     return data;
 }
+
+export async function deleteJournalEntry(guid) {
+    const response = await fetch(
+        API_URL + `journal/entry/${guid}`,
+        {
+            method: "DELETE"
+        });
+
+    return await build(response);
+}

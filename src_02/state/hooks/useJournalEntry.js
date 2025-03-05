@@ -36,10 +36,22 @@ export default function useJournalEntry(args) {
         return isSuccessful;
     }
 
+    async function duhlete(guid) {
+        const {isSuccessful} = await client.callApi(API.deleteJournalEntry, guid, true);
+
+        if (isSuccessful) {
+            setJournalEntry(x => null);
+            await updateCalendar();
+        }
+
+        return isSuccessful;
+    }
+
     return {
         journalEntry: journalEntry,
         add: add,
         update: update,
         get: get,
+        delete: duhlete,
     }
 }

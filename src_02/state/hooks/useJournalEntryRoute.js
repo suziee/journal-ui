@@ -37,10 +37,22 @@ export default function useJournalEntryRoute(args) {
         setJournalEntryRoute(x => jer);
     }
 
+    async function duhlete(jeGuid, jerGuid) {
+        const {isSuccessful} = await client.callApi(API.deleteJournalEntryRoute, jerGuid, true);
+
+        if (isSuccessful) {
+            await getJournalEntry(jeGuid);
+            await updateCalendar();
+        }
+
+        return isSuccessful;
+    }
+
     return {
         journalEntryRoute: journalEntryRoute,
         add: add,
         update: update,
         get: get,
+        delete: duhlete,
     }
 }
