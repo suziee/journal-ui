@@ -19,7 +19,7 @@ export async function build(response) {
             const values = Object.values(json.errors);
             errors = [...errors, ...values.flat()];
         } else { 
-            errors = [...x, text];
+            errors = [...errors, text];
         }
     }
 
