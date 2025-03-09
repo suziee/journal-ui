@@ -14,9 +14,9 @@
     background-color: aliceblue;
 }
 
-.route-buttons span.red:hover {
+/* .route-buttons span.red:hover {
     background-color: red;
-}
+} */
 
 #edit-sort-routes td {
     padding: 3px 10px 3px 10px;

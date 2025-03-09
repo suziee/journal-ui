@@ -9,6 +9,7 @@ export function JournalEntryPage(props) {
     const {get: getRoute} = useAppData(NAME.useRoute);
     const {get: getJournalEntryRoute, delete: deleteJournalEntryRoute} = useAppData(NAME.useJournalEntryRoute);
     const [open, setOpen] = React.useState(false);
+    const [locked, setLocked] = React.useState(true);
 
     React.useEffect(() => {
         setOpen(x => getOpen(COMP.JOURNAL_ENTRY_PAGE));
@@ -48,6 +49,10 @@ export function JournalEntryPage(props) {
         if (isSuccessful) show(COMP.CALENDAR_PAGE);
     }
 
+    function toggleLocked(event) {
+        setLocked(x => !locked);
+    }
+
     function build() {
         if (journalEntry == null) return;
 
@@ -59,12 +64,21 @@ export function JournalEntryPage(props) {
                 <div className="header-buttons">
                     <span className="material-symbols-outlined size-24 green">photo_camera</span>
                     <span className="material-symbols-outlined size-24 green" onClick={raiseEditEvent}>edit</span>
-                    <span className="material-symbols-outlined size-24 red" onClick={raiseDeleteEvent}>delete</span>
+                    {
+                        locked
+                        ? <span className="material-symbols-outlined size-24 green" onClick={toggleLocked}>lock</span>
+                        : <span className="material-symbols-outlined size-24 green" onClick={toggleLocked}>lock_open</span>
+                    }
+                    {
+                        locked
+                        ? <span className="material-symbols-outlined size-24">delete</span>
+                        : <span className="material-symbols-outlined size-24 red" onClick={raiseDeleteEvent}>delete</span>
+                    }
                 </div>
             </div>
             <p>{journalEntry.notes}</p>
             <div id="routes-climbed">
-                <header><span className="text-button" onClick={raiseAddEvent}>add</span> Routes climbed:</header>
+                <header><span className="text-button green" onClick={raiseAddEvent}>add</span> Routes climbed:</header>
                 <table>
                     <tbody>
                         {journalEntry.routes.map((route, index) => {
@@ -76,8 +90,12 @@ export function JournalEntryPage(props) {
                                     <td style={{width: 125}}>{route.pitchesClimbed} / {route.numberOfPitches} pitches</td>
                                     <td style={{width: 75}}>{route.climbType}</td>
                                     <td style={{width: 75}} className="route-buttons">
-                                        <span className="text-button" data-value={route.journalEntryRouteGuid} onClick={raiseJerEditEvent}>edit</span>&nbsp;
-                                        <span className="text-button red" data-value={route.journalEntryRouteGuid} onClick={raiseJerDeleteEvent}>delete</span>
+                                        <span className="text-button green" data-value={route.journalEntryRouteGuid} onClick={raiseJerEditEvent}>edit</span>&nbsp;
+                                        {
+                                            locked
+                                            ? <span className="text-button" data-value={route.journalEntryRouteGuid}>delete</span>
+                                            : <span className="text-button red" data-value={route.journalEntryRouteGuid} onClick={raiseJerDeleteEvent}>delete</span>
+                                        }
                                     </td>
                                 </tr>
                                 {route.notes ? <tr>

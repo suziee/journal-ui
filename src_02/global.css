@@ -48,8 +48,18 @@ header {
     border-radius: 4px;
 }
 
-.text-button:hover {
+/* .text-button:hover {
     background-color: limegreen;
+    cursor: pointer;
+} */
+
+.text-button.green:hover {
+    background-color: limegreen;
+    cursor: pointer;
+}
+
+.text-button.red:hover{
+    background-color: red;
     cursor: pointer;
 }
 
@@ -113,15 +123,17 @@ button.red {
 .header-buttons {
     display: flex;
     gap: 5px;
-    cursor: pointer;
+    /*cursor: pointer;*/
 }
 
 .header-buttons span.green:hover {
     color: limegreen;
+    cursor: pointer;
 }
 
 .header-buttons span.red:hover {
     color: red;
+    cursor: pointer;
 }
 
 span.size-24 {
