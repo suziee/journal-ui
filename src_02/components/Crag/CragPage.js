@@ -5,9 +5,11 @@ import { useAppData
     , componentNames as COMP
     , subscriptionKeys as SUB
 } from '../../state';
+import { DeleteIcon } from '../Button';
 
 export function CragPage(props) {
     const messenger = useAppData(NAME.useMessenger);
+    const deleteHub = useAppData(NAME.useDeleteHub);
     const {crag, delete: deleteCrag} = useAppData(NAME.useCrag);
     const {get: getRoute} = useAppData(NAME.useRoute);
     const {get: getArea} = useAppData(NAME.useArea);
@@ -22,22 +24,26 @@ export function CragPage(props) {
         const guid = event.target.getAttribute("data-value");
         await getArea(guid);
         show(COMP.AREA_PAGE);
+        deleteHub.resetLock(COMP.CRAG_PAGE);
     }
 
     async function raiseRouteEvent(event) {
         const guid = event.target.getAttribute("data-value");
         await getRoute(guid);
         show(COMP.ROUTE_PAGE);
+        deleteHub.resetLock(COMP.CRAG_PAGE);
     }
 
     function raiseAddEvent(event) {
         messenger.broadcast(SUB.ADD_ROUTE);
         show(COMP.ADD_ROUTE_FORM);
+        deleteHub.resetLock(COMP.CRAG_PAGE);
     }
 
     function raiseEditEvent(event) {
         messenger.broadcast(SUB.UPDATE_CRAG);
         show(COMP.EDIT_CRAG_FORM);
+        deleteHub.resetLock(COMP.CRAG_PAGE);
     }
 	
     async function raiseDeleteEvent(event) {
@@ -47,6 +53,7 @@ export function CragPage(props) {
             // maybe get rid of data value in raiseareaEvent and raiseCragEvent??
             await getArea(crag.areaGuid);
             show(COMP.AREA_PAGE);
+            deleteHub.resetLock(COMP.CRAG_PAGE);
         }
     }
 
@@ -60,11 +67,11 @@ export function CragPage(props) {
                 </header>
                 <div className="header-buttons">
                     <span className="material-symbols-outlined size-24 green" onClick={raiseEditEvent}>edit</span>
-                    <span className="material-symbols-outlined size-24 red" onClick={raiseDeleteEvent}>delete</span>
+                    <DeleteIcon parentType={COMP.CRAG_PAGE} eventHandler={raiseDeleteEvent} />
                 </div>
             </div>
             <div>
-                <header><span className="text-button" onClick={raiseAddEvent}>add</span> Routes:</header>
+                <header><span className="text-button add" onClick={raiseAddEvent}>add</span> Routes:</header>
                 <ul id="routes">
                     {crag.routes.map((route, index) => {
                         return <li key={route.routeGuid} data-value={route.routeGuid} onClick={raiseRouteEvent}>

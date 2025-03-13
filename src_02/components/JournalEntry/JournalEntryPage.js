@@ -1,9 +1,11 @@
 import React from 'react';
 import { useAppData, hookNames as NAME, componentNames as COMP, subscriptionKeys as SUB } from '../../state';
 import './journalEntryPage.css';
+import { DeleteButton, DeleteIcon } from '../Button';
 
 export function JournalEntryPage(props) {
     const messenger = useAppData(NAME.useMessenger);
+    const deleteHub = useAppData(NAME.useDeleteHub);
     const {journalEntry, delete: deleteJournalEntry} = useAppData(NAME.useJournalEntry);
     const {get: getOpen, current, show} = useAppData(NAME.useOpen);
     const {get: getRoute} = useAppData(NAME.useRoute);
@@ -20,16 +22,19 @@ export function JournalEntryPage(props) {
     function raiseAddEvent(event) {
         messenger.broadcast(SUB.ADD_JOURNAL_ENTRY_ROUTE);
         show(COMP.ADD_JOURNAL_ENTRY_ROUTE_FORM);
+        deleteHub.resetLock(COMP.JOURNAL_ENTRY_PAGE);
     }
 
     function raiseEditEvent(event) {
         show(COMP.EDIT_JOURNAL_ENTRY_FORM);
+        deleteHub.resetLock(COMP.JOURNAL_ENTRY_PAGE);
     }
 
     async function raiseRouteEvent(event) {
         const guid = event.target.getAttribute("data-value");
         await getRoute(guid);
         show(COMP.ROUTE_PAGE);
+        deleteHub.resetLock(COMP.JOURNAL_ENTRY_PAGE);
     }
 
     function raiseJerEditEvent(event) {
@@ -37,6 +42,7 @@ export function JournalEntryPage(props) {
         getJournalEntryRoute(guid);
         messenger.broadcast(SUB.UPDATE_JOURNAL_ENTRY_ROUTE);
         show(COMP.EDIT_JOURNAL_ENTRY_ROUTE_FORM);
+        deleteHub.resetLock(COMP.JOURNAL_ENTRY_PAGE);
     }
 
     async function raiseJerDeleteEvent(event) {
@@ -46,7 +52,10 @@ export function JournalEntryPage(props) {
 
     async function raiseDeleteEvent(event) {
         const isSuccessful = await deleteJournalEntry(journalEntry.journalEntryGuid);
-        if (isSuccessful) show(COMP.CALENDAR_PAGE);
+        if (isSuccessful) {
+            show(COMP.CALENDAR_PAGE);
+            deleteHub.resetLock(COMP.JOURNAL_ENTRY_PAGE);
+        }
     }
 
     function toggleLocked(event) {
@@ -64,21 +73,12 @@ export function JournalEntryPage(props) {
                 <div className="header-buttons">
                     <span className="material-symbols-outlined size-24 green">photo_camera</span>
                     <span className="material-symbols-outlined size-24 green" onClick={raiseEditEvent}>edit</span>
-                    {
-                        locked
-                        ? <span className="material-symbols-outlined size-24 green" onClick={toggleLocked}>lock</span>
-                        : <span className="material-symbols-outlined size-24 green" onClick={toggleLocked}>lock_open</span>
-                    }
-                    {
-                        locked
-                        ? <span className="material-symbols-outlined size-24">delete</span>
-                        : <span className="material-symbols-outlined size-24 red" onClick={raiseDeleteEvent}>delete</span>
-                    }
+                    <DeleteIcon parentType={COMP.JOURNAL_ENTRY_PAGE} eventHandler={raiseDeleteEvent} />
                 </div>
             </div>
             <p>{journalEntry.notes}</p>
             <div id="routes-climbed">
-                <header><span className="text-button green" onClick={raiseAddEvent}>add</span> Routes climbed:</header>
+                <header><span className="text-button add" onClick={raiseAddEvent}>add</span> Routes climbed:</header>
                 <table>
                     <tbody>
                         {journalEntry.routes.map((route, index) => {
@@ -90,12 +90,8 @@ export function JournalEntryPage(props) {
                                     <td style={{width: 125}}>{route.pitchesClimbed} / {route.numberOfPitches} pitches</td>
                                     <td style={{width: 75}}>{route.climbType}</td>
                                     <td style={{width: 75}} className="route-buttons">
-                                        <span className="text-button green" data-value={route.journalEntryRouteGuid} onClick={raiseJerEditEvent}>edit</span>&nbsp;
-                                        {
-                                            locked
-                                            ? <span className="text-button" data-value={route.journalEntryRouteGuid}>delete</span>
-                                            : <span className="text-button red" data-value={route.journalEntryRouteGuid} onClick={raiseJerDeleteEvent}>delete</span>
-                                        }
+                                        <span className="text-button edit" data-value={route.journalEntryRouteGuid} onClick={raiseJerEditEvent}>edit</span>&nbsp;
+                                        <DeleteButton parentType={COMP.JOURNAL_ENTRY_PAGE} eventHandler={raiseJerDeleteEvent} dataValue={route.journalEntryRouteGuid} />
                                     </td>
                                 </tr>
                                 {route.notes ? <tr>

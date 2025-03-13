@@ -5,9 +5,11 @@ import { useAppData
     , componentNames as COMP
     , subscriptionKeys as SUB
 } from '../../state';
+import { DeleteIcon } from '../Button';
 
 export function RoutePage(props) {
     const messenger = useAppData(NAME.useMessenger);
+    const deleteHub = useAppData(NAME.useDeleteHub);
     const {route, delete: deleteRoute} = useAppData(NAME.useRoute);
     const {get: getArea} = useAppData(NAME.useArea);
     const {get: getCrag} = useAppData(NAME.useCrag);
@@ -23,23 +25,27 @@ export function RoutePage(props) {
         const guid = event.target.getAttribute("data-value");
         await getArea(guid);
         show(COMP.AREA_PAGE);
+        deleteHub.resetLock(COMP.ROUTE_PAGE);
     }
 
     async function raiseCragEvent(event) {
         const guid = event.target.getAttribute("data-value");
         await getCrag(guid);
         show(COMP.CRAG_PAGE);
+        deleteHub.resetLock(COMP.ROUTE_PAGE);
     }
 
     function raiseEditEvent(event) {
         messenger.broadcast(SUB.UPDATE_ROUTE);
         show(COMP.EDIT_ROUTE_FORM);
+        deleteHub.resetLock(COMP.ROUTE_PAGE);
     }
 
     async function raiseDateEvent(event) {
         const guid = event.target.getAttribute("data-value");
         await getJournalEntry(guid);
         show(COMP.JOURNAL_ENTRY_PAGE);
+        deleteHub.resetLock(COMP.ROUTE_PAGE);
     }
 
     async function raiseDeleteEvent(event) {
@@ -49,6 +55,7 @@ export function RoutePage(props) {
             // maybe get rid of data value in raiseareaEvent and raiseCragEvent??
             await getCrag(route.cragGuid);
             show(COMP.CRAG_PAGE);
+            deleteHub.resetLock(COMP.ROUTE_PAGE);
         }
     }
 
@@ -64,7 +71,7 @@ export function RoutePage(props) {
                 </header>
                 <div className="header-buttons">
                     <span className="material-symbols-outlined size-24 green" onClick={raiseEditEvent}>edit</span>
-                    <span className="material-symbols-outlined size-24 red" onClick={raiseDeleteEvent}>delete</span>
+                    <DeleteIcon parentType={COMP.ROUTE_PAGE} eventHandler={raiseDeleteEvent} />
                 </div>
             </div>
             <p>{route.notes}</p>

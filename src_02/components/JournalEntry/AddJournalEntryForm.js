@@ -59,8 +59,8 @@ export function AddJournalEntryForm(props) {
                     <textarea name="notes" id="jef-notes"></textarea>
                 </div>
                 <div className="form-buttons">
-                    <button className="text-button red" onClick={raiseCancelEvent}>cancel</button>
-                    <button className="text-button green" type="submit">save</button>
+                    <button className="text-button cancel" onClick={raiseCancelEvent}>cancel</button>
+                    <button className="text-button save" type="submit">save</button>
                 </div>
             </form>
             <ul className="form-errors">

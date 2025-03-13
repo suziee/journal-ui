@@ -9,6 +9,7 @@ import useJournalEntryRoute from './hooks/useJournalEntryRoute';
 import useKeyword from './hooks/useKeyword';
 import useRoute from './hooks/useRoute';
 import useOpen from './hooks/useOpen';
+import useDeleteHub from './hooks/useDeleteHub';
 
 export default function getDefaults(args) {
     const messenger = useMessenger();
@@ -56,6 +57,7 @@ export default function getDefaults(args) {
             client: _useError,
         }),
         [NAME.useOpen]: useOpen(),
+        [NAME.useDeleteHub]: useDeleteHub(),
     };
 
     return defaults;

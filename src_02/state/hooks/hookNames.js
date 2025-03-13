@@ -8,3 +8,4 @@ export const useMessenger = "useMessenger";
 export const useRoute = "useRoute";
 export const useError = "useError";
 export const useOpen = "useOpen";
+export const useDeleteHub = "useDeleteHub";
