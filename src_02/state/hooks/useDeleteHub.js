@@ -1,15 +1,21 @@
 import React from 'react';
-import * as SUB from './subscriptionKeys';
-import { useDeleteHub as id } from './hookNames';
 import * as COMP from './componentNames';
 
 export default function useDeleteHub(args) {
+   const {openHub} = args;
+   
    const [locks, setLocks] = React.useState({
       [COMP.AREA_PAGE]: true,
       [COMP.CRAG_PAGE]: true,
       [COMP.JOURNAL_ENTRY_PAGE]: true,
       [COMP.ROUTE_PAGE]: true,
    });
+
+   React.useEffect(() => {
+      if (locks.hasOwnProperty(openHub.current)) {
+         reset(openHub.current);
+      }
+   }, [openHub.current]);
 
    function toggle(name) {
       let newLocks = {

@@ -5,9 +5,8 @@ import { DeleteButton, DeleteIcon } from '../Button';
 
 export function JournalEntryPage(props) {
     const messenger = useAppData(NAME.useMessenger);
-    const deleteHub = useAppData(NAME.useDeleteHub);
     const {journalEntry, delete: deleteJournalEntry} = useAppData(NAME.useJournalEntry);
-    const {get: getOpen, current, show} = useAppData(NAME.useOpen);
+    const {get: getOpen, current} = useAppData(NAME.useOpen);
     const {get: getRoute} = useAppData(NAME.useRoute);
     const {get: getJournalEntryRoute, delete: deleteJournalEntryRoute} = useAppData(NAME.useJournalEntryRoute);
     const [open, setOpen] = React.useState(false);
@@ -21,28 +20,22 @@ export function JournalEntryPage(props) {
 
     function raiseAddEvent(event) {
         messenger.broadcast(SUB.ADD_JOURNAL_ENTRY_ROUTE);
-        show(COMP.ADD_JOURNAL_ENTRY_ROUTE_FORM);
-        deleteHub.resetLock(COMP.JOURNAL_ENTRY_PAGE);
     }
 
     function raiseEditEvent(event) {
-        show(COMP.EDIT_JOURNAL_ENTRY_FORM);
-        deleteHub.resetLock(COMP.JOURNAL_ENTRY_PAGE);
+        messenger.broadcast(SUB.UPDATE_JOURNAL_ENTRY);
     }
 
     async function raiseRouteEvent(event) {
         const guid = event.target.getAttribute("data-value");
         await getRoute(guid);
-        show(COMP.ROUTE_PAGE);
-        deleteHub.resetLock(COMP.JOURNAL_ENTRY_PAGE);
+        messenger.broadcast(SUB.SHOW_ROUTE);
     }
 
     function raiseJerEditEvent(event) {
         const guid = event.target.getAttribute("data-value");
         getJournalEntryRoute(guid);
         messenger.broadcast(SUB.UPDATE_JOURNAL_ENTRY_ROUTE);
-        show(COMP.EDIT_JOURNAL_ENTRY_ROUTE_FORM);
-        deleteHub.resetLock(COMP.JOURNAL_ENTRY_PAGE);
     }
 
     async function raiseJerDeleteEvent(event) {
@@ -52,14 +45,7 @@ export function JournalEntryPage(props) {
 
     async function raiseDeleteEvent(event) {
         const isSuccessful = await deleteJournalEntry(journalEntry.journalEntryGuid);
-        if (isSuccessful) {
-            show(COMP.CALENDAR_PAGE);
-            deleteHub.resetLock(COMP.JOURNAL_ENTRY_PAGE);
-        }
-    }
-
-    function toggleLocked(event) {
-        setLocked(x => !locked);
+        if (isSuccessful) messenger.broadcast(SUB.DELETED_JOURNAL_ENTRY);
     }
 
     function build() {

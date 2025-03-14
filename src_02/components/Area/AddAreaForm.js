@@ -2,24 +2,30 @@ import React from 'react';
 import { useAppData
     , hookNames as NAME
     , componentNames as COMP
+    , subscriptionKeys as SUB
 } from '../../state';
-import { setValue, getValueOrDefault } from '../shared';
+import { clearValues, getValueOrDefault } from '../shared';
 
 export function AddAreaForm(props) {
+    const messenger = useAppData(NAME.useMessenger);
     const {add} = useAppData(NAME.useArea);
     const {errors} = useAppData(NAME.useError);
-    const {get: getOpen, current, hide, show} = useAppData(NAME.useOpen);
+    const {get: getOpen, current} = useAppData(NAME.useOpen);
     const [open, setOpen] = React.useState(false);
+
+    const fieldMap = [
+        {ui: "af-name", model: "areaName"},
+    ];
 
     React.useEffect(() => {
         setOpen(x => getOpen(COMP.ADD_AREA_FORM));
-        setValue("af-name", null);
+        clearValues(fieldMap);
     }, [current]);
 
     function raiseCancelEvent(event) {
         event.preventDefault();
-        setValue("af-name", null);
-        hide(COMP.ADD_AREA_FORM);
+        clearValues(fieldMap);
+        messenger.broadcast(SUB.CANCEL_ADD_AREA);
     }
 
     async function raiseSubmitEvent(event) {
@@ -30,7 +36,7 @@ export function AddAreaForm(props) {
         };
 
         let isSuccessful = await add(request);
-        if (isSuccessful) show(COMP.AREA_PAGE);
+        if (isSuccessful) messenger.broadcast(SUB.ADDED_AREA);
     }
 
     return (

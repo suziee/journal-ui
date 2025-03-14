@@ -2,13 +2,15 @@ import React from 'react';
 import { useAppData
     , hookNames as NAME
     , componentNames as COMP
+    , subscriptionKeys as SUB
 } from '../../state';
 import { setValues, getValueOrDefault, getControlledValue } from '../shared';
 
 export function EditCragForm(props) {
+    const messenger = useAppData(NAME.useMessenger);
     const {update, crag} = useAppData(NAME.useCrag);
     const {errors} = useAppData(NAME.useError);
-    const {get: getOpen, current, show} = useAppData(NAME.useOpen);
+    const {get: getOpen, current} = useAppData(NAME.useOpen);
     const [open, setOpen] = React.useState(false);
 
     const fieldMap = [
@@ -28,7 +30,7 @@ export function EditCragForm(props) {
     function raiseCancelEvent(event) {
         event.preventDefault();
         setValues(fieldMap, crag);
-        show(COMP.CRAG_PAGE); 
+        messenger.broadcast(SUB.CANCEL_UPDATE_CRAG);
     }
 
     async function raiseSubmitEvent(event) {
@@ -41,7 +43,7 @@ export function EditCragForm(props) {
         };
 
         let isSuccessful = await update(request);
-        if (isSuccessful) show(COMP.CRAG_PAGE);
+        if (isSuccessful) messenger.broadcast(SUB.UPDATED_CRAG);
     }
 
     return (

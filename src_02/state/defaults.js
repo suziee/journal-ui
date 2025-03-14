@@ -28,11 +28,16 @@ export default function getDefaults(args) {
         useCalendar: _useCalendar,
     });
 
+    const _useOpen = useOpen({
+        messenger: messenger,
+    });
+
     let defaults = {
         [NAME.useMessenger]: messenger,
         [NAME.useError]: _useError,
         [NAME.useCalendar]: _useCalendar,
         [NAME.useJournalEntry]: _useJournalEntry,
+        [NAME.useOpen]: _useOpen,
     };
 
     defaults = {
@@ -56,8 +61,9 @@ export default function getDefaults(args) {
             messenger: messenger,
             client: _useError,
         }),
-        [NAME.useOpen]: useOpen(),
-        [NAME.useDeleteHub]: useDeleteHub(),
+        [NAME.useDeleteHub]: useDeleteHub({
+            openHub: _useOpen
+        }),
     };
 
     return defaults;

@@ -1,11 +1,12 @@
 import React from 'react';
-import { useAppData, hookNames as NAME, componentNames as COMP } from '../../state';
+import { useAppData, hookNames as NAME, componentNames as COMP, subscriptionKeys as SUB } from '../../state';
 import { getValueOrDefault, clearValues, getControlledValue } from '../shared';
 
 export function AddJournalEntryForm(props) {
+    const messenger = useAppData(NAME.useMessenger);
     const {errors} = useAppData(NAME.useError);
     const {add} = useAppData(NAME.useJournalEntry);
-    const {get: getOpen, current, show} = useAppData(NAME.useOpen);
+    const {get: getOpen, current} = useAppData(NAME.useOpen);
     const {date} = useAppData(NAME.useCalendar);
     const [open, setOpen] = React.useState(false);
 
@@ -26,7 +27,7 @@ export function AddJournalEntryForm(props) {
     function raiseCancelEvent(event) {
         event.preventDefault();
         clearValues(fieldMap);
-        show(COMP.CALENDAR_PAGE);
+        messenger.broadcast(SUB.CANCEL_UPDATE_JOURNAL_ENTRY);
     }
 
     async function raiseSubmitEvent(event) {
@@ -39,7 +40,7 @@ export function AddJournalEntryForm(props) {
         };
 
         let isSuccessful = await add(request);
-        if (isSuccessful) show(COMP.JOURNAL_ENTRY_PAGE);
+        if (isSuccessful) messenger.broadcast(SUB.ADDED_JOURNAL_ENTRY);
     }
 
     return (

@@ -12,7 +12,7 @@ export function AreaPage(props) {
     const deleteHub = useAppData(NAME.useDeleteHub);
     const {area, delete: deleteArea} = useAppData(NAME.useArea);
     const {get: getCrag} = useAppData(NAME.useCrag);
-    const {get: getOpen, current, show} = useAppData(NAME.useOpen);
+    const {get: getOpen, current} = useAppData(NAME.useOpen);
     const [open, setOpen] = React.useState(false);
 
     React.useEffect(() => {
@@ -22,29 +22,20 @@ export function AreaPage(props) {
     async function raiseCragEvent(event) {
         const guid = event.target.getAttribute("data-value");
         await getCrag(guid);
-        show(COMP.CRAG_PAGE);
-        deleteHub.resetLock(COMP.AREA_PAGE);
+        messenger.broadcast(SUB.SHOW_CRAG);
     }
 
     function raiseEditEvent(event) {
         messenger.broadcast(SUB.UPDATE_AREA);
-        show(COMP.EDIT_AREA_FORM);
-        deleteHub.resetLock(COMP.AREA_PAGE);
     }
 
     function raiseAddEvent(event) {
         messenger.broadcast(SUB.ADD_CRAG);
-        show(COMP.ADD_CRAG_FORM);
-        deleteHub.resetLock(COMP.AREA_PAGE);
     }
 
     async function raiseDeleteEvent(event) {
         const isSuccessful = await deleteArea(area.areaGuid);
-        
-        if (isSuccessful) {
-            // to do: where do you go from here?
-            deleteHub.resetLock(COMP.AREA_PAGE);
-        }
+        if (isSuccessful) messenger.broadcast(SUB.DELETED_AREA);
     }
 
 	function build() {

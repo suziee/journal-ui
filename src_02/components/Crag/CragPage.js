@@ -13,7 +13,7 @@ export function CragPage(props) {
     const {crag, delete: deleteCrag} = useAppData(NAME.useCrag);
     const {get: getRoute} = useAppData(NAME.useRoute);
     const {get: getArea} = useAppData(NAME.useArea);
-    const {get: getOpen, current, show} = useAppData(NAME.useOpen);
+    const {get: getOpen, current} = useAppData(NAME.useOpen);
     const [open, setOpen] = React.useState(false);
 
     React.useEffect(() => {
@@ -21,39 +21,30 @@ export function CragPage(props) {
     }, [current]);
 
     async function raiseAreaEvent(event) {
-        const guid = event.target.getAttribute("data-value");
-        await getArea(guid);
-        show(COMP.AREA_PAGE);
-        deleteHub.resetLock(COMP.CRAG_PAGE);
+        await getArea(crag.areaGuid);
+        messenger.broadcast(SUB.SHOW_AREA);
     }
 
     async function raiseRouteEvent(event) {
         const guid = event.target.getAttribute("data-value");
         await getRoute(guid);
-        show(COMP.ROUTE_PAGE);
-        deleteHub.resetLock(COMP.CRAG_PAGE);
+        messenger.broadcast(SUB.SHOW_ROUTE);
     }
 
     function raiseAddEvent(event) {
         messenger.broadcast(SUB.ADD_ROUTE);
-        show(COMP.ADD_ROUTE_FORM);
-        deleteHub.resetLock(COMP.CRAG_PAGE);
     }
 
     function raiseEditEvent(event) {
         messenger.broadcast(SUB.UPDATE_CRAG);
-        show(COMP.EDIT_CRAG_FORM);
-        deleteHub.resetLock(COMP.CRAG_PAGE);
     }
 	
     async function raiseDeleteEvent(event) {
         const isSuccessful = await deleteCrag(crag.cragGuid);
         
         if (isSuccessful) {
-            // maybe get rid of data value in raiseareaEvent and raiseCragEvent??
             await getArea(crag.areaGuid);
-            show(COMP.AREA_PAGE);
-            deleteHub.resetLock(COMP.CRAG_PAGE);
+            messenger.broadcast(SUB.DELETED_CRAG);
         }
     }
 
@@ -63,7 +54,7 @@ export function CragPage(props) {
 		return <React.Fragment>
             <div className="header">
                 <header>
-                    Crag: <span className="crumb-nav" onClick={raiseAreaEvent} data-value={crag.areaGuid}>{crag.areaName}</span> / <span className="crumb-leaf">{crag.cragName}</span>
+                    Crag: <span className="crumb-nav" onClick={raiseAreaEvent}>{crag.areaName}</span> / <span className="crumb-leaf">{crag.cragName}</span>
                 </header>
                 <div className="header-buttons">
                     <span className="material-symbols-outlined size-24 green" onClick={raiseEditEvent}>edit</span>

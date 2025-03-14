@@ -1,8 +1,8 @@
 import React from 'react';
 import {
-    useAppData,
-    hookNames as NAME,
-    componentNames as COMP
+    useAppData
+    , hookNames as NAME
+    , componentNames as COMP
 } from '../../state';
 import './calendarContainer.css';
 import Calendar from './Calendar';
@@ -18,7 +18,7 @@ export default function CalendarPage(props) {
         yearRef.current.value = year;
     }, [year]);
 
-    const {get: getOpen, current, show} = useAppData(NAME.useOpen);
+    const {get: getOpen, current} = useAppData(NAME.useOpen);
     const [open, setOpen] = React.useState(false);
 
     React.useEffect(() => {

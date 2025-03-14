@@ -2,10 +2,12 @@ import React from 'react';
 import { useAppData
     , hookNames as NAME
     , componentNames as COMP
+    , subscriptionKeys as SUB
 } from '../../state';
 import { clearValues, getValueOrDefault, getControlledValue } from '../shared';
 
 export function AddRouteForm(props) {
+    const messenger = useAppData(NAME.useMessenger);
     const {crag} = useAppData(NAME.useCrag);
     const {add} = useAppData(NAME.useRoute);
     const {errors} = useAppData(NAME.useError);
@@ -30,7 +32,7 @@ export function AddRouteForm(props) {
     function raiseCancelEvent(event) {
         event.preventDefault();
         clearValues(fieldMap);
-        show(COMP.CRAG_PAGE);
+        messenger.broadcast(SUB.CANCEL_ADD_ROUTE);
     }
 
     async function raiseSubmitEvent(event) {
@@ -47,7 +49,7 @@ export function AddRouteForm(props) {
         };
 
         let isSuccessful = await add(request);
-        if (isSuccessful) show(COMP.ROUTE_PAGE);
+        if (isSuccessful) messenger.broadcast(SUB.ADDED_ROUTE);
     }
 
     return (

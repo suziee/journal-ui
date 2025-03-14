@@ -2,10 +2,12 @@ import React from 'react';
 import { useAppData
     , hookNames as NAME
     , componentNames as COMP
+    , subscriptionKeys as SUB
 } from '../../state';
 import { setValues, getValueOrDefault, getControlledValue } from '../shared';
 
 export function EditRouteForm(props) {
+    const messenger = useAppData(NAME.useMessenger);
     const {update, isAdd, route} = useAppData(NAME.useRoute);
     const {errors} = useAppData(NAME.useError);
     const {get: getOpen, current, show} = useAppData(NAME.useOpen);
@@ -31,7 +33,7 @@ export function EditRouteForm(props) {
     function raiseCancelEvent(event) {
         event.preventDefault();
         setValues(fieldMap, route);
-        show(COMP.ROUTE_PAGE);
+        messenger.broadcast(SUB.CANCEL_UPDATE_ROUTE);
     }
 
     async function raiseSubmitEvent(event) {
@@ -49,7 +51,7 @@ export function EditRouteForm(props) {
         };
 
         let isSuccessful = await update(request);
-        if (isSuccessful) show(COMP.ROUTE_PAGE);
+        if (isSuccessful) messenger.broadcast(SUB.UPDATED_ROUTE);
     }
 
     return (

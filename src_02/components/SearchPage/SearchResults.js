@@ -12,7 +12,6 @@ export default function SearchResults(props) {
     const {get: getCrag} = useAppData(NAME.useCrag);
     const {get: getRoute} = useAppData(NAME.useRoute);
     const messenger = useAppData(NAME.useMessenger);
-    const {show} = useAppData(NAME.useOpen);
 
     const {results, keyword} = useAppData(NAME.useKeyword);
 
@@ -23,16 +22,13 @@ export default function SearchResults(props) {
 
         if (result.isArea) {
             await getArea(result.guid);
-            // messenger.broadcast(SUB.SHOW_AREA);
-            show(COMP.AREA_PAGE);
+            messenger.broadcast(SUB.SHOW_AREA);
         } else if (result.isCrag) {
             await getCrag(result.guid);
-            // messenger.broadcast(SUB.SHOW_CRAG);
-            show(COMP.CRAG_PAGE);
+            messenger.broadcast(SUB.SHOW_CRAG);
         } else if (result.isRoute) {
             await getRoute(result.guid);
-            // messenger.broadcast(SUB.SHOW_ROUTE);
-            show(COMP.ROUTE_PAGE);
+            messenger.broadcast(SUB.SHOW_ROUTE);
         }
     }
 

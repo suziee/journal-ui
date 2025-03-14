@@ -3,18 +3,18 @@ import './calendarResults.css';
 import {
     useAppData,
     hookNames as NAME,
-    componentNames as COMP
+    subscriptionKeys as SUB
 } from '../../state';
 
 export default function CalendarResults(props) {
+    const messenger = useAppData(NAME.useMessenger);
     const { routes: yearEntries } = useAppData(NAME.useCalendar);
     const { get: getJournalEntry } = useAppData(NAME.useJournalEntry);
-    const { show } = useAppData(NAME.useOpen);
 
     async function raiseRouteEvent(guid) {
         // can't do the data-value attr thing on tr, because the target is td since that's what you're clicking
         await getJournalEntry(guid);
-        show(COMP.JOURNAL_ENTRY_PAGE);
+        messenger.broadcast(SUB.SHOW_JOURNAL_ENTRY);
     }
 
     function build() {

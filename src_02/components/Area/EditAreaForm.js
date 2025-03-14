@@ -2,14 +2,20 @@ import React from 'react';
 import { useAppData
     , hookNames as NAME
     , componentNames as COMP
+    , subscriptionKeys as SUB
 } from '../../state';
-import { setValue, getValueOrDefault } from '../shared';
+import { setValues, getValueOrDefault } from '../shared';
 
 export function EditAreaForm(props) {
+    const messenger = useAppData(NAME.useMessenger);
     const {update, area} = useAppData(NAME.useArea);
     const {errors} = useAppData(NAME.useError);
-    const {get: getOpen, current, show} = useAppData(NAME.useOpen);
+    const {get: getOpen, current} = useAppData(NAME.useOpen);
     const [open, setOpen] = React.useState(false);
+
+    const fieldMap = [
+        {ui: "af-name-edit", model: "areaName"},
+    ];
 
     React.useEffect(() => {
         setOpen(x => getOpen(COMP.EDIT_AREA_FORM));
@@ -17,14 +23,14 @@ export function EditAreaForm(props) {
 
     React.useEffect(() => {
         if (area != null) {
-            setValue("af-name-edit", area.areaName);
+            setValues(fieldMap, area);
         }
     }, [area])
 
     function raiseCancelEvent(event) {
         event.preventDefault();
-        setValue("af-name-edit", area.areaName);
-        show(COMP.AREA_PAGE);
+        setValues(fieldMap, area);
+        messenger.broadcast(SUB.CANCEL_UPDATE_AREA);
     }
 
     async function raiseSubmitEvent(event) {
@@ -36,7 +42,7 @@ export function EditAreaForm(props) {
         };
 
         let isSuccessful = await update(request);
-        if (isSuccessful) show(COMP.AREA_PAGE);
+        if (isSuccessful) messenger.broadcast(SUB.UPDATED_AREA);
     }
 
     return (

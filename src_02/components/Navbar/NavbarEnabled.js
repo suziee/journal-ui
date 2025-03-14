@@ -10,19 +10,17 @@ import NavButtons from './NavButtons';
 export default function NavbarEnabled(props) {
     const {icons} = props;
     const messenger = useAppData(NAME.useMessenger);
-    const {show} = useAppData(NAME.useOpen);
 
     function search() {
-        show(COMP.SEARCH_PAGE);
+        messenger.broadcast(SUB.SHOW_SEARCH);
     }
 
     function addArea() {
         messenger.broadcast(SUB.ADD_AREA);
-        show(COMP.ADD_AREA_FORM);
     }
 
     function calendar() {
-        show(COMP.CALENDAR_PAGE);
+        messenger.broadcast(SUB.SHOW_CALENDAR);
     }
 
     function stats() {

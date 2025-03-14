@@ -9,11 +9,10 @@ import { DeleteIcon } from '../Button';
 
 export function RoutePage(props) {
     const messenger = useAppData(NAME.useMessenger);
-    const deleteHub = useAppData(NAME.useDeleteHub);
     const {route, delete: deleteRoute} = useAppData(NAME.useRoute);
     const {get: getArea} = useAppData(NAME.useArea);
     const {get: getCrag} = useAppData(NAME.useCrag);
-    const {get: getOpen, current, show} = useAppData(NAME.useOpen);
+    const {get: getOpen, current} = useAppData(NAME.useOpen);
     const {get: getJournalEntry} = useAppData(NAME.useJournalEntry);
     const [open, setOpen] = React.useState(false);
 
@@ -22,30 +21,23 @@ export function RoutePage(props) {
     }, [current]);
 	
     async function raiseAreaEvent(event) {
-        const guid = event.target.getAttribute("data-value");
-        await getArea(guid);
-        show(COMP.AREA_PAGE);
-        deleteHub.resetLock(COMP.ROUTE_PAGE);
+        await getArea(route.areaGuid);
+        messenger.broadcast(SUB.SHOW_AREA);
     }
 
     async function raiseCragEvent(event) {
-        const guid = event.target.getAttribute("data-value");
-        await getCrag(guid);
-        show(COMP.CRAG_PAGE);
-        deleteHub.resetLock(COMP.ROUTE_PAGE);
+        await getCrag(route.cragGuid);
+        messenger.broadcast(SUB.SHOW_CRAG);
     }
 
     function raiseEditEvent(event) {
         messenger.broadcast(SUB.UPDATE_ROUTE);
-        show(COMP.EDIT_ROUTE_FORM);
-        deleteHub.resetLock(COMP.ROUTE_PAGE);
     }
 
     async function raiseDateEvent(event) {
         const guid = event.target.getAttribute("data-value");
         await getJournalEntry(guid);
-        show(COMP.JOURNAL_ENTRY_PAGE);
-        deleteHub.resetLock(COMP.ROUTE_PAGE);
+        messenger.broadcast(SUB.SHOW_JOURNAL_ENTRY);
     }
 
     async function raiseDeleteEvent(event) {
@@ -54,8 +46,7 @@ export function RoutePage(props) {
         if (isSuccessful) {
             // maybe get rid of data value in raiseareaEvent and raiseCragEvent??
             await getCrag(route.cragGuid);
-            show(COMP.CRAG_PAGE);
-            deleteHub.resetLock(COMP.ROUTE_PAGE);
+            messenger.broadcast(SUB.DELETED_ROUTE);
         }
     }
 
@@ -65,7 +56,7 @@ export function RoutePage(props) {
 		return <React.Fragment>
             <div className="header">
                 <header>
-                    Route: <span className="crumb-nav" onClick={raiseAreaEvent} data-value={route.areaGuid}>{route.areaName}</span> / <span className="crumb-nav" onClick={raiseCragEvent} data-value={route.cragGuid}>{route.cragName}</span> / <span className="crumb-leaf">{route.routeName}</span>
+                    Route: <span className="crumb-nav" onClick={raiseAreaEvent}>{route.areaName}</span> / <span className="crumb-nav" onClick={raiseCragEvent}>{route.cragName}</span> / <span className="crumb-leaf">{route.routeName}</span>
                     <br />
                     {route.grade} {route.type}, {route.numberOfPitches} pitches
                 </header>

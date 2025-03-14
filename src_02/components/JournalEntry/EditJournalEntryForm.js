@@ -1,11 +1,15 @@
 import React from 'react';
-import { useAppData, hookNames as NAME, componentNames as COMP } from '../../state';
+import { useAppData
+    , hookNames as NAME
+    , componentNames as COMP
+    , subscriptionKeys as SUB } from '../../state';
 import { getValueOrDefault, setValues } from '../shared';
 
 export function EditJournalEntryForm(props) {
+    const messenger = useAppData(NAME.useMessenger);
     const {errors} = useAppData(NAME.useError);
     const {update: updateJournalEntry, journalEntry} = useAppData(NAME.useJournalEntry);
-    const {get: getOpen, current, show} = useAppData(NAME.useOpen);
+    const {get: getOpen, current} = useAppData(NAME.useOpen);
     const [open, setOpen] = React.useState(false);
     const [routes, setRoutes] = React.useState([]);
 
@@ -36,7 +40,7 @@ export function EditJournalEntryForm(props) {
         setRoutes(x => routes.sort((a, b) => {return a.index - b.index}));
         setValues(fieldMap, journalEntry);
 
-        show(COMP.JOURNAL_ENTRY_PAGE);
+        messenger.broadcast(SUB.CANCEL_UPDATE_JOURNAL_ENTRY);
     }
 
     async function raiseSubmitEvent(event) {
@@ -51,7 +55,7 @@ export function EditJournalEntryForm(props) {
         };
 
         let isSuccessful = await updateJournalEntry(request);
-        if (isSuccessful) show(COMP.JOURNAL_ENTRY_PAGE);
+        if (isSuccessful) messenger.broadcast(SUB.UPDATED_JOURNAL_ENTRY);
     }
 
     function raiseUpEvent(index) {

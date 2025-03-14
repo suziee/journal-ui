@@ -2,10 +2,12 @@ import React from 'react';
 import { useAppData
     , hookNames as NAME
     , componentNames as COMP
+    , subscriptionKeys as SUB
 } from '../../state';
 import { clearValues, getValueOrDefault, getControlledValue } from '../shared';
 
 export function AddJournalEntryRouteForm(props) {
+    const messenger = useAppData(NAME.useMessenger);
     const {areas} = useAppData(NAME.useArea);
     const {crags} = useAppData(NAME.useCrag);
     const {routes} = useAppData(NAME.useRoute);
@@ -43,7 +45,7 @@ export function AddJournalEntryRouteForm(props) {
     function raiseCancelEvent(event) {
         event.preventDefault();
         clearValues(fieldMap);
-        show(COMP.JOURNAL_ENTRY_PAGE);
+        messenger.broadcast(SUB.CANCEL_ADD_JOURNAL_ENTRY_ROUTE);
     }
 
     async function raiseSubmitEvent(event) {
@@ -60,7 +62,7 @@ export function AddJournalEntryRouteForm(props) {
         };
 
         let isSuccessful = await add(request);
-        if (isSuccessful) show(COMP.JOURNAL_ENTRY_PAGE);
+        if (isSuccessful) messenger.broadcast(SUB.ADDED_JOURNAL_ENTRY_ROUTE);
     }
 
     function getAreaInput() {

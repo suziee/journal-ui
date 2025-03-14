@@ -2,14 +2,16 @@ import React from 'react';
 import { useAppData
     , hookNames as NAME
     , componentNames as COMP
+    , subscriptionKeys as SUB
 } from '../../state';
 import { clearValues, getValueOrDefault, getControlledValue } from '../shared';
 
 export function AddCragForm(props) {
+    const messenger = useAppData(NAME.useMessenger);
     const {area} = useAppData(NAME.useArea);
     const {add} = useAppData(NAME.useCrag);
     const {errors} = useAppData(NAME.useError);
-    const {get: getOpen, current, show} = useAppData(NAME.useOpen);
+    const {get: getOpen, current} = useAppData(NAME.useOpen);
     const [open, setOpen] = React.useState(false);
 
     const fieldMap = [
@@ -24,7 +26,7 @@ export function AddCragForm(props) {
     function raiseCancelEvent(event) {
         event.preventDefault();
         clearValues(fieldMap);
-        show(COMP.AREA_PAGE);
+        messenger.broadcast(SUB.CANCEL_ADD_CRAG);
     }
 
     async function raiseSubmitEvent(event) {
@@ -36,7 +38,7 @@ export function AddCragForm(props) {
         };
 
         let isSuccessful = await add(request);
-        if (isSuccessful) show(COMP.CRAG_PAGE);
+        if (isSuccessful) messenger.broadcast(SUB.ADDED_CRAG);
     }
 
     return (
