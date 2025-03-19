@@ -9,7 +9,6 @@ import { DeleteIcon } from '../Button';
 
 export function CragPage(props) {
     const messenger = useAppData(NAME.useMessenger);
-    const deleteHub = useAppData(NAME.useDeleteHub);
     const {crag, delete: deleteCrag} = useAppData(NAME.useCrag);
     const {get: getRoute} = useAppData(NAME.useRoute);
     const {get: getArea} = useAppData(NAME.useArea);

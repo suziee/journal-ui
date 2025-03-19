@@ -10,7 +10,6 @@ export function JournalEntryPage(props) {
     const {get: getRoute} = useAppData(NAME.useRoute);
     const {get: getJournalEntryRoute, delete: deleteJournalEntryRoute} = useAppData(NAME.useJournalEntryRoute);
     const [open, setOpen] = React.useState(false);
-    const [locked, setLocked] = React.useState(true);
 
     React.useEffect(() => {
         setOpen(x => getOpen(COMP.JOURNAL_ENTRY_PAGE));

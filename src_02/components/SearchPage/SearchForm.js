@@ -1,13 +1,10 @@
 import React from 'react';
 import { useAppData
     , hookNames as NAME
-    , subscriptionKeys as SUB
 } from '../../state';
 
 export default function SearchForm(props) {
     const {updateKeyword} = useAppData(NAME.useKeyword);
-    const messenger = useAppData(NAME.useMessenger);
-
     const keywordRef = React.useRef();
 
     async function raiseSearchEvent() {
