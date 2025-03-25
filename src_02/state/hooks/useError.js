@@ -3,25 +3,26 @@ import * as SUB from './subscriptionKeys';
 import { useError as id } from './hookNames';
 
 export default function useError(args) {
-    const {messenger} = args;
+    const {messenger, openHub, deleteHub} = args;
     const [errors, setErrors] = React.useState([]);
     const [isSuccessful, setIsSuccessful] = React.useState(false);
 
     messenger.subscribe(id, {
-        [SUB.ADD_AREA]: clearErrors,
-        [SUB.UPDATE_AREA]: clearErrors,
-        [SUB.ADD_CRAG]: clearErrors,
-        [SUB.UPDATE_CRAG]: clearErrors,
-        [SUB.ADD_ROUTE]: clearErrors,
-        [SUB.UPDATE_ROUTE]: clearErrors,
-        [SUB.ADD_JOURNAL_ENTRY]: clearErrors,
-        [SUB.UPDATE_JOURNAL_ENTRY]: clearErrors,
-        [SUB.ADD_JOURNAL_ENTRY_ROUTE]: clearErrors,
-        [SUB.UPDATE_JOURNAL_ENTRY_ROUTE]: clearErrors,
+        [SUB.DELETED_JOURNAL_ENTRY_ROUTE]: clearErrors,
     });
 
+    React.useEffect(() => {
+        clearErrors();
+    }, [openHub.current]);
+
+    React.useEffect(() => {
+        clearErrors();
+    }, [deleteHub.locks]);
+
     function clearErrors() {
-        setErrors(x => []);
+        if (errors != null && errors.length != 0) {
+            setErrors(x => []);
+        }
     }
 
     async function callApi(func, obj = null, useObj = false) {

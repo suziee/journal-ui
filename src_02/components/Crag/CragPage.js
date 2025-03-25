@@ -6,6 +6,7 @@ import { useAppData
     , subscriptionKeys as SUB
 } from '../../state';
 import { DeleteIcon } from '../Button';
+import { ErrorContainer } from '../ErrorContainer';
 
 export function CragPage(props) {
     const messenger = useAppData(NAME.useMessenger);
@@ -60,6 +61,7 @@ export function CragPage(props) {
                     <DeleteIcon parentType={COMP.CRAG_PAGE} eventHandler={raiseDeleteEvent} />
                 </div>
             </div>
+            <ErrorContainer />
             <div>
                 <header><span className="text-button add" onClick={raiseAddEvent}>add</span> Routes:</header>
                 <ul id="routes">

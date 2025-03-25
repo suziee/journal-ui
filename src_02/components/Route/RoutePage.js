@@ -6,6 +6,7 @@ import { useAppData
     , subscriptionKeys as SUB
 } from '../../state';
 import { DeleteIcon } from '../Button';
+import { ErrorContainer } from '../ErrorContainer';
 
 export function RoutePage(props) {
     const messenger = useAppData(NAME.useMessenger);
@@ -65,6 +66,7 @@ export function RoutePage(props) {
                     <DeleteIcon parentType={COMP.ROUTE_PAGE} eventHandler={raiseDeleteEvent} />
                 </div>
             </div>
+            <ErrorContainer />
             <p>{route.notes}</p>
             <div id="dates-climbed">
                 <header>Dates climbed:</header>

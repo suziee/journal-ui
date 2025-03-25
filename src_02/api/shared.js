@@ -18,6 +18,8 @@ export async function build(response) {
         if (json != null && json.errors) {
             const values = Object.values(json.errors);
             errors = [...errors, ...values.flat()];
+        } else if (json.title) {
+            errors = [...errors, json.title];
         } else { 
             errors = [...errors, text];
         }

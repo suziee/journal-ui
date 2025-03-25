@@ -6,10 +6,10 @@ import { useAppData
     , subscriptionKeys as SUB
 } from '../../state';
 import { DeleteIcon } from '../Button';
+import { ErrorContainer } from '../ErrorContainer';
 
 export function AreaPage(props) {
     const messenger = useAppData(NAME.useMessenger);
-    const deleteHub = useAppData(NAME.useDeleteHub);
     const {area, delete: deleteArea} = useAppData(NAME.useArea);
     const {get: getCrag} = useAppData(NAME.useCrag);
     const {get: getOpen, current} = useAppData(NAME.useOpen);
@@ -49,6 +49,7 @@ export function AreaPage(props) {
                     <DeleteIcon parentType={COMP.AREA_PAGE} eventHandler={raiseDeleteEvent} />
                 </div>
             </div>
+            <ErrorContainer />
             <div>
                 <header><span className="text-button add" onClick={raiseAddEvent}>add</span> Crags:</header>
                 <ul id="crags">

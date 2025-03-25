@@ -2,6 +2,7 @@ import React from 'react';
 import { useAppData, hookNames as NAME, componentNames as COMP, subscriptionKeys as SUB } from '../../state';
 import './journalEntryPage.css';
 import { DeleteButton, DeleteIcon } from '../Button';
+import { ErrorContainer } from '../ErrorContainer';
 
 export function JournalEntryPage(props) {
     const messenger = useAppData(NAME.useMessenger);
@@ -61,6 +62,7 @@ export function JournalEntryPage(props) {
                     <DeleteIcon parentType={COMP.JOURNAL_ENTRY_PAGE} eventHandler={raiseDeleteEvent} />
                 </div>
             </div>
+            <ErrorContainer />
             <p>{journalEntry.notes}</p>
             <div id="routes-climbed">
                 <header><span className="text-button add" onClick={raiseAddEvent}>add</span> Routes climbed:</header>

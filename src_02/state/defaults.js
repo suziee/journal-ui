@@ -14,8 +14,18 @@ import useDeleteHub from './hooks/useDeleteHub';
 export default function getDefaults(args) {
     const messenger = useMessenger();
 
+    const _useOpen = useOpen({
+        messenger: messenger,
+    });
+
+    const deleteHub = useDeleteHub({
+        openHub: _useOpen
+    });
+
     const _useError = useError({
         messenger: messenger,
+        openHub: _useOpen,
+        deleteHub: deleteHub,
     });
     
     const _useCalendar = useCalendar({
@@ -28,16 +38,13 @@ export default function getDefaults(args) {
         useCalendar: _useCalendar,
     });
 
-    const _useOpen = useOpen({
-        messenger: messenger,
-    });
-
     let defaults = {
         [NAME.useMessenger]: messenger,
         [NAME.useError]: _useError,
         [NAME.useCalendar]: _useCalendar,
         [NAME.useJournalEntry]: _useJournalEntry,
         [NAME.useOpen]: _useOpen,
+        [NAME.useDeleteHub]: deleteHub,
     };
 
     defaults = {
@@ -61,9 +68,7 @@ export default function getDefaults(args) {
             messenger: messenger,
             client: _useError,
         }),
-        [NAME.useDeleteHub]: useDeleteHub({
-            openHub: _useOpen
-        }),
+        
     };
 
     return defaults;

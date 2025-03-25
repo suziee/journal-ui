@@ -5,11 +5,11 @@ import { useAppData
     , subscriptionKeys as SUB
 } from '../../state';
 import { setValues, getValueOrDefault } from '../shared';
+import { ErrorContainer } from '../ErrorContainer';
 
 export function EditAreaForm(props) {
     const messenger = useAppData(NAME.useMessenger);
     const {update, area} = useAppData(NAME.useArea);
-    const {errors} = useAppData(NAME.useError);
     const {get: getOpen, current} = useAppData(NAME.useOpen);
     const [open, setOpen] = React.useState(false);
 
@@ -58,11 +58,7 @@ export function EditAreaForm(props) {
                     <button className="text-button save" type="submit">save</button>
                 </div>
             </form>
-            <ul className="form-errors">
-                {errors.map((error, index) => {
-                    return <li key={`form-error-${index}`}>{error}</li>
-                })}
-            </ul>
+            <ErrorContainer />
         </div>
     );
 }

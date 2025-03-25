@@ -2,7 +2,6 @@ import React from 'react';
 import { useAppData
     , hookNames as NAME
     , subscriptionKeys as SUB
-    , componentNames as COMP
 } from '../../state';
 
 export default function SearchResults(props) {
@@ -16,10 +15,6 @@ export default function SearchResults(props) {
     const {results, keyword} = useAppData(NAME.useKeyword);
 
     async function gotoPage(result) {
-		//const result = event.target.getAttribute("data-value");
-
-        // messenger.broadcast(SUB.HIDE_SEARCH);
-
         if (result.isArea) {
             await getArea(result.guid);
             messenger.broadcast(SUB.SHOW_AREA);

@@ -5,11 +5,11 @@ import { useAppData
     , subscriptionKeys as SUB
 } from '../../state';
 import { setValues, getValueOrDefault } from '../shared';
+import { ErrorContainer } from '../ErrorContainer';
 
 export function EditJournalEntryRouteForm(props) {
     const messenger = useAppData(NAME.useMessenger);
     const {update, journalEntryRoute} = useAppData(NAME.useJournalEntryRoute);
-    const {errors} = useAppData(NAME.useError);
     const {get: getOpen, current, show} = useAppData(NAME.useOpen);
     const [open, setOpen] = React.useState(false);
 
@@ -78,11 +78,7 @@ export function EditJournalEntryRouteForm(props) {
                     <button className="text-button save" type="submit">save</button>
                 </div>
             </form>
-            <ul className="form-errors">
-                {errors.map((error, index) => {
-                    return <li key={`form-error-${index}`}>{error}</li>
-                })}
-            </ul>
+            <ErrorContainer />
         </div>
     );
 }
