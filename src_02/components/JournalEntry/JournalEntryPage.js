@@ -10,6 +10,7 @@ export function JournalEntryPage(props) {
     const {get: getOpen, current} = useAppData(NAME.useOpen);
     const {get: getRoute} = useAppData(NAME.useRoute);
     const {get: getJournalEntryRoute, delete: deleteJournalEntryRoute} = useAppData(NAME.useJournalEntryRoute);
+    const {shows: errors, initError, showError} = useAppData(NAME.useError);
     const [open, setOpen] = React.useState(false);
 
     React.useEffect(() => {
@@ -17,6 +18,15 @@ export function JournalEntryPage(props) {
         // See useOpen.getOpen for why this commented code is here
         // console.log(current, getOpen(COMP.JOURNAL_ENTRY_PAGE));
     }, [current]);
+
+    React.useEffect(() => {
+        if (journalEntry) {
+            initError(journalEntry.journalEntryGuid);
+            journalEntry.routes.map((route, index) => {
+                initError(route.journalEntryRouteGuid);
+            });
+        }
+    }, [journalEntry]);
 
     function raiseAddEvent(event) {
         messenger.broadcast(SUB.ADD_JOURNAL_ENTRY_ROUTE);
@@ -40,10 +50,12 @@ export function JournalEntryPage(props) {
 
     async function raiseJerDeleteEvent(event) {
         const jerGuid = event.target.getAttribute("data-value");
+        showError(jerGuid);
         await deleteJournalEntryRoute(journalEntry.journalEntryGuid, jerGuid);
     }
 
     async function raiseDeleteEvent(event) {
+        showError(journalEntry.journalEntryGuid);
         const isSuccessful = await deleteJournalEntry(journalEntry.journalEntryGuid);
         if (isSuccessful) messenger.broadcast(SUB.DELETED_JOURNAL_ENTRY);
     }
@@ -62,7 +74,7 @@ export function JournalEntryPage(props) {
                     <DeleteIcon parentType={COMP.JOURNAL_ENTRY_PAGE} eventHandler={raiseDeleteEvent} />
                 </div>
             </div>
-            <ErrorContainer />
+            {errors != null && errors[journalEntry.journalEntryGuid] ? <ErrorContainer /> : null}
             <p>{journalEntry.notes}</p>
             <div id="routes-climbed">
                 <header><span className="text-button add" onClick={raiseAddEvent}>add</span> Routes climbed:</header>
@@ -83,6 +95,9 @@ export function JournalEntryPage(props) {
                                 </tr>
                                 {route.notes ? <tr>
                                     <td colSpan="6" className="route-notes">{route.notes}</td>
+                                </tr> : null}
+                                {errors != null && errors[route.journalEntryRouteGuid] ? <tr>
+                                    <td colSpan="6" className="route-notes"><ErrorContainer /></td>
                                 </tr> : null}
                             </React.Fragment>
                         })}

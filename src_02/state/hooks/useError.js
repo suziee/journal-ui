@@ -6,17 +6,37 @@ export default function useError(args) {
     const {messenger, openHub, deleteHub} = args;
     const [errors, setErrors] = React.useState([]);
     const [isSuccessful, setIsSuccessful] = React.useState(false);
+    const [shows, setShows] = React.useState({});
 
+    function initShow(guid) {
+        let _shows = {...shows, [guid]: false};
+        setShows(x => _shows);
+    }
+
+    function setShow(guid) {
+        resetShows();
+        let _shows = {...shows, [guid]: true};
+        setShows(x => _shows);
+    }
+
+    function resetShows() {
+        for (let key in shows) {
+            shows[key] = false;
+        }
+    }
+    
     messenger.subscribe(id, {
         [SUB.DELETED_JOURNAL_ENTRY_ROUTE]: clearErrors,
     });
 
     React.useEffect(() => {
         clearErrors();
+        setShows(x => {});
     }, [openHub.current]);
 
     React.useEffect(() => {
         clearErrors();
+        resetShows();
     }, [deleteHub.locks]);
 
     function clearErrors() {
@@ -48,5 +68,8 @@ export default function useError(args) {
         errors: errors,
         callApi: callApi,
         isSuccessful: isSuccessful,
+        initError: initShow,
+        showError: setShow,
+        shows: shows,
     };
 }
