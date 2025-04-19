@@ -6,6 +6,7 @@ import { useAppData
 } from '../../state';
 import { setValues, getValueOrDefault, getControlledValue } from '../shared';
 import { ErrorContainer } from '../ErrorContainer';
+import RouteTypeSelector from './RouteTypeSelector';
 
 export function EditRouteForm(props) {
     const messenger = useAppData(NAME.useMessenger);
@@ -72,7 +73,7 @@ export function EditRouteForm(props) {
                 </div>
                 <div>
                     <label>Type:</label>
-                    <input name="routeType" id="erf-type"/>
+                    <RouteTypeSelector name="routeType" id="erf-type"/>
                 </div>
                 <div>
                     <label>Grade:</label>

@@ -10,7 +10,7 @@ export function JournalEntryPage(props) {
     const {get: getOpen, current} = useAppData(NAME.useOpen);
     const {get: getRoute} = useAppData(NAME.useRoute);
     const {get: getJournalEntryRoute, delete: deleteJournalEntryRoute} = useAppData(NAME.useJournalEntryRoute);
-    const {shows: errors, initError, showError} = useAppData(NAME.useError);
+    const {showErrors, initError, showError} = useAppData(NAME.useError);
     const [open, setOpen] = React.useState(false);
 
     React.useEffect(() => {
@@ -74,7 +74,7 @@ export function JournalEntryPage(props) {
                     <DeleteIcon parentType={COMP.JOURNAL_ENTRY_PAGE} eventHandler={raiseDeleteEvent} />
                 </div>
             </div>
-            {errors != null && errors[journalEntry.journalEntryGuid] ? <ErrorContainer /> : null}
+            {showErrors != null && showErrors[journalEntry.journalEntryGuid] ? <ErrorContainer /> : null}
             <p>{journalEntry.notes}</p>
             <div id="routes-climbed">
                 <header><span className="text-button add" onClick={raiseAddEvent}>add</span> Routes climbed:</header>
@@ -96,7 +96,7 @@ export function JournalEntryPage(props) {
                                 {route.notes ? <tr>
                                     <td colSpan="6" className="route-notes">{route.notes}</td>
                                 </tr> : null}
-                                {errors != null && errors[route.journalEntryRouteGuid] ? <tr>
+                                {showErrors != null && showErrors[route.journalEntryRouteGuid] ? <tr>
                                     <td colSpan="6" className="route-notes"><ErrorContainer /></td>
                                 </tr> : null}
                             </React.Fragment>

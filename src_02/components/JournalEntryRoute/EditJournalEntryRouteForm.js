@@ -6,6 +6,7 @@ import { useAppData
 } from '../../state';
 import { setValues, getValueOrDefault } from '../shared';
 import { ErrorContainer } from '../ErrorContainer';
+import ClimbTypeSelector from './ClimbTypeSelector';
 
 export function EditJournalEntryRouteForm(props) {
     const messenger = useAppData(NAME.useMessenger);
@@ -67,7 +68,7 @@ export function EditJournalEntryRouteForm(props) {
                 </div>
                 <div>
                     <label>Climb Type:</label>
-                    <input name="climbType" id="ejerf-type"/>
+                    <ClimbTypeSelector name="climbType" id="ejerf-type"/>
                 </div>
                 <div>
                     <label>Notes:</label>

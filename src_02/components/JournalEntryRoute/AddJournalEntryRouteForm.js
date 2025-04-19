@@ -6,6 +6,7 @@ import { useAppData
 } from '../../state';
 import { clearValues, getValueOrDefault, getControlledValue } from '../shared';
 import { ErrorContainer } from '../ErrorContainer';
+import ClimbTypeSelector from './ClimbTypeSelector';
 
 export function AddJournalEntryRouteForm(props) {
     const messenger = useAppData(NAME.useMessenger);
@@ -26,7 +27,7 @@ export function AddJournalEntryRouteForm(props) {
         {ui: "jerf-route", model: "routeGuid"},
         {ui: "jerf-notes", model: "notes"},
         {ui: "jerf-pitches", model: "pitchesClimbed"},
-        {ui: "ejerf-type", model: "climbType"},
+        {ui: "jerf-type", model: "climbType"},
     ];
 
     React.useEffect(() => {
@@ -155,7 +156,7 @@ export function AddJournalEntryRouteForm(props) {
                 </div>
                 <div>
                     <label>Climb Type:</label>
-                    <input name="climbType" id="ejerf-type"/>
+                    <ClimbTypeSelector name="climbType" id="jerf-type"/>
                 </div>
                 <div>
                     <label>Notes:</label>

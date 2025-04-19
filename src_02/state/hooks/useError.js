@@ -6,22 +6,22 @@ export default function useError(args) {
     const {messenger, openHub, deleteHub} = args;
     const [errors, setErrors] = React.useState([]);
     const [isSuccessful, setIsSuccessful] = React.useState(false);
-    const [shows, setShows] = React.useState({});
+    const [showErrors, setShowErrors] = React.useState({});
 
-    function initShow(guid) {
-        let _shows = {...shows, [guid]: false};
-        setShows(x => _shows);
+    function initShowError(guid) {
+        let _showErrors = {...showErrors, [guid]: false};
+        setShowErrors(x => _showErrors);
     }
 
-    function setShow(guid) {
-        resetShows();
-        let _shows = {...shows, [guid]: true};
-        setShows(x => _shows);
+    function setShowError(guid) {
+        resetShowErrors();
+        let _showErrors = {...showErrors, [guid]: true};
+        setShowErrors(x => _showErrors);
     }
 
-    function resetShows() {
-        for (let key in shows) {
-            shows[key] = false;
+    function resetShowErrors() {
+        for (let key in showErrors) {
+            showErrors[key] = false;
         }
     }
     
@@ -31,12 +31,12 @@ export default function useError(args) {
 
     React.useEffect(() => {
         clearErrors();
-        setShows(x => {});
+        setShowErrors(x => {});
     }, [openHub.current]);
 
     React.useEffect(() => {
         clearErrors();
-        resetShows();
+        resetShowErrors();
     }, [deleteHub.locks]);
 
     function clearErrors() {
@@ -46,8 +46,6 @@ export default function useError(args) {
     }
 
     async function callApi(func, obj = null, useObj = false) {
-        clearErrors(); // kinda redundant here, but necessary for getall and get
-
         let response;
         if (useObj) {
             response = await func(obj);
@@ -56,7 +54,9 @@ export default function useError(args) {
         }
 
         if (!response.isSuccessful) {
-            setErrors(x => response.errors);
+            setErrors(response.errors);
+        } else {
+            clearErrors();
         }
 
         setIsSuccessful(x => response.isSuccessful);
@@ -68,8 +68,8 @@ export default function useError(args) {
         errors: errors,
         callApi: callApi,
         isSuccessful: isSuccessful,
-        initError: initShow,
-        showError: setShow,
-        shows: shows,
+        initError: initShowError,
+        showError: setShowError,
+        showErrors: showErrors,
     };
 }
