@@ -153,3 +153,7 @@ span.size-24 {
 .light {
     color: #aaaaaa;
 }
+
+.preserved-text {
+    white-space: pre-wrap;
+}

@@ -75,7 +75,7 @@ export function JournalEntryPage(props) {
                 </div>
             </div>
             {showErrors != null && showErrors[journalEntry.journalEntryGuid] ? <ErrorContainer /> : null}
-            <p>{journalEntry.notes}</p>
+            <p className="preserved-text">{journalEntry.notes}</p>
             <div id="routes-climbed">
                 <header><span className="text-button add" onClick={raiseAddEvent}>add</span> Routes climbed:</header>
                 <table>
@@ -94,7 +94,7 @@ export function JournalEntryPage(props) {
                                     </td>
                                 </tr>
                                 {route.notes ? <tr>
-                                    <td colSpan="6" className="route-notes">{route.notes}</td>
+                                    <td colSpan="6" className="route-notes preserved-text">{route.notes}</td>
                                 </tr> : null}
                                 {showErrors != null && showErrors[route.journalEntryRouteGuid] ? <tr>
                                     <td colSpan="6" className="route-notes"><ErrorContainer /></td>
