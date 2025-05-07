@@ -9,7 +9,7 @@
     padding: 10px;
 }
 
-#routes-climbed td:not(.route-notes) {
+#routes-climbed td:not(.route-notes, .base-errors) {
     vertical-align: top;
     background-color: aliceblue;
 }

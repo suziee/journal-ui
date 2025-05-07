@@ -111,6 +111,14 @@ form textarea {
 .form-errors {
     padding: 0;
     list-style: none;
+}
+
+.form-errors li {
+    padding: 3px;
+}
+
+.base-errors {
+    background-color: lavenderblush;
     color: red;
 }
 

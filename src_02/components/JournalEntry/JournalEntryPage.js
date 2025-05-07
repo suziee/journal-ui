@@ -97,7 +97,7 @@ export function JournalEntryPage(props) {
                                     <td colSpan="6" className="route-notes preserved-text">{route.notes}</td>
                                 </tr> : null}
                                 {showErrors != null && showErrors[route.journalEntryRouteGuid] ? <tr>
-                                    <td colSpan="6" className="route-notes"><ErrorContainer /></td>
+                                    <td colSpan="6" className="base-errors"><ErrorContainer isPlainText="true"/></td>
                                 </tr> : null}
                             </React.Fragment>
                         })}

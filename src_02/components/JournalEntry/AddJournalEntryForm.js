@@ -27,7 +27,7 @@ export function AddJournalEntryForm(props) {
     function raiseCancelEvent(event) {
         event.preventDefault();
         clearValues(fieldMap);
-        messenger.broadcast(SUB.CANCEL_UPDATE_JOURNAL_ENTRY);
+        messenger.broadcast(SUB.CANCEL_ADD_JOURNAL_ENTRY);
     }
 
     async function raiseSubmitEvent(event) {
